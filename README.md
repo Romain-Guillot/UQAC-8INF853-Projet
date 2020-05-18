@@ -2,9 +2,15 @@
 
 ## Structure du projet
 ```
-|- documents/   # rapports, diagrammes, spécifications, etc.
-|- app/         # Java EE application
+|- documents/       # rapports, diagrammes, spécifications, etc.
+|- StableManager/   # Java EE application (projet IntelliJ)
 ```
+
+## Technologies et environnements
+- [Oracle JDK 8 Update 144](https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html) (*Java SE Development Kit 8u144*)
+- [GlassFish 5.0.1](https://javaee.github.io/glassfish/download)
+- [Struts 2.???](https://mvnrepository.com/artifact/org.apache.struts/struts2-core)
+- [IntelliJ IDEA 2020.1.1 ULTIMATE](https://www.jetbrains.com/idea/download/#section=linux)
 
 ## User stories
 - [ ] Employés
