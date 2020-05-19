@@ -6,6 +6,11 @@
 |- StableManager/   # Java EE application (projet IntelliJ avec support de Maven)
 ```
 
+## Technologies utilisées
+- Java EE
+- Struts 2
+- JavaServer Pages (JSP)
+
 ## Environnement recommandé
 - [Oracle JDK 8 Update 144](https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html) (*Java SE Development Kit 8u144*)
 - [GlassFish 5.0.1](https://javaee.github.io/glassfish/download)
