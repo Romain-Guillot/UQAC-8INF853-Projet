@@ -1,7 +1,8 @@
-package com.uqac.stablemanager.action;
+package com.uqac.stablemanager.actions;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.uqac.stablemanager.model.MessageStore;
+import com.uqac.stablemanager.models.MessageStore;
+
 
 public class HelloWorldAction extends ActionSupport {
     private static final long serialVersionUID = 1L;

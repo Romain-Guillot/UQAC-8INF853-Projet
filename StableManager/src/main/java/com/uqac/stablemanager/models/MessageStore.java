@@ -1,4 +1,4 @@
-package com.uqac.stablemanager.model;
+package com.uqac.stablemanager.models;
 
 public class MessageStore {
 
@@ -11,5 +11,4 @@ public class MessageStore {
     public String getMessage() {
         return message;
     }
-
 }

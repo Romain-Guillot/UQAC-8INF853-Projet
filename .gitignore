@@ -29,3 +29,4 @@ StableManager/out/
 
 # INTELLIJ
 *.iws
+StableManager/.idea/workspace.xml
