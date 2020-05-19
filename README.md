@@ -3,14 +3,18 @@
 ## Structure du projet
 ```
 |- documents/       # rapports, diagrammes, spécifications, etc.
-|- StableManager/   # Java EE application (projet IntelliJ)
+|- StableManager/   # Java EE application (projet IntelliJ avec support de Maven)
 ```
 
-## Technologies et environnements
+## Environnement recommandé
 - [Oracle JDK 8 Update 144](https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html) (*Java SE Development Kit 8u144*)
 - [GlassFish 5.0.1](https://javaee.github.io/glassfish/download)
-- [Struts 2.???](https://mvnrepository.com/artifact/org.apache.struts/struts2-core)
 - [IntelliJ IDEA 2020.1.1 ULTIMATE](https://www.jetbrains.com/idea/download/#section=linux)
+
+Les dépendances aux librairies externes sont gérées via Maven (installation automatique) :
+- `struts2-core`: 2.5.22
+- `log4j-api`: 2.13.3
+- `log4j-core`: 2.13.3
 
 ## User stories
 - [ ] Employés
