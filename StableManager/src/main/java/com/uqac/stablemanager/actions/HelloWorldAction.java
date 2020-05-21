@@ -2,6 +2,7 @@ package com.uqac.stablemanager.actions;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.uqac.stablemanager.models.MessageStore;
+import org.apache.struts2.convention.annotation.Action;
 
 
 public class HelloWorldAction extends ActionSupport {
