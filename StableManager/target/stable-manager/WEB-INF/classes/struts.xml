@@ -9,15 +9,6 @@
 
     <package name="basicstruts2" extends="struts-default">
 
-        <interceptors>
-            <interceptor-stack name="authentication">
-                <interceptor-ref name="timer"/>
-                <interceptor-ref name="logger"/>
-                <interceptor-ref name="default-stack"/>
-            </interceptor-stack>
-        </interceptors>
-
-        <default-interceptor-ref name="authentication"/>
 
         <!-- If no class attribute is specified the framework will assume success and
         render the result index.jsp -->
@@ -29,8 +20,7 @@
         <!-- If the URL is hello.action then call the execute method of class HelloWorldAction.
         If the result returned by the execute method is success render the HelloWorld.jsp -->
         <action name="hello" class="com.uqac.stablemanager.actions.HelloWorldAction" method="execute">
-            <param name="permissions">VIEW_PROFILE</param>
-            <result name="success">/HelloWorld.jsp</result>
+            <result name="success">/login.jsp</result>
         </action>
 
     </package>

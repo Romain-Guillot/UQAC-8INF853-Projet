@@ -1,8 +1,8 @@
 package com.uqac.stablemanager.actions;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.uqac.stablemanager.models.MessageStore;
-import org.apache.struts2.convention.annotation.Action;
+import com.uqac.stablemanager.entities.MessageStore;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 public class HelloWorldAction extends ActionSupport {
@@ -21,9 +21,10 @@ public class HelloWorldAction extends ActionSupport {
      * (non-Javadoc)
      * @see com.opensymphony.xwork2.ActionSupport#execute()
      */
+    @PreAuthorize("hasRole('PERM_READ_FORUMS')")
     public String execute() {
         messageStore = new MessageStore() ;
-
+        System.out.println("SALUT");
         return SUCCESS;
     }
 
