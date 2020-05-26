@@ -8,19 +8,26 @@
 
     <global-method-security pre-post-annotations="enabled"/>
     <http auto-config="true">
-        <intercept-url pattern="**" access="isAuthenticated()" />
-        <intercept-url pattern="/login" access="isAnonymous()"/>
-<!--        <intercept-url pattern="/menu2" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />-->
+        <csrf disabled="true"/>
+
+        <intercept-url pattern="/login*" access="isAnonymous()"/>
+        <intercept-url pattern="/perform_login*" access="isAnonymous()"/>
+
+        <intercept-url pattern="/**" access="isAuthenticated()" />
 
 <!--        <access-denied-handler error-page="/accessDenied"/>-->
 
-<!--        <form-login-->
-<!--                login-page="/login"-->
-<!--                default-target-url="/welcome"-->
-<!--                authentication-failure-url="/login?error"-->
-<!--                username-parameter="username"-->
-<!--                password-parameter="password"/>-->
-<!--        <logout logout-url="/j_spring_security_logout" logout-success-url="/login" invalidate-session="true" />-->
+        <form-login
+                login-page="/login"
+                login-processing-url="/perform_login"
+                default-target-url="/index"
+                authentication-failure-url="/login?error"
+                username-parameter="username"
+                password-parameter="password"/>
+        <logout
+                logout-url="/perform_logout"
+                logout-success-url="/login"
+                invalidate-session="true" />
     </http>
 
     <authentication-manager erase-credentials="false">
