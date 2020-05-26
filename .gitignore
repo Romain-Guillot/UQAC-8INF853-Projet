@@ -28,4 +28,5 @@ StableManager/out/
 
 
 # INTELLIJ
-*.iws
+.idea
+StableManager/target
