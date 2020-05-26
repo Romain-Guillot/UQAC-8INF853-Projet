@@ -28,5 +28,6 @@ StableManager/out/
 
 
 # INTELLIJ
-.idea
+StableManager/.idea/workspace.xml
+StableManager/.idea/uiDesigner.xml
 StableManager/target
