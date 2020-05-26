@@ -2,27 +2,24 @@
 <!DOCTYPE struts PUBLIC
         "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
         "http://struts.apache.org/dtds/struts-2.5.dtd">
-
 <struts>
-
     <constant name="struts.devMode" value="true" />
 
     <package name="basicstruts2" extends="struts-default">
-
-
-        <!-- If no class attribute is specified the framework will assume success and
-        render the result index.jsp -->
-        <!-- If no name value for the result node is specified the success value is the default -->
         <action name="index">
             <result>/index.jsp</result>
         </action>
 
-        <!-- If the URL is hello.action then call the execute method of class HelloWorldAction.
-        If the result returned by the execute method is success render the HelloWorld.jsp -->
-        <action name="hello" class="com.uqac.stablemanager.actions.HelloWorldAction" method="execute">
-            <result name="success">/login.jsp</result>
+        <action name="login">
+            <result>/login.jsp</result>
         </action>
 
-    </package>
+        <action name="perform_login" class="com.uqac.stablemanager.auth.action.LoginAction" method="execute">
+            <result name="success">/index.jsp</result>
+        </action>
 
+        <action name="perform_logout" class="com.uqac.stablemanager.auth.action.LogoutAction" method="execute">
+            <result name="success">/login.jsp</result>
+        </action>
+    </package>
 </struts>

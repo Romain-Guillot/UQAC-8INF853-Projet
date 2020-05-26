@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="stable-manager.war">
+    <root id="archive" name="StableManager.war">
       <element id="artifact" artifact-name="StableManager:war exploded" />
     </root>
   </artifact>
