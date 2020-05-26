@@ -5,13 +5,7 @@
 <struts>
     <constant name="struts.devMode" value="true" />
 
-    <package name="basicstruts2" extends="struts-default">
-        <action name="index">
-            <result>/index.jsp</result>
-        </action>
+    <package name="member" namespace="/" extends="struts-default">
+
     </package>
-
-    <include file="struts-auth.xml"/>
-    <include file="struts-member.xml"/>
-
 </struts>
