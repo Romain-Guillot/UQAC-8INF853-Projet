@@ -15,6 +15,18 @@ public class MemberModel implements UserDetails {
     private Date birthDate;
     private String password;
 
+    public MemberModel() { }
+
+    public MemberModel(MemberModel member) {
+        firstName = member.firstName;
+        lastName = member.lastName;
+        email = member.email;
+        postalAddress = member.postalAddress;
+        registerAt = member.registerAt;
+        birthDate = member.birthDate;
+        password = member.password;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

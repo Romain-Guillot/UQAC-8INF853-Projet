@@ -10,4 +10,8 @@ public class AdminModel extends MemberModel {
     public AdminModel() {
 
     }
+
+    public AdminModel(MemberModel member) {
+        super(member);
+    }
 }

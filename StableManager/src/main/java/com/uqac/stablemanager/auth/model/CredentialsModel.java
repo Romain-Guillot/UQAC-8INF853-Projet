@@ -2,7 +2,6 @@ package com.uqac.stablemanager.auth.model;
 
 
 public class CredentialsModel {
-    
     private String email;
     private String password;
     
