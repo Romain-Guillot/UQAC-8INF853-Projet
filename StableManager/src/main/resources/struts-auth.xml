@@ -12,6 +12,7 @@
 
         <action name="perform_login" class="com.uqac.stablemanager.auth.action.LoginAction" method="execute">
             <result name="success" type="redirectAction">index</result>
+            <result name="error" type="redirectAction">login</result>
         </action>
 
         <action name="perform_logout" class="com.uqac.stablemanager.auth.action.LogoutAction" method="execute">

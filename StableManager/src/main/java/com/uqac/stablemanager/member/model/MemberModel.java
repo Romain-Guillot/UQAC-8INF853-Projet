@@ -12,6 +12,7 @@ public class MemberModel implements UserDetails {
     private String email;
     private String postalAddress;
     private Date registerAt;
+    private Date birth_date;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

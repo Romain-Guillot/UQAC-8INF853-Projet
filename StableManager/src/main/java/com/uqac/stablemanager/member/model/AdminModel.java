@@ -1,5 +1,13 @@
 package com.uqac.stablemanager.member.model;
 
-public class AdminModel extends MemberModel {
+import com.uqac.stablemanager.utils.TimeSlot;
 
+import java.util.List;
+
+public class AdminModel extends MemberModel {
+    private List<TimeSlot> planning;
+
+    public AdminModel() {
+
+    }
 }

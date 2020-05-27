@@ -7,7 +7,7 @@
     <title>Basic Struts 2 Application - Welcome</title>
   </head>
   <body>
-    <h1>StableManager</h1>
+    <h1>Welcome to StableManager</h1>
     <p><a href="<s:url action='login'/>">Login</a></p>
     <p><a href="<s:url action='perform_logout'/>">Logout</a></p>
   </body>
