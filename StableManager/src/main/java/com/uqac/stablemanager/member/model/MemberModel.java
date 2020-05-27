@@ -12,7 +12,8 @@ public class MemberModel implements UserDetails {
     private String email;
     private String postalAddress;
     private Date registerAt;
-    private Date birth_date;
+    private Date birthDate;
+    private String password;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -21,12 +22,64 @@ public class MemberModel implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Date getRegisterAt() {
+        return registerAt;
+    }
+
+    public void setRegisterAt(Date registerAt) {
+        this.registerAt = registerAt;
+    }
+
+    public String getPostalAddress() {
+        return postalAddress;
+    }
+
+    public void setPostalAddress(String postalAddress) {
+        this.postalAddress = postalAddress;
     }
 
     @Override

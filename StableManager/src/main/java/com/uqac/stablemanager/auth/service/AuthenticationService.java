@@ -7,9 +7,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class AuthenticationService {
@@ -20,9 +24,32 @@ public class AuthenticationService {
         this.connection = connection;
     }
 
-    public void login(CredentialsModel credentials) {
-        UserDetails user = new MemberModel();
-        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+    public boolean login(CredentialsModel credentials) {
+        boolean isAuthenticated = false;
+        try {
+            String query = "SELECT passwd FROM ProfileMember WHERE email=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, credentials.getEmail());
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                String hashPass = result.getString("passwd");
+                String plainPass = credentials.getPassword();
+                boolean passwordMatches = BCrypt.checkpw(plainPass, hashPass);
+                if (passwordMatches) {
+                    UserDetails user = new MemberModel();
+                    setSpringAuthentication(user);
+                    isAuthenticated = true;
+                }
+            }
+            statement.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return isAuthenticated;
+    }
+
+    private void setSpringAuthentication(UserDetails user) {
+        Authentication auth = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
 

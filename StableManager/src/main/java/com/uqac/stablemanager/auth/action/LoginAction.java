@@ -16,6 +16,7 @@ public class LoginAction extends ActionSupport {
             new AuthenticationService(MySQLConnection.getConnection()).login(credential);
             return SUCCESS;
         } catch (Exception exception) {
+            System.err.println(exception);
             return ERROR;
         }
     }
