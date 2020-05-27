@@ -4,8 +4,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 
 public class MemberModel implements UserDetails {
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String postalAddress;
+    private Date registerAt;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
