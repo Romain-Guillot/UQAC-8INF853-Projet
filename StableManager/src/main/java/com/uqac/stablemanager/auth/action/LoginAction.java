@@ -12,13 +12,8 @@ public class LoginAction extends ActionSupport {
 
     @Override
     public String execute() {
-        try {
-            new AuthenticationService(MySQLConnection.getConnection()).login(credential);
-            return SUCCESS;
-        } catch (Exception exception) {
-            System.err.println(exception);
-            return ERROR;
-        }
+        boolean isAuthenticated = new AuthenticationService(MySQLConnection.getConnection()).login(credential);
+        return isAuthenticated ? SUCCESS : ERROR;
     }
 
     public CredentialsModel getCredential() {
