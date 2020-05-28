@@ -2,6 +2,7 @@ package com.uqac.stablemanager.auth.service;
 
 import com.uqac.stablemanager.auth.model.CredentialsModel;
 import com.uqac.stablemanager.member.service.MemberService;
+import com.uqac.stablemanager.utils.PasswordManager;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -47,7 +48,7 @@ public class AuthenticationService {
             if (result.next()) {
                 String hashPass = result.getString("passwd");
                 String plainPass = credentials.getPassword();
-                boolean passwordMatches = BCrypt.checkpw(plainPass, hashPass);
+                boolean passwordMatches = PasswordManager.check(plainPass, hashPass);
                 if (passwordMatches) {
                     UserDetails user = new MemberService(connection).findByEmail(credentials.getEmail());
                     setSpringAuthentication(user);

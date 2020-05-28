@@ -1,18 +1,27 @@
 package com.uqac.stablemanager.member.action;
 
 import com.uqac.stablemanager.member.model.MemberModel;
+import com.uqac.stablemanager.member.service.MemberService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
+import com.uqac.stablemanager.utils.MySQLConnection;
 
 public class MemberProfileEditAction extends AuthenticatedAction {
 
     private String memberID;
     private MemberModel member;
-    private String newPassword;
 
     @Override
     public String execute() throws Exception {
-        member = getUser();
+        member = new MemberService(MySQLConnection.getConnection()).findById(memberID);
         return SUCCESS;
+    }
+
+    public String getMemberID() {
+        return memberID;
+    }
+
+    public void setMemberID(String memberID) {
+        this.memberID = memberID;
     }
 
     public MemberModel getMember() {
@@ -21,13 +30,5 @@ public class MemberProfileEditAction extends AuthenticatedAction {
 
     public void setMember(MemberModel member) {
         this.member = member;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
     }
 }

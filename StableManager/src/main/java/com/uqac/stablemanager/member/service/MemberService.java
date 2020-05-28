@@ -1,8 +1,8 @@
 package com.uqac.stablemanager.member.service;
 
-import com.uqac.stablemanager.member.model.AdminModel;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.utils.CommonDao;
+import com.uqac.stablemanager.utils.PasswordManager;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.Connection;
@@ -92,8 +92,22 @@ public class MemberService extends CommonDao<MemberModel> {
         return success;
     }
 
-    public boolean changePassword(MemberModel member, String newPassword) {
-        return true;
+    public boolean changePassword(String memberID, String newPassword) {
+        boolean success = false;
+        try{
+            String hashPassword = PasswordManager.hash(newPassword);
+            PreparedStatement statement = connection.prepareStatement("UPDATE ProfileMember SET " +
+                    "passwd=?" +
+                    "WHERE id = ?");
+            statement.setString(1, hashPassword);
+            statement.setString(2, memberID);
+            int res = statement.executeUpdate();
+            success = res == 1;
+            statement.close();
+        }catch (SQLException exception) {
+            System.err.println(exception);
+        }
+        return success;
     }
 
     public boolean delete(String id) {
