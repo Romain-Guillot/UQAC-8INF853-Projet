@@ -8,7 +8,7 @@
     <constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
     <constant name="struts.patternMatcher" value="regex" />
 
-    <package name="basicstruts2" extends="struts-default">
+    <package name="basicstruts2" namespace="/" extends="struts-default">
         <action name="index" class="com.uqac.stablemanager.homepage.HomePageAction">
             <result>/index.jsp</result>
         </action>

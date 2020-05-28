@@ -9,10 +9,13 @@
     </head>
     <body>
         <div id="page-header">
+            <div>
+                <p><a href="<s:url action='index' namespace="/"/>">StableManager</a></p>
+            </div>
             <p>
                 <s:set value="user.id" var="userID"/>
-                <a href="<s:url action='perform_logout'/>">Logout</a> |
-                <a href="<s:url action='member/view/%{#userID}'/>">My Account</a> |
+                <a href="<s:url action='perform_logout' namespace="auth"/>">Logout</a> |
+                <a href="<s:url action='view/%{#userID}' namespace="member"/>">My Account</a> |
             </p>
         </div>
         <div id="page-body">
