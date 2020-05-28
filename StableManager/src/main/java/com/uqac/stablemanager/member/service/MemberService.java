@@ -43,6 +43,8 @@ public class MemberService extends CommonDao<MemberModel> {
         member.setLastName(result.getString("last_name"));
         member.setBirthDate(result.getDate("birth_date"));
         member.setRegisterAt(result.getDate("register_at"));
+        member.setPassword(result.getString("passwd"));
+        member.setPostalAddress(result.getString("postal_address"));
 //        boolean isAdmin = result.getBoolean("isAdmin");
 //        if (isAdmin) {
 //            member = new AdminModel(member);
@@ -65,8 +67,33 @@ public class MemberService extends CommonDao<MemberModel> {
         return member;
     }
 
-    public boolean update(String id) {
-        throw new NotImplementedException();
+    public boolean update(MemberModel member) {
+        boolean success = false;
+        try{
+            PreparedStatement statement = connection.prepareStatement("UPDATE ProfileMember SET " +
+                    "first_name=?," +
+                    "last_name=?," +
+                    "email=?," +
+                    "birth_date=?," +
+                    "postal_address=? " +
+                    "WHERE id = ?");
+            statement.setString(1, member.getFirstName());
+            statement.setString(2, member.getLastName());
+            statement.setString(3, member.getEmail());
+            statement.setDate(4, new java.sql.Date(member.getBirthDate().getTime()));
+            statement.setString(5, member.getPostalAddress());
+            statement.setString(6, member.getId());
+            int res = statement.executeUpdate();
+            success = res == 1;
+            statement.close();
+        }catch (SQLException exception) {
+            System.err.println(exception);
+        }
+        return success;
+    }
+
+    public boolean changePassword(MemberModel member, String newPassword) {
+        return true;
     }
 
     public boolean delete(String id) {

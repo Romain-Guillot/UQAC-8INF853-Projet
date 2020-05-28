@@ -10,8 +10,14 @@
             <result name="success">/member_view.jsp</result>
         </action>
 
-<!--        <action name="myprofile" class="com.uqac.stablemanager.auth.action.LoginAction" method="execute">-->
-<!--            <result name="success" type="redirectAction"></result>-->
-<!--        </action>-->
+        <action name="edit/{memberID}" class="com.uqac.stablemanager.member.action.MemberProfileEditAction" method="execute">
+            <result name="success">/member_edit.jsp</result>
+        </action>
+
+        <action name="perform_edit" class="com.uqac.stablemanager.member.action.MemberProfilePerformEditAction" method="execute">
+            <result name="success" type="redirectAction">
+                <param name="actionName">edit/${member.id}</param>
+            </result>
+        </action>
     </package>
 </struts>

@@ -6,6 +6,12 @@
 
     <t:pagedescription title="Employés > Profile > ${user.id}" />
 
+
+    <s:if test="user.id == member.id">
+        <s:set value="user.id" var="userID"/>
+        <p><a href="<s:url action='edit/%{#userID}' namespace="/member"/>">Modifier</a></p>
+    </s:if>
+
     First name: <s:property value="member.firstName"/><br>
     Last name: <s:property value="member.lastName"/><br>
     Email: <s:property value="member.email"/><br>

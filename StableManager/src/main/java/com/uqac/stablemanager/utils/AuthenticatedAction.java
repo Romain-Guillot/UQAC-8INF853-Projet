@@ -2,6 +2,7 @@ package com.uqac.stablemanager.utils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.uqac.stablemanager.member.model.MemberModel;
+import com.uqac.stablemanager.member.service.MemberService;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextImpl;
@@ -13,7 +14,8 @@ public abstract class AuthenticatedAction extends ActionSupport implements Sessi
     private Authentication authentication;
 
     public MemberModel getUser() {
-        return (MemberModel) authentication.getPrincipal();
+        String userID = ((MemberModel) authentication.getPrincipal()).getId();
+        return new MemberService(MySQLConnection.getConnection()).findById(userID);
     }
 
     @Override
