@@ -19,16 +19,35 @@ public class MemberService extends CommonDao<MemberModel> {
     }
 
     public MemberModel findById(String id) {
+        MemberModel member = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ? WHERE id = ?");
-            statement.setString(1, TABLE);
-            statement.setString(2, id);
-            statement.execute();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProfileMember WHERE id = ?");
+            statement.setString(1, id);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                member = buildMemberFromResultSet(result);
+            }
             statement.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        throw new NotImplementedException();
+        return member;
+
+    }
+
+    private MemberModel buildMemberFromResultSet(ResultSet result) throws SQLException {
+        MemberModel member = new MemberModel();
+        member.setId(result.getString("id"));
+        member.setEmail(result.getString("email"));
+        member.setFirstName(result.getString("first_name"));
+        member.setLastName(result.getString("last_name"));
+        member.setBirthDate(result.getDate("birth_date"));
+        member.setRegisterAt(result.getDate("register_at"));
+//        boolean isAdmin = result.getBoolean("isAdmin");
+//        if (isAdmin) {
+//            member = new AdminModel(member);
+//        }
+        return member;
     }
 
     public MemberModel findByEmail(String email) {
@@ -38,16 +57,7 @@ public class MemberService extends CommonDao<MemberModel> {
             statement.setString(1, email);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                member = new MemberModel();
-                member.setEmail(result.getString("email"));
-                member.setFirstName(result.getString("first_name"));
-                member.setLastName(result.getString("last_name"));
-                member.setBirthDate(result.getDate("birth_date"));
-                member.setRegisterAt(result.getDate("register_at"));
-                boolean isAdmin = result.getBoolean("isAdmin");
-                if (isAdmin) {
-                    member = new AdminModel(member);
-                }
+                member = buildMemberFromResultSet(result);
             }
         } catch (SQLException exception) {
             System.err.println(exception);

@@ -9,8 +9,10 @@
     <h1>Login</h1>
 
     <s:form action="perform_login">
-        <s:textfield name="credential.email" label="Email" />
-        <s:textfield name="credential.password" label="Password" />
+        <s:textfield name="credential.email" label="Email" value="jmyatt0@sfgate.com"/>
+        <s:textfield name="credential.password" label="Password" value="pass" />
+<%--        <s:password name="credential.password" label="Password" />--%>
+
         <s:submit/>
     </s:form>
 </body>

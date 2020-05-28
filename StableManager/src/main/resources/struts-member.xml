@@ -5,7 +5,13 @@
 <struts>
     <constant name="struts.devMode" value="true" />
 
-    <package name="member" namespace="/" extends="struts-default">
+    <package name="member" namespace="/member" extends="struts-default">
+        <action name="view/{memberID}" class="com.uqac.stablemanager.member.action.MemberProfileViewAction" method="execute">
+            <result name="success">/member_view.jsp</result>
+        </action>
 
+<!--        <action name="myprofile" class="com.uqac.stablemanager.auth.action.LoginAction" method="execute">-->
+<!--            <result name="success" type="redirectAction"></result>-->
+<!--        </action>-->
     </package>
 </struts>

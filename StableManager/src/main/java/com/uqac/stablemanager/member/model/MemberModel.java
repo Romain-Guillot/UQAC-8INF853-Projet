@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 
 public class MemberModel implements UserDetails {
+    private String id;
     private String firstName;
     private String lastName;
     private String email;
@@ -18,6 +19,7 @@ public class MemberModel implements UserDetails {
     public MemberModel() { }
 
     public MemberModel(MemberModel member) {
+        id = member.id;
         firstName = member.firstName;
         lastName = member.lastName;
         email = member.email;
@@ -30,6 +32,14 @@ public class MemberModel implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override
