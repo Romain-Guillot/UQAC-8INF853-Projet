@@ -11,9 +11,12 @@
   <h2>Employés</h2>
   <ul>
     <li><a href="<s:url action='list' namespace="/member"/>">Voir tous</a></li>
-    <li><a href="">Secretariat</a></li>
-    <li><a href="">Palfeniers</a></li>
-    <li><a href="">Manager</a></li>
+    <s:iterator value="roles">
+      <s:url action="list"  var="url" includeParams="get" namespace="/member">
+        <s:param name="selectedRole">${name}</s:param>
+      </s:url>
+      <li><a href="${url}" >${name}</a></li>
+    </s:iterator>
     <li><a href="<s:url action='create' namespace="/member"/>">Création</a></li>
   </ul>
 

@@ -3,25 +3,22 @@ package com.uqac.stablemanager.member.action;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.model.RoleModel;
 import com.uqac.stablemanager.member.service.MemberService;
+import com.uqac.stablemanager.member.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import com.uqac.stablemanager.utils.MySQLConnection;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MemberListAction extends AuthenticatedAction {
 
     private List<RoleModel> roles;
-    private RoleModel selectedRole;
+    private String selectedRole;
 
     private List<MemberModel> members;
 
     @Override
-    public String execute() throws Exception {
-        roles = new ArrayList<>();
-        roles.add(new RoleModel("Secretaire"));
-        roles.add(new RoleModel("Palfrenier"));
-
+    public String execute() {
+        roles = new RoleService(MySQLConnection.getConnection()).list();
         members = new MemberService(MySQLConnection.getConnection()).list();
         return SUCCESS;
     }
@@ -34,11 +31,11 @@ public class MemberListAction extends AuthenticatedAction {
         this.roles = roles;
     }
 
-    public RoleModel getSelectedRole() {
+    public String getSelectedRole() {
         return selectedRole;
     }
 
-    public void setSelectedRole(RoleModel selectedRole) {
+    public void setSelectedRole(String selectedRole) {
         this.selectedRole = selectedRole;
     }
 

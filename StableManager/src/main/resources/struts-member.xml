@@ -57,5 +57,12 @@
             <result name="success">/member_list.jsp</result>
         </action>
 
+        <action name="list_applyfilter" class="com.uqac.stablemanager.member.action.MemberListAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">list</param>
+                <param name="selectedRole">${selectedRole}</param>
+            </result>
+        </action>
+
     </package>
 </struts>

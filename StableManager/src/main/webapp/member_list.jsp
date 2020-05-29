@@ -5,13 +5,16 @@
 <t:basepage pageTitle="StableManager">
 
     <t:pagedescription title="Employés" >
-        <s:select label="Filtrer par rôle"
-                  name="selectedRole"
-                  list="roles"
-                  listKey="name"
-                  listValue="name"
-                  value="%{selectedRole}"
-        />
+        <s:form action="list_applyfilter" namespace="/member">
+            <s:select label="Filtrer par rôle"
+                      name="selectedRole"
+                      list="roles"
+                      listKey="name"
+                      listValue="name"
+                      value="%{selectedRole}"
+            />
+            <s:submit/>
+        </s:form>
     </t:pagedescription>
 
     <ul>
