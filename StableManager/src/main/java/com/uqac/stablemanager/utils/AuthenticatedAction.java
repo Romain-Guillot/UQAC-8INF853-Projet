@@ -14,7 +14,7 @@ public abstract class AuthenticatedAction extends ActionSupport implements Sessi
     private Authentication authentication;
 
     public MemberModel getUser() {
-        String userID = ((MemberModel) authentication.getPrincipal()).getId();
+        int userID = ((MemberModel) authentication.getPrincipal()).getId();
         return new MemberService(MySQLConnection.getConnection()).findById(userID);
     }
 

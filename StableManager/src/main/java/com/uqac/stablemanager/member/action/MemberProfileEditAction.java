@@ -7,7 +7,7 @@ import com.uqac.stablemanager.utils.MySQLConnection;
 
 public class MemberProfileEditAction extends AuthenticatedAction {
 
-    private String memberID;
+    private int memberID;
     private MemberModel member;
 
     @Override
@@ -16,11 +16,11 @@ public class MemberProfileEditAction extends AuthenticatedAction {
         return SUCCESS;
     }
 
-    public String getMemberID() {
+    public int getMemberID() {
         return memberID;
     }
 
-    public void setMemberID(String memberID) {
+    public void setMemberID(int memberID) {
         this.memberID = memberID;
     }
 

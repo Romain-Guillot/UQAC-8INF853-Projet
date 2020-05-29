@@ -5,10 +5,8 @@ import com.uqac.stablemanager.utils.CommonDao;
 import com.uqac.stablemanager.utils.PasswordManager;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Calendar;
 import java.util.List;
 
 public class MemberService extends CommonDao<MemberModel> {
@@ -18,11 +16,11 @@ public class MemberService extends CommonDao<MemberModel> {
         super(connection);
     }
 
-    public MemberModel findById(String id) {
+    public MemberModel findById(int id) {
         MemberModel member = null;
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProfileMember WHERE id = ?");
-            statement.setString(1, id);
+            statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
                 member = buildMemberFromResultSet(result);
@@ -32,12 +30,11 @@ public class MemberService extends CommonDao<MemberModel> {
             exception.printStackTrace();
         }
         return member;
-
     }
 
     private MemberModel buildMemberFromResultSet(ResultSet result) throws SQLException {
         MemberModel member = new MemberModel();
-        member.setId(result.getString("id"));
+        member.setId(result.getInt("id"));
         member.setEmail(result.getString("email"));
         member.setFirstName(result.getString("first_name"));
         member.setLastName(result.getString("last_name"));
@@ -82,7 +79,7 @@ public class MemberService extends CommonDao<MemberModel> {
             statement.setString(3, member.getEmail());
             statement.setDate(4, new java.sql.Date(member.getBirthDate().getTime()));
             statement.setString(5, member.getPostalAddress());
-            statement.setString(6, member.getId());
+            statement.setInt(6, member.getId());
             int res = statement.executeUpdate();
             success = res == 1;
             statement.close();
@@ -92,7 +89,7 @@ public class MemberService extends CommonDao<MemberModel> {
         return success;
     }
 
-    public boolean changePassword(String memberID, String newPassword) {
+    public boolean changePassword(int memberID, String newPassword) {
         boolean success = false;
         try{
             String hashPassword = PasswordManager.hash(newPassword);
@@ -100,7 +97,7 @@ public class MemberService extends CommonDao<MemberModel> {
                     "passwd=?" +
                     "WHERE id = ?");
             statement.setString(1, hashPassword);
-            statement.setString(2, memberID);
+            statement.setInt(2, memberID);
             int res = statement.executeUpdate();
             success = res == 1;
             statement.close();
@@ -112,6 +109,40 @@ public class MemberService extends CommonDao<MemberModel> {
 
     public boolean delete(String id) {
         throw new NotImplementedException();
+    }
+
+    public boolean create(MemberModel member) {
+        boolean success = false;
+        try{
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO ProfileMember" +
+                    "(first_name, last_name, email, postal_address, birth_date, register_at, passwd)" +
+                    "VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, member.getFirstName());
+            statement.setString(2, member.getLastName());
+            statement.setString(3, member.getEmail());
+            statement.setString(4, member.getPostalAddress());
+            if (member.getBirthDate() != null) {
+                statement.setDate(5, new java.sql.Date(member.getBirthDate().getTime()));
+            } else {
+                statement.setDate(5, null);
+            }
+            long now = Calendar.getInstance().getTime().getTime();
+            statement.setDate(6, new java.sql.Date(now));
+            statement.setString(7, member.getPostalAddress());
+            int res = statement.executeUpdate();
+            if (res == 1) {
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        member.setId(generatedKeys.getInt(1));
+                        success = true;
+                    }
+                }
+            }
+            statement.close();
+        }catch (SQLException exception) {
+            System.err.println(exception);
+        }
+        return success;
     }
 
     public List<MemberModel> list() {

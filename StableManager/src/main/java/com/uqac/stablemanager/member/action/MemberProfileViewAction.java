@@ -10,7 +10,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.Map;
 
 public class MemberProfileViewAction extends AuthenticatedAction {
-    private String memberID;
+    private int memberID;
     private MemberModel member;
 
     @Override
@@ -27,11 +27,11 @@ public class MemberProfileViewAction extends AuthenticatedAction {
         this.member = member;
     }
 
-    public String getMemberID() {
+    public int getMemberID() {
         return memberID;
     }
 
-    public void setMemberID(String memberID) {
+    public void setMemberID(int memberID) {
         this.memberID = memberID;
     }
 }

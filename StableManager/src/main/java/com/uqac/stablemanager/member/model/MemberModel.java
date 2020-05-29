@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 
 public class MemberModel implements UserDetails {
-    private String id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
@@ -34,11 +34,11 @@ public class MemberModel implements UserDetails {
         return null;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

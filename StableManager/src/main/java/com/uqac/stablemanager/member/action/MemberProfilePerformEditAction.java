@@ -6,7 +6,7 @@ import com.uqac.stablemanager.utils.AuthenticatedAction;
 import com.uqac.stablemanager.utils.MySQLConnection;
 
 public class MemberProfilePerformEditAction extends AuthenticatedAction {
-    private String memberID;
+    private int memberID;
     private MemberModel member;
     private String newPassword;
 
@@ -38,11 +38,11 @@ public class MemberProfilePerformEditAction extends AuthenticatedAction {
         this.newPassword = newPassword;
     }
 
-    public void setMemberID(String memberID) {
+    public void setMemberID(int memberID) {
         this.memberID = memberID;
     }
 
-    public String getMemberID() {
+    public int getMemberID() {
         return memberID;
     }
 }

@@ -14,6 +14,7 @@
     <li><a href="">Secretariat</a></li>
     <li><a href="">Palfeniers</a></li>
     <li><a href="">Manager</a></li>
+    <li><a href="<s:url action='create' namespace="/member"/>">Création</a></li>
   </ul>
 
   <h2>Ressources</h2>
