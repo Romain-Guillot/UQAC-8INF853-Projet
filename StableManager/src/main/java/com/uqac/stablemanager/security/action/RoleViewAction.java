@@ -13,7 +13,7 @@ public class RoleViewAction extends AuthenticatedAction {
     @Override
     public String execute() {
         role = new RoleService(MySQLConnection.getConnection()).findByName(roleName);
-        return SUCCESS;
+        return role != null ? SUCCESS : ERROR;
     }
 
     public String getRoleName() {
