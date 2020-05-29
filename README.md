@@ -11,10 +11,10 @@
 - [GlassFish 5.0.1](https://javaee.github.io/glassfish/download)
 - [IntelliJ IDEA 2020.1.1 ULTIMATE](https://www.jetbrains.com/idea/download/#section=linux)
 
-Les dépendances aux librairies externes sont gérées via Maven (installation automatique) :
-- `struts2-core`: 2.5.22
-- `log4j-api`: 2.13.3
-- `log4j-core`: 2.13.3
+Les dépendances aux librairies externes sont gérées via Maven (installation automatique). Nous utilisons en particulier les technologies suivantes :
+- `Apache Struts2`
+- `Spring Security`
+- `MySQL`
 
 ## User stories
 - [ ] Employés
