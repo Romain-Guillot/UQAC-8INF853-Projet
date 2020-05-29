@@ -8,6 +8,7 @@ import com.uqac.stablemanager.utils.MySQLConnection;
 public class MemberProfileCreationAction extends AuthenticatedAction {
 
     private MemberModel member;
+    private String passwordConfirmation;
 
     @Override
     public String execute() {
@@ -27,6 +28,12 @@ public class MemberProfileCreationAction extends AuthenticatedAction {
                 addFieldError("member.email", "Email already exists");
             }
         }
+        if (member.getPassword().isEmpty()) {
+            addFieldError("member.password", "Required");
+        }
+        if (!passwordConfirmation.equals(member.getPassword())) {
+            addFieldError("passwordConfirmation", "Les mots de passe de correspondent pas");
+        }
     }
 
     public MemberModel getMember() {
@@ -35,5 +42,13 @@ public class MemberProfileCreationAction extends AuthenticatedAction {
 
     public void setMember(MemberModel member) {
         this.member = member;
+    }
+
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
     }
 }

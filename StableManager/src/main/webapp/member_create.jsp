@@ -13,6 +13,8 @@
         <s:textfield name="member.email" label="Email" />
         <s:textfield name="member.postalAddress" label="Adresse postale" />
         <s:textfield name="member.birthDate" label="Date de naissance" />
+        <s:password name="member.password" label="Mot de passe" />
+        <s:password name="passwordConfirmation" label="Confirmer votre mot de passe" />
         <s:submit/>
     </s:form>
 
