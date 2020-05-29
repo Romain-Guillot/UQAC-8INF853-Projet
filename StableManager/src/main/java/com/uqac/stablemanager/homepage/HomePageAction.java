@@ -1,7 +1,7 @@
 package com.uqac.stablemanager.homepage;
 
-import com.uqac.stablemanager.member.model.RoleModel;
-import com.uqac.stablemanager.member.service.RoleService;
+import com.uqac.stablemanager.security.model.RoleModel;
+import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import com.uqac.stablemanager.utils.MySQLConnection;
 

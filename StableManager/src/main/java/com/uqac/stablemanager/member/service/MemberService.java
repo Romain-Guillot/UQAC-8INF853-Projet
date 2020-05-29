@@ -1,15 +1,14 @@
 package com.uqac.stablemanager.member.service;
 
 import com.uqac.stablemanager.member.model.MemberModel;
-import com.uqac.stablemanager.member.model.RoleModel;
+import com.uqac.stablemanager.security.model.RoleModel;
+import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.CommonDao;
 import com.uqac.stablemanager.utils.DatabaseHelper;
 import com.uqac.stablemanager.utils.MySQLConnection;
 import com.uqac.stablemanager.utils.PasswordManager;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.*;
-import java.sql.Date;
 import java.util.*;
 
 public class MemberService extends CommonDao<MemberModel> {

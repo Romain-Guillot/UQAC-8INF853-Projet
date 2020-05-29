@@ -1,6 +1,7 @@
-package com.uqac.stablemanager.member.service;
+package com.uqac.stablemanager.security.service;
 
-import com.uqac.stablemanager.member.model.RoleModel;
+import com.uqac.stablemanager.security.model.PermissionModel;
+import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.utils.CommonDao;
 import com.uqac.stablemanager.utils.DatabaseHelper;
 
@@ -37,10 +38,12 @@ public class RoleService extends CommonDao<RoleModel> {
         }
     }
 
-    public RoleModel buildRoleFromResultSet(ResultSet result) {
+    private RoleModel buildRoleFromResultSet(ResultSet result) {
         RoleModel role = new RoleModel();
         try {
             role.setName(result.getString("name"));
+            List<PermissionModel> permissions = new PermissionService(connection).listByRole(role);
+            role.setRights(permissions);
         } catch (SQLException exception) {
             System.err.println(exception);
         }

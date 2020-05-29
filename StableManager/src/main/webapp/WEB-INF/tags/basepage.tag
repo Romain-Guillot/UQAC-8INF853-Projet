@@ -14,7 +14,9 @@
             </div>
             <p>
                 <s:set value="user.id" var="userID"/>
+                <s:set value="user.role.name" var="roleName"/>
                 <a href="<s:url action='perform_logout' namespace="/auth"/>">Logout</a> |
+                <a href="<s:url action='role/view/%{#roleName}' namespace="/security"/>">${roleName}</a> |
                 <a href="<s:url action='view/%{#userID}' namespace="/member"/>">My Account</a> |
             </p>
         </div>

@@ -16,5 +16,6 @@
 
     <include file="struts-auth.xml"/>
     <include file="struts-member.xml"/>
+    <include file="struts-security.xml"/>
 
 </struts>

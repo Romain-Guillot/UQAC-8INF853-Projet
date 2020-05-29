@@ -1,6 +1,7 @@
-package com.uqac.stablemanager.member.model;
+package com.uqac.stablemanager.security.model;
 
-import javax.management.relation.Role;
+import com.uqac.stablemanager.security.model.PermissionModel;
+
 import java.util.List;
 
 public class RoleModel {

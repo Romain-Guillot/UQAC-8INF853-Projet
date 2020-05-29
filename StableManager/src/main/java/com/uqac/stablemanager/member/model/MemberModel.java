@@ -1,5 +1,6 @@
 package com.uqac.stablemanager.member.model;
 
+import com.uqac.stablemanager.security.model.RoleModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -33,7 +34,7 @@ public class MemberModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return role.getRights();
     }
 
     public void setId(int id) {
