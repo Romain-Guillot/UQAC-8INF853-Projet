@@ -7,7 +7,7 @@
 
     <package name="security" namespace="/security" extends="struts-default">
         <action name="role/view/{roleName}" class="com.uqac.stablemanager.security.action.RoleViewAction" method="execute">
-            <result name="success">/role_view.jsp</result>
+            <result name="success">/security/role_view.jsp</result>
         </action>
     </package>
 </struts>

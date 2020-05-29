@@ -7,7 +7,7 @@
 
     <package name="auth" namespace="/auth" extends="struts-default">
         <action name="login">
-            <result>/login.jsp</result>
+            <result>/auth/login.jsp</result>
         </action>
 
         <action name="perform_login" class="com.uqac.stablemanager.auth.action.LoginAction" method="execute">
