@@ -1,6 +1,7 @@
 package com.uqac.stablemanager.member.service;
 
 import com.uqac.stablemanager.member.model.MemberModel;
+import com.uqac.stablemanager.member.model.RoleModel;
 import com.uqac.stablemanager.utils.CommonDao;
 import com.uqac.stablemanager.utils.PasswordManager;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -158,15 +159,34 @@ public class MemberService extends CommonDao<MemberModel> {
         return success;
     }
 
+    private List<MemberModel> list(PreparedStatement statement) throws SQLException {
+        List<MemberModel> members = new ArrayList<>();
+        ResultSet result = statement.executeQuery();
+        while (result.next()) {
+            members.add(buildMemberFromResultSet(result));
+        }
+        return members;
+    }
+
     public List<MemberModel> list() {
         List<MemberModel> members = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProfileMember",
                     ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                members.add(buildMemberFromResultSet(result));
-            }
+            members = list(statement);
+        } catch (SQLException exception) {
+            System.err.println(exception);
+        }
+        return members;
+    }
+
+    public List<MemberModel> list(RoleModel roleFilter) {
+        List<MemberModel> members = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProfileMember WHERE role_name = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement.setString(1, roleFilter.getName());
+            members = list(statement);
         } catch (SQLException exception) {
             System.err.println(exception);
         }
