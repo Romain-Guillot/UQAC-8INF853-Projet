@@ -20,11 +20,11 @@
 
     <ul>
         <s:iterator value="members">
-            <s:set value="id" var="userID"/>
+            <s:set value="id" var="memberID"/>
             <li>
-                <a href="<s:url action='view/%{#userID}' namespace='/member'/> ">
+                <a href="<s:url action='view/%{#memberID}' namespace='/member'/> ">
                     <p>${firstName} ${lastName}</p>
-                    <p>${accountType}</p>
+                    <p>${accountType} - ${role.name}</p>
                 </a>
             </li>
         </s:iterator>

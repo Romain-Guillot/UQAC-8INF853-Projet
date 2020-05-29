@@ -15,6 +15,7 @@ public class MemberModel implements UserDetails {
     private Date registerAt;
     private Date birthDate;
     private String password;
+    private RoleModel role;
 
     public MemberModel() { }
 
@@ -27,6 +28,7 @@ public class MemberModel implements UserDetails {
         registerAt = member.registerAt;
         birthDate = member.birthDate;
         password = member.password;
+        role = member.role;
     }
 
     @Override
@@ -102,6 +104,14 @@ public class MemberModel implements UserDetails {
 
     public void setPostalAddress(String postalAddress) {
         this.postalAddress = postalAddress;
+    }
+
+    public RoleModel getRole() {
+        return role;
+    }
+
+    public void setRole(RoleModel role) {
+        this.role = role;
     }
 
     public String getAccountType() {

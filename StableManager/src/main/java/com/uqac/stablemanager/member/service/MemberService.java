@@ -3,13 +3,14 @@ package com.uqac.stablemanager.member.service;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.model.RoleModel;
 import com.uqac.stablemanager.utils.CommonDao;
+import com.uqac.stablemanager.utils.DatabaseHelper;
+import com.uqac.stablemanager.utils.MySQLConnection;
 import com.uqac.stablemanager.utils.PasswordManager;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 public class MemberService extends CommonDao<MemberModel> {
     private final static String TABLE = "Member";
@@ -19,51 +20,25 @@ public class MemberService extends CommonDao<MemberModel> {
     }
 
     public MemberModel findById(int id) {
-        MemberModel member = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProfileMember WHERE id = ?");
-            statement.setInt(1, id);
-            ResultSet result = statement.executeQuery();
-            if (result.next()) {
-                member = buildMemberFromResultSet(result);
-            }
-            statement.close();
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("id", id);
+            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).findBy("ProfileMember", condition);
         } catch (SQLException exception) {
             exception.printStackTrace();
+            return null;
         }
-        return member;
-    }
-
-    private MemberModel buildMemberFromResultSet(ResultSet result) throws SQLException {
-        MemberModel member = new MemberModel();
-        member.setId(result.getInt("id"));
-        member.setEmail(result.getString("email"));
-        member.setFirstName(result.getString("first_name"));
-        member.setLastName(result.getString("last_name"));
-        member.setBirthDate(result.getDate("birth_date"));
-        member.setRegisterAt(result.getDate("register_at"));
-        member.setPassword(result.getString("passwd"));
-        member.setPostalAddress(result.getString("postal_address"));
-//        boolean isAdmin = result.getBoolean("isAdmin");
-//        if (isAdmin) {
-//            member = new AdminModel(member);
-//        }
-        return member;
     }
 
     public MemberModel findByEmail(String email) {
-        MemberModel member = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProfileMember WHERE email = ?");
-            statement.setString(1, email);
-            ResultSet result = statement.executeQuery();
-            if (result.next()) {
-                member = buildMemberFromResultSet(result);
-            }
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("email", email);
+            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).findBy("ProfileMember", condition);
         } catch (SQLException exception) {
-            System.err.println(exception);
+            exception.printStackTrace();
+            return null;
         }
-        return member;
     }
 
     public boolean update(MemberModel member) {
@@ -169,15 +144,11 @@ public class MemberService extends CommonDao<MemberModel> {
     }
 
     public List<MemberModel> list() {
-        List<MemberModel> members = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProfileMember",
-                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            members = list(statement);
+            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).list("ProfileMember");
         } catch (SQLException exception) {
-            System.err.println(exception);
+            return null;
         }
-        return members;
     }
 
     public List<MemberModel> list(RoleModel roleFilter) {
@@ -191,5 +162,28 @@ public class MemberService extends CommonDao<MemberModel> {
             System.err.println(exception);
         }
         return members;
+    }
+
+    private MemberModel buildMemberFromResultSet(ResultSet result) {
+        MemberModel member = new MemberModel();
+        try {
+            member.setId(result.getInt("id"));
+            member.setEmail(result.getString("email"));
+            member.setFirstName(result.getString("first_name"));
+            member.setLastName(result.getString("last_name"));
+            member.setBirthDate(result.getDate("birth_date"));
+            member.setRegisterAt(result.getDate("register_at"));
+            member.setPassword(result.getString("passwd"));
+            member.setPostalAddress(result.getString("postal_address"));
+            RoleModel role = new RoleService(MySQLConnection.getConnection()).findByName(result.getString("role_name"));
+            member.setRole(role);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+//        boolean isAdmin = result.getBoolean("isAdmin");
+//        if (isAdmin) {
+//            member = new AdminModel(member);
+//        }
+        return member;
     }
 }
