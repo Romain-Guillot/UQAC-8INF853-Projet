@@ -9,11 +9,8 @@ import com.uqac.stablemanager.utils.MySQLConnection;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MemberListAction extends AuthenticatedAction {
-    private RoleModel defaultRole = new RoleModel("Tous les rôles");
     private List<RoleModel> roles;
     private String selectedRole;
 
@@ -23,7 +20,7 @@ public class MemberListAction extends AuthenticatedAction {
     public String execute() {
         roles = new RoleService(MySQLConnection.getConnection()).list();
         Optional<RoleModel> selectedRoleModel = roles.stream().filter(r -> r.getName().equals(selectedRole)).findFirst();
-        if (selectedRoleModel.isPresent() && selectedRoleModel.get() != defaultRole) {
+        if (selectedRoleModel.isPresent()) {
             members = new MemberService(MySQLConnection.getConnection()).list(selectedRoleModel.get());
         } else {
             members = new MemberService(MySQLConnection.getConnection()).list();
@@ -32,8 +29,7 @@ public class MemberListAction extends AuthenticatedAction {
     }
 
     public List<RoleModel> getRoles() {
-        return Stream.concat(Stream.of(defaultRole), roles.stream())
-                .collect(Collectors.toList());
+        return roles;
     }
 
     public String getSelectedRole() {
@@ -41,8 +37,7 @@ public class MemberListAction extends AuthenticatedAction {
     }
 
     public void setSelectedRole(String selectedRole) {
-        if (!selectedRole.equals(defaultRole.getName()))
-            this.selectedRole = selectedRole;
+        this.selectedRole = selectedRole;
     }
 
     public List<MemberModel> getMembers() {

@@ -11,6 +11,7 @@
                       list="roles"
                       listKey="name"
                       listValue="name"
+                      emptyOption="true"
                       value="%{selectedRole}"
             />
             <s:submit/>
