@@ -107,8 +107,19 @@ public class MemberService extends CommonDao<MemberModel> {
         return success;
     }
 
-    public boolean delete(String id) {
-        throw new NotImplementedException();
+    public boolean delete(int id) {
+        boolean success = false;
+        try{
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM ProfileMember " +
+                    "WHERE id = ?");
+            statement.setInt(1, id);
+            int res = statement.executeUpdate();
+            success = res == 1;
+            statement.close();
+        }catch (SQLException exception) {
+            System.err.println(exception);
+        }
+        return success;
     }
 
     public boolean create(MemberModel member) {
