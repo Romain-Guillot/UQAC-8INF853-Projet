@@ -1,12 +1,11 @@
 package com.uqac.stablemanager.auth.model;
 
 
-public class CredentialModel {
-    
+public class CredentialsModel {
     private String email;
     private String password;
     
-    public CredentialModel() { }
+    public CredentialsModel() { }
 
     public String getEmail() {
         return email;
@@ -22,5 +21,13 @@ public class CredentialModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "CredentialsModel{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

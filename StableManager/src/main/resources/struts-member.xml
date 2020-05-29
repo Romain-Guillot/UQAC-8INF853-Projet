@@ -5,7 +5,46 @@
 <struts>
     <constant name="struts.devMode" value="true" />
 
-    <package name="member" namespace="/" extends="struts-default">
+    <package name="member" namespace="/member" extends="struts-default">
+        <action name="view/{memberID}" class="com.uqac.stablemanager.member.action.MemberProfileViewAction" method="execute">
+            <result name="success">/member_view.jsp</result>
+        </action>
+
+        <action name="edit/{memberID}" class="com.uqac.stablemanager.member.action.MemberProfileEditAction" method="execute">
+            <result name="success">/member_edit.jsp</result>
+        </action>
+
+        <action name="perform_edit/{memberID}" class="com.uqac.stablemanager.member.action.MemberProfilePerformEditAction" method="execute">
+            <result name="success" type="redirectAction">
+                <param name="actionName">edit/{1}</param>
+                <param name="memberID">{1}</param>
+            </result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">edit/{1}</param>
+                <param name="memberID">{1}</param>
+            </result>
+        </action>
+
+        <action name="perform_changepassword/{memberID}" class="com.uqac.stablemanager.member.action.MemberProfilePerformEditAction" method="updatePassword">
+            <result name="success" type="redirectAction">
+                <param name="actionName">edit/{1}</param>
+            </result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">edit/{1}</param>
+            </result>
+        </action>
+
+        <action name="create">
+            <result name="success">/member_create.jsp</result>
+        </action>
+
+        <action name="perform_create" class="com.uqac.stablemanager.member.action.MemberProfileCreationAction" method="execute">
+            <result name="success" type="redirectAction">
+                <param name="actionName">view/${member.id}</param>
+            </result>
+            <result name="error">/member_create.jsp</result>
+            <result name="input">/member_create.jsp</result>
+        </action>
 
     </package>
 </struts>
