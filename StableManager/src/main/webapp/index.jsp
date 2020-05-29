@@ -21,6 +21,12 @@
     <li><a href="<s:url action='create' namespace="/member"/>">Création</a></li>
   </ul>
 
+  <h2>Sécurité</h2>
+  <ul>
+    <li><a href="<s:url action='role/list' namespace="/security"/>">Rôles</a></li>
+    <li><a href="">Créer un nouveau rôle</a></li>
+  </ul>
+
   <h2>Ressources</h2>
   <ul>
     <li><a href="">Voir tous</a></li>
