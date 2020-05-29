@@ -2,14 +2,8 @@ package com.uqac.stablemanager.utils;
 
 import com.uqac.stablemanager.member.model.MemberModel;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.sql.*;
+import java.util.*;
 import java.util.function.Function;
 
 public class DatabaseHelper<T> {
@@ -25,10 +19,7 @@ public class DatabaseHelper<T> {
         T model = null;
         String whereClause = buildWhereClause(condition.keySet());
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + whereClause);
-        int index = 1;
-        for (Object whereValue : condition.values()) {
-            statement.setObject(index++, whereValue);
-        }
+        buildStatementWithConditionValues(statement, condition.values());
         ResultSet result = statement.executeQuery();
         if (result.next()) {
             model = modelBuilder.apply(result);
@@ -37,16 +28,34 @@ public class DatabaseHelper<T> {
         return model;
     }
 
-    public List<T> list(String table) throws SQLException {
+    private List<T> list(PreparedStatement statement) throws SQLException {
         List<T> models = new ArrayList<>();
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table,
-                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        models = new ArrayList<>();
         ResultSet result = statement.executeQuery();
         while (result.next()) {
             models.add(modelBuilder.apply(result));
-        };
+        }
         return models;
+    }
+
+    public List<T> list(String table) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table,
+                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        return list(statement);
+    }
+
+    public List<T> list(String table, Map<String, Object> condition) throws SQLException {
+        String whereClause = buildWhereClause(condition.keySet());
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + whereClause,
+                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        buildStatementWithConditionValues(statement, condition.values());
+        return list(statement);
+    }
+
+    private void buildStatementWithConditionValues(PreparedStatement statement, Collection<Object> conditionValues) throws SQLException {
+        int index = 1;
+        for (Object whereValue : conditionValues) {
+            statement.setObject(index++, whereValue);
+        }
     }
 
     private String buildWhereClause(Set<String> columns) {

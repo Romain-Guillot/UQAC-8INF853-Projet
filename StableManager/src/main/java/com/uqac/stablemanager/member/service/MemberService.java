@@ -134,14 +134,6 @@ public class MemberService extends CommonDao<MemberModel> {
         return success;
     }
 
-    private List<MemberModel> list(PreparedStatement statement) throws SQLException {
-        List<MemberModel> members = new ArrayList<>();
-        ResultSet result = statement.executeQuery();
-        while (result.next()) {
-            members.add(buildMemberFromResultSet(result));
-        }
-        return members;
-    }
 
     public List<MemberModel> list() {
         try {
@@ -152,16 +144,13 @@ public class MemberService extends CommonDao<MemberModel> {
     }
 
     public List<MemberModel> list(RoleModel roleFilter) {
-        List<MemberModel> members = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProfileMember WHERE role_name = ?",
-                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            statement.setString(1, roleFilter.getName());
-            members = list(statement);
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("role_name", roleFilter.getName());
+            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).list("ProfileMember", condition);
         } catch (SQLException exception) {
-            System.err.println(exception);
+            return null;
         }
-        return members;
     }
 
     private MemberModel buildMemberFromResultSet(ResultSet result) {
