@@ -140,7 +140,8 @@ public class MemberService extends CommonDao<MemberModel> {
             }
             long now = Calendar.getInstance().getTime().getTime();
             statement.setDate(6, new java.sql.Date(now));
-            statement.setString(7, member.getPostalAddress());
+            String hashPassword = PasswordManager.hash(member.getPassword());
+            statement.setString(7, hashPassword);
             int res = statement.executeUpdate();
             if (res == 1) {
                 try (ResultSet generatedKeys = statement.getGeneratedKeys()) {

@@ -12,7 +12,8 @@
   <ul>
     <li><a href="<s:url action='list' namespace="/member"/>">Voir tous</a></li>
     <s:iterator value="roles">
-      <s:url action="list"  var="url" includeParams="get" namespace="/member">
+      <s:url action="list"  var="url"
+             includeParams="get" namespace="/member">
         <s:param name="selectedRole">${name}</s:param>
       </s:url>
       <li><a href="${url}" >${name}</a></li>
