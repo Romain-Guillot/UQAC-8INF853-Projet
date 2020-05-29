@@ -14,4 +14,9 @@ public class AdminModel extends MemberModel {
     public AdminModel(MemberModel member) {
         super(member);
     }
+
+    @Override
+    public String getAccountType() {
+        return "Admin";
+    }
 }

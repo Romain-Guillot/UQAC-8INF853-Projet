@@ -6,6 +6,7 @@ import com.uqac.stablemanager.utils.PasswordManager;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -157,6 +158,17 @@ public class MemberService extends CommonDao<MemberModel> {
     }
 
     public List<MemberModel> list() {
-        throw new NotImplementedException();
+        List<MemberModel> members = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProfileMember",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                members.add(buildMemberFromResultSet(result));
+            }
+        } catch (SQLException exception) {
+            System.err.println(exception);
+        }
+        return members;
     }
 }

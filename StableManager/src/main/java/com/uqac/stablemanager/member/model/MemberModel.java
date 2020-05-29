@@ -104,6 +104,10 @@ public class MemberModel implements UserDetails {
         this.postalAddress = postalAddress;
     }
 
+    public String getAccountType() {
+        return "Membre";
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return false;
