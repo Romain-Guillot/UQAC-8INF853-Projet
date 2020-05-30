@@ -6,10 +6,12 @@ import com.uqac.stablemanager.member.service.MemberService;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import com.uqac.stablemanager.utils.MySQLConnection;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Optional;
 
+@PreAuthorize("hasAuthority('READ_ALL_PROFILES')")
 public class MemberListAction extends AuthenticatedAction {
     private List<RoleModel> roles;
     private String selectedRole;

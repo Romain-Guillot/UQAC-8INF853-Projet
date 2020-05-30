@@ -6,14 +6,14 @@
                 http://www.springframework.org/schema/security
                 http://www.springframework.org/schema/security/spring-security-5.3.xsd">
 
-    <global-method-security pre-post-annotations="enabled"/>
-    <http>
+    <global-method-security secured-annotations="enabled" pre-post-annotations="enabled" proxy-target-class = "true" />
+    <http auto-config='true'>
         <csrf disabled="true"/>
 
         <intercept-url pattern="/auth/login*" access="isAnonymous()"/>
         <intercept-url pattern="/auth/perform_login*" access="isAnonymous()"/>
-
         <intercept-url pattern="/**" access="isAuthenticated()" />
+
 
         <!--        <access-denied-handler error-page="/accessDenied"/>-->
 

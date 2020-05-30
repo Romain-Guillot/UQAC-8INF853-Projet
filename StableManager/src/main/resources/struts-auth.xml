@@ -5,7 +5,8 @@
 <struts>
     <constant name="struts.devMode" value="true" />
 
-    <package name="auth" namespace="/auth" extends="struts-default">
+    <package name="auth" namespace="/auth" extends="default">
+
         <action name="login">
             <result>/auth/login.jsp</result>
         </action>

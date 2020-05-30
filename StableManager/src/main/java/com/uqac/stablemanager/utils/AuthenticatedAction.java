@@ -11,6 +11,10 @@ import java.util.Map;
 
 public abstract class AuthenticatedAction extends ActionSupport implements SessionAware {
 
+    String ERROR_NOTFOUND = "error_notfound";
+    String ERROR_PERMISSION_MISSING = "error_permission_missing";
+    String ERROR_DATABASE = "error_database";
+
     private Authentication authentication;
 
     public MemberModel getUser() {
