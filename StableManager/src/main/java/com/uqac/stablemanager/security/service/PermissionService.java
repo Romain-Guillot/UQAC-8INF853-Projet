@@ -5,10 +5,7 @@ import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.utils.CommonDao;
 import com.uqac.stablemanager.utils.DatabaseHelper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +30,26 @@ public class PermissionService  extends CommonDao<PermissionModel> {
         } catch (SQLException exception) {
             System.err.println(exception);
             return null;
+        }
+    }
+
+    public boolean updateRolePermissions(RoleModel role) {
+        try {
+            PreparedStatement st = connection.prepareStatement("insert ignore into RolePermissionAssoc values(?,?)" );
+            connection.setAutoCommit(false);
+            for (PermissionModel permission : role.getRights()) {
+                st.setString(1, role.getName());
+                st.setString(2, permission.getName());
+                st.executeUpdate();
+            }
+            connection.commit();
+            st.close();
+            connection.setAutoCommit(true);
+            return true;
+        } catch (SQLException exception) {
+            System.out.println(exception);
+            try {connection.setAutoCommit(true); connection.rollback();} catch (SQLException e) { }
+            return false;
         }
     }
 

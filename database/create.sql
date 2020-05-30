@@ -23,7 +23,7 @@ CREATE TABLE RolePermissionAssoc (
     role_name VARCHAR(255) NOT NULL,
     permission_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (role_name, permission_name),
-    FOREIGN KEY (role_name) REFERENCES Role(name),
+    FOREIGN KEY (role_name) REFERENCES Role(name) ON DELETE CASCADE,
     FOREIGN KEY (permission_name) REFERENCES Permission(name)
 );
 

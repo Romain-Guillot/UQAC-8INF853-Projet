@@ -8,6 +8,7 @@
 
     ${roleName}
 
+    <h2>Information générales</h2>
     <s:form action="perform_edition" method="post">
         <s:hidden name="roleName" value="%{roleName}"/>
 
@@ -26,5 +27,6 @@
 
         <s:submit />
     </s:form>
+
 
 </t:basepage>

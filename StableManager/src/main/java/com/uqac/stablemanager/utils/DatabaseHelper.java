@@ -77,6 +77,28 @@ public class DatabaseHelper<T> {
         return res == 1;
     }
 
+    public Object create(String table, Map<String, Object> values)  throws SQLException {
+        Object key = null;
+        String columnNames = String.join(",", values.keySet());
+        String tokens = String.join(",", Collections.nCopies(values.size(), "?"));
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO " + table +
+                "(" + columnNames + ") " +
+                "VALUES(" + tokens + ")", Statement.RETURN_GENERATED_KEYS);
+        buildStatementWithConditionValues(statement, values.values());
+        int res = statement.executeUpdate();
+        if (res == 1) {
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    key = generatedKeys.getObject(1);
+                }
+            }
+        }
+        statement.close();
+        return key;
+    }
+
+
+
     private void buildStatementWithConditionValues(PreparedStatement statement, Collection<Object> conditionValues) throws SQLException {
         int index = 1;
         for (Object whereValue : conditionValues) {

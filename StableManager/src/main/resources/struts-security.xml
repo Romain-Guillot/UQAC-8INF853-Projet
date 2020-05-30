@@ -34,14 +34,12 @@
 
         <action name="role/perform_edition" class="com.uqac.stablemanager.security.action.RoleEditionAction" method="execute">
             <result name="success" type="redirectAction">
-                <param name="actionName">role/view/${roleName}</param>
+                <param name="actionName">role/view/${role.name}</param>
             </result>
             <result name="error">
                 <param name="location">/error404.jsp</param>
                 <param name="namespace">/</param>
             </result>
         </action>
-        
-        
     </package>
 </struts>
