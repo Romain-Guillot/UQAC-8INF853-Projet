@@ -1,16 +1,18 @@
 package com.uqac.stablemanager;
 
-import com.uqac.stablemanager.auth.service.AuthenticationService;
+import com.uqac.stablemanager.auth.service.IAuthenticationService;
+import com.uqac.stablemanager.auth.service.MySQLAuthenticationService;
+import com.uqac.stablemanager.member.service.MemberService;
+import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.MySQLConnection;
+import com.uqac.stablemanager.utils.PasswordManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.SecurityBuilder;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+import java.sql.Connection;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +38,27 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationService authenticationService() {
-        return new AuthenticationService(MySQLConnection.getConnection());
+    public Connection connection() {
+        return MySQLConnection.getConnection();
+    }
+
+    @Bean
+    public IAuthenticationService authenticationService() {
+        return new MySQLAuthenticationService();
+    }
+
+    @Bean
+    public MemberService memberService() {
+        return new MemberService();
+    }
+
+    @Bean
+    public RoleService roleService() {
+        return new RoleService();
+    }
+
+    @Bean
+    public PasswordManager passwordManager() {
+        return new PasswordManager(12);
     }
 }

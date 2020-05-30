@@ -15,9 +15,6 @@ import java.util.*;
 public class MemberService extends CommonDao<MemberModel> {
     private final static String TABLE = "ProfileMember";
 
-    public MemberService(Connection connection) {
-        super(connection);
-    }
 
     public MemberModel findById(int id) {
         try {

@@ -1,6 +1,10 @@
 package com.uqac.stablemanager.auth.model;
 
-
+/**
+ * Modèle représentant les données d'identification d'un utiliseur :
+ *  - email
+ *  - mot de passe
+ */
 public class CredentialsModel {
     private String email;
     private String password;
@@ -21,13 +25,5 @@ public class CredentialsModel {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "CredentialsModel{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

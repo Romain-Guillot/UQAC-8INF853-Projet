@@ -3,19 +3,23 @@ package com.uqac.stablemanager.homepage;
 import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
-import com.uqac.stablemanager.utils.MySQLConnection;
-import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+/**
+ *
+ */
 public class HomePageAction extends AuthenticatedAction {
+    private static final long serialVersionUID = 1L;
+
+    @Autowired
+    private RoleService roleService;
     private List<RoleModel> roles;
 
     @Override
     public String execute() {
-
-
-        roles = new RoleService(MySQLConnection.getConnection()).list();
+        roles = roleService.list();
         return SUCCESS;
     }
 

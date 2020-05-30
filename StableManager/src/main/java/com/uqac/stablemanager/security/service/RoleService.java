@@ -19,10 +19,6 @@ public class RoleService extends CommonDao<RoleModel> {
 
     private static final String TABLE = "Role";
 
-    public RoleService(Connection connection) {
-        super(connection);
-    }
-
     public List<RoleModel> list() {
         try {
             return new DatabaseHelper<>(connection, this::buildRoleFromResultSet).list(TABLE);
