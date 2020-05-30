@@ -41,6 +41,7 @@ public class RoleEditionAction extends AuthenticatedAction {
         return INPUT;
     }
 
+
     @Override
     public void validate() {
         super.validate();

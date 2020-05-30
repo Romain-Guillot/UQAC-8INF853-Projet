@@ -41,7 +41,5 @@
                 <param name="namespace">/</param>
             </result>
         </action>
-        
-        
     </package>
 </struts>

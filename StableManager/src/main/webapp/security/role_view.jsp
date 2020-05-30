@@ -23,8 +23,9 @@
     <p>${role.description}</p>
 
     <h3>Privilèges</h3>
-    <s:iterator value="role.rights">
-        <p>${name}</p>
+    <s:iterator value="role.rights" var="permission">
+        <p>${permission.name}</p>
+        <p>${permission.description}</p>
     </s:iterator>
 
     <h3>Membres</h3>

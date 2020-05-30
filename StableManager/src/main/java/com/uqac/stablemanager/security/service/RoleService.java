@@ -4,8 +4,10 @@ import com.uqac.stablemanager.security.model.PermissionModel;
 import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.utils.CommonDao;
 import com.uqac.stablemanager.utils.DatabaseHelper;
+import com.uqac.stablemanager.utils.MySQLConnection;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -57,7 +59,9 @@ public class RoleService extends CommonDao<RoleModel> {
                 {put("name", role.getName());}
                 {put("description", role.getDescription());}
             };
-            return new DatabaseHelper<>(connection, this::buildRoleFromResultSet).update(TABLE, primaryKey, values);
+            boolean success = new PermissionService(MySQLConnection.getConnection()).updateRolePermissions(role);
+            success = success && new DatabaseHelper<>(connection, this::buildRoleFromResultSet).update(TABLE, primaryKey, values);
+            return success;
         } catch (SQLException exception) {
             exception.printStackTrace();
             return false;
