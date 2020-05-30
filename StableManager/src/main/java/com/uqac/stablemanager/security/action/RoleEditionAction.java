@@ -26,7 +26,7 @@ public class RoleEditionAction extends AuthenticatedAction {
                 .collect(Collectors.toList());
         role.setRights(selectedPermissionModels);
         boolean success;
-        if (roleName == null) {
+        if (roleName == null || roleName.isEmpty()) {
             success = new RoleService(MySQLConnection.getConnection()).create(role);
         } else {
             success = new RoleService(MySQLConnection.getConnection()).update(roleName, role);

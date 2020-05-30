@@ -69,7 +69,18 @@ public class RoleService extends CommonDao<RoleModel> {
     }
 
     public boolean create(RoleModel role) {
-        return false;
+        try {
+            Map<String, Object> values = new HashMap<String, Object>() {
+                {put("name", role.getName());}
+                {put("description", role.getDescription());}
+            };
+            Object r = new DatabaseHelper<>(connection, this::buildRoleFromResultSet).create(TABLE, values);
+            new PermissionService(connection).updateRolePermissions(role);
+            return true;
+        } catch (SQLException exception) {
+            System.out.println(exception);
+            return false;
+        }
     }
 
     private RoleModel buildRoleFromResultSet(ResultSet result) {
