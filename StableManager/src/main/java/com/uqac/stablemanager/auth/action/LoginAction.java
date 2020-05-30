@@ -13,6 +13,8 @@ public class LoginAction extends ActionSupport {
     @Override
     public String execute() {
         boolean isAuthenticated = new AuthenticationService(MySQLConnection.getConnection()).login(credential);
+        if (!isAuthenticated)
+            addActionError("Impossible de vous connecter avec ces informations");
         return isAuthenticated ? SUCCESS : ERROR;
     }
 

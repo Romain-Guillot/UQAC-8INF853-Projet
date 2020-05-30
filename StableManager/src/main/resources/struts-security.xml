@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <constant name="struts.devMode" value="true" />
+
+    <package name="security" namespace="/security" extends="struts-default">
+        <action name="role/view/{roleName}" class="com.uqac.stablemanager.security.action.RoleViewAction" method="execute">
+            <result name="success">/security/role_view.jsp</result>
+            <result name="error">
+                <param name="location">/error404.jsp</param>
+                <param name="namespace">/</param>
+            </result>
+        </action>
+
+        <action name="role/perform_delete/{roleName}" class="com.uqac.stablemanager.security.action.RolePerformDeleteAction" method="execute">
+            <result name="success" type="redirectAction">
+                <param name="actionName">role/list</param>
+            </result>
+            <result name="error">
+                <param name="location">/error404.jsp</param>
+                <param name="namespace">/</param>
+            </result>
+        </action>
+
+        <action name="role/list" class="com.uqac.stablemanager.security.action.RoleListViewAction" method="execute">
+            <result name="success">/security/role_list_view.jsp</result>
+        </action>
+
+        <action name="role/edition" class="com.uqac.stablemanager.security.action.RoleEditionAction" method="input">
+            <result name="input">/security/role_edition.jsp</result>
+        </action>
+
+        <action name="role/perform_edition" class="com.uqac.stablemanager.security.action.RoleEditionAction" method="execute">
+            <result name="success" type="redirectAction">
+                <param name="actionName">role/view/${roleName}</param>
+            </result>
+            <result name="error">
+                <param name="location">/error404.jsp</param>
+                <param name="namespace">/</param>
+            </result>
+        </action>
+        
+        
+    </package>
+</struts>

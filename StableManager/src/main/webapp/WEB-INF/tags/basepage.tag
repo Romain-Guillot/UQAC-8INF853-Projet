@@ -13,12 +13,18 @@
                 <p><a href="<s:url action='index' namespace="/"/>">StableManager</a></p>
             </div>
             <p>
-                <s:set value="user.id" var="userID"/>
                 <a href="<s:url action='perform_logout' namespace="/auth"/>">Logout</a> |
-                <a href="<s:url action='view/%{#userID}' namespace="/member"/>">My Account</a> |
+                <a href="<s:url action='role/view/%{user.role.name}' namespace="/security"/>">${user.role.name}</a> |
+                <a href="<s:url action='view/%{user.id}' namespace="/member"/>">My Account</a> |
             </p>
         </div>
+
         <div id="page-body">
+            <s:if test="hasActionErrors()">
+                <div class="errors">
+                    <s:actionerror/>
+                </div>
+            </s:if>
             <jsp:doBody/>
         </div>
         <div id="page-footer">

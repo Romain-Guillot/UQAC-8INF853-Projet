@@ -1,92 +1,54 @@
 package com.uqac.stablemanager.member.service;
 
 import com.uqac.stablemanager.member.model.MemberModel;
+import com.uqac.stablemanager.security.model.RoleModel;
+import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.CommonDao;
+import com.uqac.stablemanager.utils.DatabaseHelper;
+import com.uqac.stablemanager.utils.MySQLConnection;
 import com.uqac.stablemanager.utils.PasswordManager;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.*;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 public class MemberService extends CommonDao<MemberModel> {
-    private final static String TABLE = "Member";
+    private final static String TABLE = "ProfileMember";
 
     public MemberService(Connection connection) {
         super(connection);
     }
 
     public MemberModel findById(int id) {
-        MemberModel member = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProfileMember WHERE id = ?");
-            statement.setInt(1, id);
-            ResultSet result = statement.executeQuery();
-            if (result.next()) {
-                member = buildMemberFromResultSet(result);
-            }
-            statement.close();
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("id", id);
+            return new DatabaseHelper<>(connection, this::fromResultSet).findBy(TABLE, condition);
         } catch (SQLException exception) {
             exception.printStackTrace();
+            return null;
         }
-        return member;
-    }
-
-    private MemberModel buildMemberFromResultSet(ResultSet result) throws SQLException {
-        MemberModel member = new MemberModel();
-        member.setId(result.getInt("id"));
-        member.setEmail(result.getString("email"));
-        member.setFirstName(result.getString("first_name"));
-        member.setLastName(result.getString("last_name"));
-        member.setBirthDate(result.getDate("birth_date"));
-        member.setRegisterAt(result.getDate("register_at"));
-        member.setPassword(result.getString("passwd"));
-        member.setPostalAddress(result.getString("postal_address"));
-//        boolean isAdmin = result.getBoolean("isAdmin");
-//        if (isAdmin) {
-//            member = new AdminModel(member);
-//        }
-        return member;
     }
 
     public MemberModel findByEmail(String email) {
-        MemberModel member = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProfileMember WHERE email = ?");
-            statement.setString(1, email);
-            ResultSet result = statement.executeQuery();
-            if (result.next()) {
-                member = buildMemberFromResultSet(result);
-            }
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("email", email);
+            return new DatabaseHelper<>(connection, this::fromResultSet).findBy(TABLE, condition);
         } catch (SQLException exception) {
-            System.err.println(exception);
+            exception.printStackTrace();
+            return null;
         }
-        return member;
     }
 
     public boolean update(MemberModel member) {
-        boolean success = false;
-        try{
-            PreparedStatement statement = connection.prepareStatement("UPDATE ProfileMember SET " +
-                    "first_name=?," +
-                    "last_name=?," +
-                    "email=?," +
-                    "birth_date=?," +
-                    "postal_address=? " +
-                    "WHERE id = ?");
-            statement.setString(1, member.getFirstName());
-            statement.setString(2, member.getLastName());
-            statement.setString(3, member.getEmail());
-            statement.setDate(4, new java.sql.Date(member.getBirthDate().getTime()));
-            statement.setString(5, member.getPostalAddress());
-            statement.setInt(6, member.getId());
-            int res = statement.executeUpdate();
-            success = res == 1;
-            statement.close();
-        }catch (SQLException exception) {
+        try {
+            Map<String, Object> primaryKey = Collections.singletonMap("id", member.getId());
+            Map<String, Object> values = toMap(member);
+            return new DatabaseHelper<>(connection, this::fromResultSet).update("ProfileMember", primaryKey, values);
+        } catch (SQLException exception) {
             System.err.println(exception);
+            return  false;
         }
-        return success;
     }
 
     public boolean changePassword(int memberID, String newPassword) {
@@ -107,8 +69,14 @@ public class MemberService extends CommonDao<MemberModel> {
         return success;
     }
 
-    public boolean delete(String id) {
-        throw new NotImplementedException();
+    public boolean delete(int id) {
+        try {
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("id", id);
+            return new DatabaseHelper<>(connection, this::fromResultSet).delete(TABLE, condition);
+        } catch (SQLException exception) {
+            return false;
+        }
     }
 
     public boolean create(MemberModel member) {
@@ -128,7 +96,8 @@ public class MemberService extends CommonDao<MemberModel> {
             }
             long now = Calendar.getInstance().getTime().getTime();
             statement.setDate(6, new java.sql.Date(now));
-            statement.setString(7, member.getPostalAddress());
+            String hashPassword = PasswordManager.hash(member.getPassword());
+            statement.setString(7, hashPassword);
             int res = statement.executeUpdate();
             if (res == 1) {
                 try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
@@ -145,7 +114,59 @@ public class MemberService extends CommonDao<MemberModel> {
         return success;
     }
 
+
     public List<MemberModel> list() {
-        throw new NotImplementedException();
+        try {
+            return new DatabaseHelper<>(connection, this::fromResultSet).list("ProfileMember");
+        } catch (SQLException exception) {
+            return null;
+        }
+    }
+
+    public List<MemberModel> list(RoleModel roleFilter) {
+        try {
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("role_name", roleFilter.getName());
+            return new DatabaseHelper<>(connection, this::fromResultSet).list("ProfileMember", condition);
+        } catch (SQLException exception) {
+            return null;
+        }
+    }
+
+
+    private HashMap<String, Object> toMap(MemberModel memberModel) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", memberModel.getId());
+        map.put("email", memberModel.getEmail());
+        map.put("first_name", memberModel.getFirstName());
+        map.put("last_name", memberModel.getLastName());
+        map.put("birth_date", memberModel.getBirthDate());
+        map.put("register_at", memberModel.getRegisterAt());
+        map.put("passwd", memberModel.getPassword());
+        map.put("postal_address", memberModel.getPostalAddress());
+        return map;
+    }
+
+    private MemberModel fromResultSet(ResultSet result) {
+        MemberModel member = new MemberModel();
+        try {
+            member.setId(result.getInt("id"));
+            member.setEmail(result.getString("email"));
+            member.setFirstName(result.getString("first_name"));
+            member.setLastName(result.getString("last_name"));
+            member.setBirthDate(result.getDate("birth_date"));
+            member.setRegisterAt(result.getDate("register_at"));
+            member.setPassword(result.getString("passwd"));
+            member.setPostalAddress(result.getString("postal_address"));
+            RoleModel role = new RoleService(MySQLConnection.getConnection()).findByName(result.getString("role_name"));
+            member.setRole(role);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+//        boolean isAdmin = result.getBoolean("isAdmin");
+//        if (isAdmin) {
+//            member = new AdminModel(member);
+//        }
+        return member;
     }
 }

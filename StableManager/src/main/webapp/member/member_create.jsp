@@ -4,7 +4,7 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Employés > Profile > Création" />
+    <t:pagedescription title="Employés > Création" />
 
     <h2>Information générales</h2>
     <s:form action="perform_create" namespace="/member">

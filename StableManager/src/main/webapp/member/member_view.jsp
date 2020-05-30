@@ -4,12 +4,12 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Employés > Profile > ${user.id}" />
+    <t:pagedescription title="Employés > ${member.id}" />
 
 
     <s:if test="user.id == member.id">
-        <s:set value="user.id" var="userID"/>
-        <p><a href="<s:url action='edit/%{#userID}' namespace="/member"/>">Modifier</a></p>
+        <p><a href="<s:url action='edit/%{member.id}' namespace="/member"/>">Modifier</a></p>
+        <p><a href="<s:url action='perform_delete/%{member.id}' namespace="/member"/>">Supprimer</a></p>
     </s:if>
 
     First name: <s:property value="member.firstName"/><br>
