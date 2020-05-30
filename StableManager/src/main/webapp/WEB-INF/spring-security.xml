@@ -8,25 +8,8 @@
 
     <global-method-security secured-annotations="enabled" pre-post-annotations="enabled" proxy-target-class = "true" />
     <http auto-config='true'>
-        <csrf disabled="true"/>
-
-        <intercept-url pattern="/auth/login*" access="isAnonymous()"/>
-        <intercept-url pattern="/auth/perform_login*" access="isAnonymous()"/>
-        <intercept-url pattern="/**" access="isAuthenticated()" />
 
 
-        <!--        <access-denied-handler error-page="/accessDenied"/>-->
-
-        <form-login
-                login-page="/auth/login"
-                login-processing-url="/auth/perform_login"
-                default-target-url="/index"
-                authentication-failure-url="/auth/login?error"
-                username-parameter="username"
-                password-parameter="password"/>
-        <logout
-                logout-url="/auth/perform_logout"
-                logout-success-url="/auth/login"/>
     </http>
 
     <authentication-manager erase-credentials="false">
