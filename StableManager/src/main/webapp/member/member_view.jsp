@@ -8,9 +8,8 @@
 
 
     <s:if test="user.id == member.id">
-        <s:set value="member.id" var="memberID"/>
-        <p><a href="<s:url action='edit/%{#memberID}' namespace="/member"/>">Modifier</a></p>
-        <p><a href="<s:url action='perform_delete/%{#memberID}' namespace="/member"/>">Supprimer</a></p>
+        <p><a href="<s:url action='edit/%{member.id}' namespace="/member"/>">Modifier</a></p>
+        <p><a href="<s:url action='perform_delete/%{member.id}' namespace="/member"/>">Supprimer</a></p>
     </s:if>
 
     First name: <s:property value="member.firstName"/><br>

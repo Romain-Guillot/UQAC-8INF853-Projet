@@ -22,7 +22,7 @@ public class MemberService extends CommonDao<MemberModel> {
         try {
             Map<String, Object> condition = new HashMap<>();
             condition.put("id", id);
-            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).findBy(TABLE, condition);
+            return new DatabaseHelper<>(connection, this::fromResultSet).findBy(TABLE, condition);
         } catch (SQLException exception) {
             exception.printStackTrace();
             return null;
@@ -33,7 +33,7 @@ public class MemberService extends CommonDao<MemberModel> {
         try {
             Map<String, Object> condition = new HashMap<>();
             condition.put("email", email);
-            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).findBy(TABLE, condition);
+            return new DatabaseHelper<>(connection, this::fromResultSet).findBy(TABLE, condition);
         } catch (SQLException exception) {
             exception.printStackTrace();
             return null;
@@ -41,28 +41,14 @@ public class MemberService extends CommonDao<MemberModel> {
     }
 
     public boolean update(MemberModel member) {
-        boolean success = false;
-        try{
-            PreparedStatement statement = connection.prepareStatement("UPDATE ProfileMember SET " +
-                    "first_name=?," +
-                    "last_name=?," +
-                    "email=?," +
-                    "birth_date=?," +
-                    "postal_address=? " +
-                    "WHERE id = ?");
-            statement.setString(1, member.getFirstName());
-            statement.setString(2, member.getLastName());
-            statement.setString(3, member.getEmail());
-            statement.setDate(4, new java.sql.Date(member.getBirthDate().getTime()));
-            statement.setString(5, member.getPostalAddress());
-            statement.setInt(6, member.getId());
-            int res = statement.executeUpdate();
-            success = res == 1;
-            statement.close();
-        }catch (SQLException exception) {
+        try {
+            Map<String, Object> primaryKey = Collections.singletonMap("id", member.getId());
+            Map<String, Object> values = toMap(member);
+            return new DatabaseHelper<>(connection, this::fromResultSet).update("ProfileMember", primaryKey, values);
+        } catch (SQLException exception) {
             System.err.println(exception);
+            return  false;
         }
-        return success;
     }
 
     public boolean changePassword(int memberID, String newPassword) {
@@ -87,7 +73,7 @@ public class MemberService extends CommonDao<MemberModel> {
         try {
             Map<String, Object> condition = new HashMap<>();
             condition.put("id", id);
-            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).delete(TABLE, condition);
+            return new DatabaseHelper<>(connection, this::fromResultSet).delete(TABLE, condition);
         } catch (SQLException exception) {
             return false;
         }
@@ -131,7 +117,7 @@ public class MemberService extends CommonDao<MemberModel> {
 
     public List<MemberModel> list() {
         try {
-            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).list("ProfileMember");
+            return new DatabaseHelper<>(connection, this::fromResultSet).list("ProfileMember");
         } catch (SQLException exception) {
             return null;
         }
@@ -141,13 +127,27 @@ public class MemberService extends CommonDao<MemberModel> {
         try {
             Map<String, Object> condition = new HashMap<>();
             condition.put("role_name", roleFilter.getName());
-            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).list("ProfileMember", condition);
+            return new DatabaseHelper<>(connection, this::fromResultSet).list("ProfileMember", condition);
         } catch (SQLException exception) {
             return null;
         }
     }
 
-    private MemberModel buildMemberFromResultSet(ResultSet result) {
+
+    private HashMap<String, Object> toMap(MemberModel memberModel) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", memberModel.getId());
+        map.put("email", memberModel.getEmail());
+        map.put("first_name", memberModel.getFirstName());
+        map.put("last_name", memberModel.getLastName());
+        map.put("birth_date", memberModel.getBirthDate());
+        map.put("register_at", memberModel.getRegisterAt());
+        map.put("passwd", memberModel.getPassword());
+        map.put("postal_address", memberModel.getPostalAddress());
+        return map;
+    }
+
+    private MemberModel fromResultSet(ResultSet result) {
         MemberModel member = new MemberModel();
         try {
             member.setId(result.getInt("id"));

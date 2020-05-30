@@ -3,6 +3,7 @@ package com.uqac.stablemanager.security.service;
 import com.uqac.stablemanager.security.model.PermissionModel;
 import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.utils.CommonDao;
+import com.uqac.stablemanager.utils.DatabaseHelper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,6 +32,14 @@ public class PermissionService  extends CommonDao<PermissionModel> {
             return permissions;
         } catch (SQLException exception) {
             System.err.println(exception);
+            return null;
+        }
+    }
+
+    public List<PermissionModel> list() {
+        try {
+            return new DatabaseHelper<>(connection, this::buildPermissionFromResultSet).list("Permission");
+        } catch (SQLException exception) {
             return null;
         }
     }

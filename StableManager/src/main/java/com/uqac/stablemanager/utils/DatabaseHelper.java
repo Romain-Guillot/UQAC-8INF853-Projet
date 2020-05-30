@@ -5,6 +5,8 @@ import com.uqac.stablemanager.member.model.MemberModel;
 import java.sql.*;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DatabaseHelper<T> {
     private final Connection connection;
@@ -55,6 +57,21 @@ public class DatabaseHelper<T> {
         String whereClause = buildWhereClause(condition.keySet());
         PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE " + whereClause);
         buildStatementWithConditionValues(statement, condition.values());
+        int res = statement.executeUpdate();
+        statement.close();
+        return res == 1;
+    }
+
+    public boolean update(String table, Map<String, Object> primaryKey, Map<String, Object> values) throws SQLException {
+        String setClause = buildWhereClause(values.keySet());
+        String whereClause = buildWhereClause(primaryKey.keySet());
+        String query = "UPDATE " + table + " SET " +
+                setClause +
+                " WHERE " + whereClause;
+        PreparedStatement statement = connection.prepareStatement(query);
+        Collection<Object> statementValues = Stream.concat(values.values().stream(), primaryKey.values().stream())
+                .collect(Collectors.toList());
+        buildStatementWithConditionValues(statement, statementValues);
         int res = statement.executeUpdate();
         statement.close();
         return res == 1;

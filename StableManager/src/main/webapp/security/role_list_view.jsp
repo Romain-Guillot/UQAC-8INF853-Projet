@@ -8,8 +8,7 @@
 
     <ul>
     <s:iterator value="roles">
-        <s:set value="name" var="roleName"/>
-        <li><a href="<s:url action='role/view/%{#roleName}' namespace="/security" />">${name}</a></li>
+        <li><a href="<s:url action='role/view/%{name}' namespace="/security" />">${name}</a></li>
     </s:iterator>
     </ul>
 

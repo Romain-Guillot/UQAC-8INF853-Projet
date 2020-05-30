@@ -6,10 +6,11 @@
 
     <t:pagedescription title="Employés > Edition > ${user.id}" />
 
-    <s:set value="member.id" var="memberID"/>
 
     <h2>Information générales</h2>
-    <s:form action="perform_edit/%{#memberID}" namespace="/member">
+    <s:form action="perform_edit/%{member.id}" namespace="/member">
+        <s:hidden name="member.password" />
+        <s:hidden name="member.registerAt" />
         <s:textfield name="member.firstName" label="Prénom"/>
         <s:textfield name="member.lastName" label="Nom" />
         <s:textfield name="member.email" label="Email" />
@@ -19,7 +20,7 @@
     </s:form>
 
     <h2>Mot de passe</h2>
-    <s:form action="perform_changepassword/%{#memberID}" namespace="/member">
+    <s:form action="perform_changepassword/%{member.id}" namespace="/member">
         <s:textfield name="newPassword" label="Nouveau mot de passe"/>
         <s:submit/>
     </s:form>

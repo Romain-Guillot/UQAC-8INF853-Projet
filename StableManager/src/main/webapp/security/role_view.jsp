@@ -4,19 +4,23 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Sécurité > Rôle > ${role.name}"  />
+    <t:pagedescription title="Sécurité > Rôle > ${roleName}"  />
 
     <s:if test="usersWithThisRole.isEmpty()">
         <p>
-            <s:set value="role.name" var="roleName"/>
-            <a href="<s:url action="role/perform_delete/%{#roleName}" namespace="/security" />">Supprimer</a>
+            <a href="<s:url action="role/perform_delete/%{role.name}" namespace="/security" />">Supprimer</a>
         </p>
     </s:if><s:else>
         Ce rôle ne peux pas être supprimé, des membres y sont encore associés
     </s:else>
+    <p>
+        <a href="<s:url action="role/edition"><s:param name="roleName" value="roleName"/></s:url>">Modifier</a>
+    </p>
+
 
 
     <h2>${role.name}</h2>
+    <p>${role.description}</p>
 
     <h3>Privilèges</h3>
     <s:iterator value="role.rights">
