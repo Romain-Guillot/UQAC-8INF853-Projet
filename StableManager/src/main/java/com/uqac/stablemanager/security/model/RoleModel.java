@@ -2,9 +2,10 @@ package com.uqac.stablemanager.security.model;
 
 import com.uqac.stablemanager.security.model.PermissionModel;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RoleModel {
+public class RoleModel implements Serializable {
     private String name;
     private List<PermissionModel> rights;
 

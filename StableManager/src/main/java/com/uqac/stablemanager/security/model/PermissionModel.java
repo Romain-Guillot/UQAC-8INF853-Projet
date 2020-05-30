@@ -2,7 +2,9 @@ package com.uqac.stablemanager.security.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public class PermissionModel implements GrantedAuthority {
+import java.io.Serializable;
+
+public class PermissionModel implements GrantedAuthority, Serializable {
     private String name;
     private String description;
 

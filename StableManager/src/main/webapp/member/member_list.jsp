@@ -4,7 +4,7 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Employés" >
+    <t:pagedescription title="Employés > Liste" >
         <s:form action="list_applyfilter" namespace="/member">
             <s:select label="Filtrer par rôle"
                       name="selectedRole"

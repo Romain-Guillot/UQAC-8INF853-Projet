@@ -51,6 +51,15 @@ public class DatabaseHelper<T> {
         return list(statement);
     }
 
+    public boolean delete(String table, Map<String, Object> condition) throws SQLException {
+        String whereClause = buildWhereClause(condition.keySet());
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE " + whereClause);
+        buildStatementWithConditionValues(statement, condition.values());
+        int res = statement.executeUpdate();
+        statement.close();
+        return res == 1;
+    }
+
     private void buildStatementWithConditionValues(PreparedStatement statement, Collection<Object> conditionValues) throws SQLException {
         int index = 1;
         for (Object whereValue : conditionValues) {

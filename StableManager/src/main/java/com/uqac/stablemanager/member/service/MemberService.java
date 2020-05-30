@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.*;
 
 public class MemberService extends CommonDao<MemberModel> {
-    private final static String TABLE = "Member";
+    private final static String TABLE = "ProfileMember";
 
     public MemberService(Connection connection) {
         super(connection);
@@ -22,7 +22,7 @@ public class MemberService extends CommonDao<MemberModel> {
         try {
             Map<String, Object> condition = new HashMap<>();
             condition.put("id", id);
-            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).findBy("ProfileMember", condition);
+            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).findBy(TABLE, condition);
         } catch (SQLException exception) {
             exception.printStackTrace();
             return null;
@@ -33,7 +33,7 @@ public class MemberService extends CommonDao<MemberModel> {
         try {
             Map<String, Object> condition = new HashMap<>();
             condition.put("email", email);
-            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).findBy("ProfileMember", condition);
+            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).findBy(TABLE, condition);
         } catch (SQLException exception) {
             exception.printStackTrace();
             return null;
@@ -84,18 +84,13 @@ public class MemberService extends CommonDao<MemberModel> {
     }
 
     public boolean delete(int id) {
-        boolean success = false;
-        try{
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM ProfileMember " +
-                    "WHERE id = ?");
-            statement.setInt(1, id);
-            int res = statement.executeUpdate();
-            success = res == 1;
-            statement.close();
-        }catch (SQLException exception) {
-            System.err.println(exception);
+        try {
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("id", id);
+            return new DatabaseHelper<>(connection, this::buildMemberFromResultSet).delete(TABLE, condition);
+        } catch (SQLException exception) {
+            return false;
         }
-        return success;
     }
 
     public boolean create(MemberModel member) {

@@ -4,7 +4,7 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Employés > Profile > Edition > ${user.id}" />
+    <t:pagedescription title="Employés > Edition > ${user.id}" />
 
     <s:set value="member.id" var="memberID"/>
 

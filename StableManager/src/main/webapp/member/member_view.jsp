@@ -4,7 +4,7 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Employés > Profile > ${user.id}" />
+    <t:pagedescription title="Employés > ${user.id}" />
 
 
     <s:if test="user.id == member.id">

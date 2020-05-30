@@ -38,6 +38,25 @@ public class RoleService extends CommonDao<RoleModel> {
         }
     }
 
+    public boolean delete(String name) {
+        try {
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("name", name);
+            return new DatabaseHelper<>(connection, this::buildRoleFromResultSet).delete("Role", condition);
+        } catch (SQLException exception) {
+            System.err.println(exception);
+            return false;
+        }
+    }
+
+    public boolean update(RoleModel role) {
+        return false;
+    }
+
+    public boolean create(RoleModel role) {
+        return false;
+    }
+
     private RoleModel buildRoleFromResultSet(ResultSet result) {
         RoleModel role = new RoleModel();
         try {
