@@ -8,6 +8,12 @@
 <body>
     <h1>Login</h1>
 
+    <s:if test="hasActionErrors()">
+        <div class="errors">
+            <s:actionerror/>
+        </div>
+    </s:if>
+
     <s:form action="perform_login">
         <s:textfield name="credential.email" label="Email" value="ystave0@mapy.cz"/>
         <s:textfield name="credential.password" label="Password" value="pass" />

@@ -20,7 +20,13 @@
                 <a href="<s:url action='view/%{#userID}' namespace="/member"/>">My Account</a> |
             </p>
         </div>
+
         <div id="page-body">
+            <s:if test="hasActionErrors()">
+                <div class="errors">
+                    <s:actionerror/>
+                </div>
+            </s:if>
             <jsp:doBody/>
         </div>
         <div id="page-footer">

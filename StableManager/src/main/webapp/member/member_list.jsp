@@ -18,16 +18,6 @@
         </s:form>
     </t:pagedescription>
 
-    <ul>
-        <s:iterator value="members">
-            <s:set value="id" var="memberID"/>
-            <li>
-                <a href="<s:url action='view/%{#memberID}' namespace='/member'/> ">
-                    <p>${firstName} ${lastName}</p>
-                    <p>${accountType} - ${role.name}</p>
-                </a>
-            </li>
-        </s:iterator>
-    </ul>
+    <t:memberlist members="${members}" />
 
 </t:basepage>
