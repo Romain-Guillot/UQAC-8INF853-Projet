@@ -2,6 +2,7 @@ package com.uqac.stablemanager;
 
 import com.uqac.stablemanager.auth.service.IAuthenticationService;
 import com.uqac.stablemanager.auth.service.SpringSecurityAuthenticationService;
+import com.uqac.stablemanager.horse.service.HorseService;
 import com.uqac.stablemanager.member.service.MemberService;
 import com.uqac.stablemanager.security.service.PermissionService;
 import com.uqac.stablemanager.security.service.RoleService;
@@ -61,5 +62,10 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public PermissionService permissionService() {
         return new PermissionService();
+    }
+
+    @Bean
+    public HorseService horseService() {
+        return new HorseService();
     }
 }
