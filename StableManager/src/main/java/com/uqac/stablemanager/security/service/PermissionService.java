@@ -3,16 +3,19 @@ package com.uqac.stablemanager.security.service;
 import com.uqac.stablemanager.security.model.PermissionModel;
 import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.utils.CommonDao;
-import com.uqac.stablemanager.utils.DatabaseHelper;
+import com.uqac.stablemanager.utils.SQLTableOperationsHelper;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class PermissionService  extends CommonDao<PermissionModel> {
 
-    public PermissionService(Connection connection) {
-        super(connection);
+    private final SQLTableOperationsHelper<PermissionModel> tableOperationsHelper;
+
+    public PermissionService() {
+        tableOperationsHelper = new SQLTableOperationsHelper<>(connection, "Permission", this::buildPermissionFromResultSet, null);
     }
 
     public List<PermissionModel> listByRole(RoleModel role) {
@@ -28,7 +31,7 @@ public class PermissionService  extends CommonDao<PermissionModel> {
             }
             return permissions;
         } catch (SQLException exception) {
-            System.err.println(exception);
+            log(Level.SEVERE, null, exception);
             return null;
         }
     }
@@ -47,16 +50,18 @@ public class PermissionService  extends CommonDao<PermissionModel> {
             connection.setAutoCommit(true);
             return true;
         } catch (SQLException exception) {
-            System.out.println(exception);
-            try {connection.setAutoCommit(true); connection.rollback();} catch (SQLException e) { }
+            log(Level.SEVERE, null, exception);
+            try {connection.setAutoCommit(true); connection.rollback();}
+            catch (SQLException e) {log(Level.SEVERE, null, exception); }
             return false;
         }
     }
 
     public List<PermissionModel> list() {
         try {
-            return new DatabaseHelper<>(connection, this::buildPermissionFromResultSet).list("Permission");
+            return tableOperationsHelper.list();
         } catch (SQLException exception) {
+            log(Level.SEVERE, null, exception);
             return null;
         }
     }
@@ -68,7 +73,7 @@ public class PermissionService  extends CommonDao<PermissionModel> {
             permission.setDescription(result.getString("description"));
             return permission;
         } catch (SQLException exception) {
-            System.err.println(exception);
+            log(Level.SEVERE, null, exception);
             return null;
         }
     }

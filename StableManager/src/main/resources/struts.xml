@@ -8,7 +8,19 @@
     <constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
     <constant name="struts.patternMatcher" value="regex" />
 
-    <package name="basicstruts2" namespace="/" extends="struts-default">
+
+
+
+    <package name="default" namespace="/" extends="struts-default">
+
+        <global-results>
+            <result name="success" type="redirectAction">index</result>
+            <result name="error">/error404.jsp</result>
+            <result name="error_notfound">/error404.jsp</result>
+            <result name="error_database">/error404.jsp</result>
+            <result name="error_permission_missing">/error404.jsp</result>
+        </global-results>
+
         <action name="index" class="com.uqac.stablemanager.homepage.HomePageAction">
             <result>/index.jsp</result>
         </action>

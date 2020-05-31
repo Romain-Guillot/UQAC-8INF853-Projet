@@ -5,7 +5,7 @@ import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.security.service.PermissionService;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
-import com.uqac.stablemanager.utils.MySQLConnection;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 
 public class RoleEditionAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
+
+    @Autowired RoleService roleService;
+    @Autowired PermissionService permissionService;
 
     private RoleModel role;
     private String roleName;
@@ -27,17 +30,17 @@ public class RoleEditionAction extends AuthenticatedAction {
         role.setRights(selectedPermissionModels);
         boolean success;
         if (roleName == null || roleName.isEmpty()) {
-            success = new RoleService(MySQLConnection.getConnection()).create(role);
+            success = roleService.create(role);
         } else {
-            success = new RoleService(MySQLConnection.getConnection()).update(roleName, role);
+            success = roleService.update(roleName, role);
         }
         return success ? SUCCESS : ERROR;
     }
 
     @Override
-    public String input() throws Exception {
+    public String input() {
         if (roleName != null)
-            role = new RoleService(MySQLConnection.getConnection()).findByName(roleName);
+            role = roleService.findByName(roleName);
         return INPUT;
     }
 
@@ -64,7 +67,7 @@ public class RoleEditionAction extends AuthenticatedAction {
     }
 
     public List<PermissionModel> getPermissions() {
-        return new PermissionService(MySQLConnection.getConnection()).list();
+        return permissionService.list(); // TODO : mettre en variable d'instance !?
     }
 
     public List<String> getSelectedPermissions() {
