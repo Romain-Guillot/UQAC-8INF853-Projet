@@ -42,6 +42,17 @@ public class HorseService extends CommonDao<HorseModel> {
         }
     }
 
+    public boolean delete(int id) {
+        try {
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("id", id);
+            return tableOperationsHelper.delete(condition);
+        } catch (SQLException exception) {
+            log(Level.SEVERE, null, exception);
+            return false;
+        }
+    }
+
     private HashMap<String, Object> toMap(HorseModel horseModel) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("id", horseModel.getId());
