@@ -7,8 +7,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<%--        <link rel="stylesheet" href="http://127.0.0.1:8081/main.css" />--%>
-        <link rel="stylesheet" href="/StableManager/assets/css/main.css" />
+        <link rel="stylesheet" href="http://127.0.0.1:8081/main.css" />
+<%--        <link rel="stylesheet" href="/StableManager/assets/css/main.css" />--%>
 
         <title>${pageTitle}</title>
     </head>
@@ -23,7 +23,7 @@
                     <div class="right header-menu">
                         <a href="<s:url action='role/view/%{user.role.name}' namespace="/security"/>">${user.role.name}</a>
                         <a href="<s:url action='view/%{user.id}' namespace="/member"/>">My Account</a>
-                        <a href="<s:url action='perform_logout' namespace="/auth"/>" class="waves-effect waves-light btn error-btn">Logout</a>
+                        <a href="<s:url action='perform_logout' namespace="/auth"/>" class="waves-effect waves-light btn btn-error">Logout</a>
                     </div>
                 </div>
 
@@ -56,6 +56,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('select');
             var instances = M.FormSelect.init(elems, {});
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.datepicker');
+            var instances = M.Datepicker.init(elems, {format: "dd/mm/yyyy"});
         });
 
     </script>

@@ -9,24 +9,25 @@
 
 
     <jsp:body>
+        <a href="<s:url action="role/edition"><s:param name="roleName" value="roleName"/></s:url>" class="waves-effect waves-light btn">
+            Modifier
+        </a>
         <s:if test="usersWithThisRole.isEmpty()">
-            <p>
-                <a href="<s:url action="role/perform_delete/%{role.name}" namespace="/security" />">Supprimer</a>
-            </p>
+            <a href="<s:url action="role/perform_delete/%{role.name}" namespace="/security" />" class="waves-effect waves-light btn btn-error">
+                Supprimer
+            </a>
         </s:if><s:else>
-            Ce rôle ne peux pas être supprimé, des membres y sont encore associés
+            <span>Ce rôle ne peux pas être supprimé, des membres y sont encore associés<span>
         </s:else>
-        <p>
-            <a href="<s:url action="role/edition"><s:param name="roleName" value="roleName"/></s:url>">Modifier</a>
-        </p>
+
 
         <p>${role.description}</p>
 
         <h2>Privilèges</h2>
         <ul class="collection">
-            <li class="collection-item collection-header row">
-                <p class="col s3">Nom</p>
-                <p class="col s9">Description</p>
+            <li class="collection-item collection-header row collection-item-content">
+                <span class="col s3">Nom</span>
+                <span class="col s9">Description</span>
             </li>
             <s:iterator value="role.rights" var="permission">
                 <li class="row collection-item">

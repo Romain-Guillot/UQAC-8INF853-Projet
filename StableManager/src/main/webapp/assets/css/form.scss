@@ -1,3 +1,6 @@
+form {
+    max-width: 700px;
+}
 .select-wrapper input.select-dropdown, .select-wrapper input.select-dropdown:focus {
     border: 1px solid $border-color;
     border-radius: $radius;
@@ -10,6 +13,12 @@
     padding-left: 10px;
     margin: 0;
     width: calc(100% - 10px);
+}
+.input-field-select {
+    > label {
+        position: unset;
+    }
+
 }
 .dropdown-content {
     border-radius: $radius;

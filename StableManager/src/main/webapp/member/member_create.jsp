@@ -46,8 +46,4 @@
             </button>
         </s:form>
     </jsp:body>
-
-
-
-
 </t:basepage>

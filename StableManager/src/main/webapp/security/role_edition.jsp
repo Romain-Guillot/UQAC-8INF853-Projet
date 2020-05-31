@@ -14,20 +14,30 @@
         <h2>Information générales</h2>
         <s:form action="perform_edition" method="post">
             <s:hidden name="roleName" value="%{roleName}"/>
-
-            <s:textfield key="role.name" label="Nom"/>
-            <s:textfield key="role.description" label="Nom"/>
-
-            <s:select
-                    label="Privilèges"
-                    list="permissions"
-                    listKey="name"
-                    listValue="name"
-                    multiple="true"
-                    key="selectedPermissions"
-                    value="%{role.rights.{name}}"
-            />
-            <s:submit />
+            <div class="input-field">
+                <s:textfield key="role.name" label="Nom" id="name"/>
+                <label for="name">Nom</label>
+            </div>
+            <div class="input-field">
+                <s:textfield key="role.description" label="Nom" id="description"/>
+                <label for="description">Description</label>
+            </div>
+            <div class="input-field input-field-select">
+                <label for="rights">Privilèges</label>
+                <s:select
+                        label="Privilèges"
+                        list="permissions"
+                        listKey="name"
+                        listValue="name"
+                        multiple="true"
+                        key="selectedPermissions"
+                        value="%{role.rights.{name}}"
+                        id="rights"/>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit">
+                Valider
+                <i class="material-icons right">send</i>
+            </button>
         </s:form>
     </jsp:body>
 </t:basepage>

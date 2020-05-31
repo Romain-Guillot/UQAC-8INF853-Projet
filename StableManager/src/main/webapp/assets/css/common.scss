@@ -14,7 +14,7 @@ main {
 }
 
 #main {
-    margin-top: 15px;
+    margin-top: $normal-spacing;
 }
 
 h1 {
@@ -28,6 +28,10 @@ h2 {
     font-weight: bold;
     margin: 45px 0 10px 0;
     color: rgba(0,0,0,0.5);
+}
+
+table, p, .collection {
+    margin: $normal-spacing 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -87,7 +91,6 @@ nav {
 .collection {
     border-radius: $radius;
     padding: 0;
-    margin: 15px 0 0 0;
 
     .collection-header {
         background-color: $background-hover;
@@ -126,9 +129,9 @@ nav {
     border-radius: $radius;
     font-weight: 500;
 }
-.error-btn, .error-btn:focus {
+.btn-error, .btn-error:focus {
     background-color: $error-color;
 }
-.error-btn:hover {
+.btn-error:hover {
     background-color: lighten($error-color, 15%);
 }

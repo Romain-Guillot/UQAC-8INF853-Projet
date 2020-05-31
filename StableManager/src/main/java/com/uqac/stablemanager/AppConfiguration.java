@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 
 @Configuration
 @EnableWebSecurity
@@ -67,5 +68,10 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public HorseService horseService() {
         return new HorseService();
+    }
+
+    @Bean
+    public SimpleDateFormat simpleDateFormat() {
+        return new SimpleDateFormat("dd/MM/yyyy");
     }
 }

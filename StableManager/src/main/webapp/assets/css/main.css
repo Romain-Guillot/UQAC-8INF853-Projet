@@ -8104,7 +8104,7 @@ main {
 }
 
 #main {
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 h1 {
@@ -8118,6 +8118,10 @@ h2 {
   font-weight: bold;
   margin: 45px 0 10px 0;
   color: rgba(0, 0, 0, 0.5);
+}
+
+table, p, .collection {
+  margin: 20px 0;
 }
 
 .page-footer {
@@ -8169,7 +8173,6 @@ nav .header-menu a {
 .collection {
   border-radius: 5px;
   padding: 0;
-  margin: 15px 0 0 0;
 }
 .collection .collection-header {
   background-color: #F5F7FA;
@@ -8208,12 +8211,16 @@ nav .header-menu a {
   font-weight: 500;
 }
 
-.error-btn, .error-btn:focus {
+.btn-error, .btn-error:focus {
   background-color: #f54949;
 }
 
-.error-btn:hover {
+.btn-error:hover {
   background-color: #f99292;
+}
+
+form {
+  max-width: 700px;
 }
 
 .select-wrapper input.select-dropdown, .select-wrapper input.select-dropdown:focus {
@@ -8230,6 +8237,10 @@ nav .header-menu a {
   padding-left: 10px;
   margin: 0;
   width: calc(100% - 10px);
+}
+
+.input-field-select > label {
+  position: unset;
 }
 
 .dropdown-content {
@@ -8283,6 +8294,23 @@ nav .header-menu a {
 #pageheader h1 {
   padding: 0;
   margin: 0;
+}
+
+.login-container {
+  border: 1px solid #d1d8dd;
+  border-radius: 5px;
+  width: 500px;
+  margin: auto;
+  padding: 40px;
+  text-align: center;
+}
+.login-container h1 {
+  margin: 20px 0;
+  padding: 0;
+}
+.login-container svg {
+  height: 35px;
+  width: 35px;
 }
 
 /*# sourceMappingURL=main.css.map */
