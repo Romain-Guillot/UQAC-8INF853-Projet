@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public abstract class AuthenticatedAction extends ActionSupport implements SessionAware {
 
+    @Autowired MemberService memberService;
+
     String ERROR_NOTFOUND = "error_notfound";
     String ERROR_PERMISSION_MISSING = "error_permission_missing";
     String ERROR_DATABASE = "error_database";
@@ -26,7 +28,7 @@ public abstract class AuthenticatedAction extends ActionSupport implements Sessi
 
     public MemberModel getUser() {
         int userID = member.getId();
-        return new MemberService().findById(userID); // TODO: voir pour juste renvoyé [member], problème d'update des données?
+        return memberService.findById(userID); // TODO: voir pour juste renvoyé [member], problème d'update des données?
     }
 
     @Override

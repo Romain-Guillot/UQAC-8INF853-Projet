@@ -3,6 +3,7 @@ package com.uqac.stablemanager;
 import com.uqac.stablemanager.auth.service.IAuthenticationService;
 import com.uqac.stablemanager.auth.service.SpringSecurityAuthenticationService;
 import com.uqac.stablemanager.member.service.MemberService;
+import com.uqac.stablemanager.security.service.PermissionService;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.MySQLConnection;
 import com.uqac.stablemanager.utils.PasswordManager;
@@ -38,11 +39,6 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public Connection connection() {
-        return MySQLConnection.getConnection();
-    }
-
-    @Bean
     public IAuthenticationService authenticationService() {
         return new SpringSecurityAuthenticationService();
     }
@@ -60,5 +56,10 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordManager passwordManager() {
         return new PasswordManager(12);
+    }
+
+    @Bean
+    public PermissionService permissionService() {
+        return new PermissionService();
     }
 }
