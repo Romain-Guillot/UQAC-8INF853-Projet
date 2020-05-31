@@ -82,3 +82,7 @@ insert into Horse (name, birth_date, profile_member_id)
 values ('Atila', '2005-11-04', 2);
 insert into Horse (name, birth_date, profile_member_id) 
 values ('Zeus', '2008-06-12', 2);
+insert into Horse (name, birth_date, profile_member_id) 
+values ('Tonerre', '2006-08-11', 2);
+insert into Horse (name, birth_date, profile_member_id) 
+values ('Rose', '2002-02-10', 3);

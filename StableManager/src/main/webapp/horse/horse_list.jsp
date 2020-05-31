@@ -4,7 +4,7 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Horse > ${horse.id}" ></t:pagedescription>
+    <t:pagedescription title="Chevaux > Liste" ></t:pagedescription>
     <t:horselist horses="${horses}"  />
 
 </t:basepage>

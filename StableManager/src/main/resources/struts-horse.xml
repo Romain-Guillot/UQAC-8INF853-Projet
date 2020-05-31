@@ -14,7 +14,22 @@
             <result name="success">/horse/horse_view.jsp</result>
         </action>
 
+        <action name="edit/{horseID}" class="com.uqac.stablemanager.horse.action.HorseEditAction" method="view">
+            <result name="success">/horse/horse_edit.jsp</result>
+        </action>
+
         <action name="perform_delete/{horseID}" class="com.uqac.stablemanager.horse.action.HorseDeleteAction" method="execute" />
+
+        <action name="perform_edit/{horseID}" class="com.uqac.stablemanager.horse.action.HorseEditAction" method="performUpdate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">edit/{1}</param>
+                <param name="horseID">{1}</param>
+            </result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">edit/{1}</param>
+                <param name="horseID">{1}</param>
+            </result>
+        </action>
 
     </package>
 </struts>
