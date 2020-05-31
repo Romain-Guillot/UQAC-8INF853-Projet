@@ -2,8 +2,6 @@ package com.uqac.stablemanager.auth.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.uqac.stablemanager.auth.service.IAuthenticationService;
-import com.uqac.stablemanager.auth.service.MySQLAuthenticationService;
-import com.uqac.stablemanager.utils.MySQLConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -14,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class LogoutAction extends ActionSupport {
     private static final long serialVersionUID = 1L;
 
-    @Autowired
-    private IAuthenticationService authenticationService;
+    @Autowired private IAuthenticationService authenticationService;
 
     @Override
     public String execute() {

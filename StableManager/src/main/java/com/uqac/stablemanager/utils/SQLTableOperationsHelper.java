@@ -1,26 +1,28 @@
 package com.uqac.stablemanager.utils;
 
-import com.uqac.stablemanager.member.model.MemberModel;
-
 import java.sql.*;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class DatabaseHelper<T> {
+public class SQLTableOperationsHelper<T> {
     private final Connection connection;
     private final Function<ResultSet, T> modelBuilder;
+    private final Function<T, Map<String, Object>> modelDestructor;
+    private final String tableName;
 
-    public DatabaseHelper(Connection connection, Function<ResultSet, T> modelBuilder) {
+    public SQLTableOperationsHelper(Connection connection, String tableName, Function<ResultSet, T> modelBuilder, Function<T, Map<String, Object>> modelDestructor) {
         this.connection = connection;
         this.modelBuilder = modelBuilder;
+        this.modelDestructor = modelDestructor;
+        this.tableName = tableName;
     }
 
-    public T findBy(String table, Map<String, Object> condition) throws SQLException {
+    public T findBy(Map<String, Object> condition) throws SQLException {
         T model = null;
         String whereClause = buildWhereClause(condition.keySet());
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + whereClause);
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE " + whereClause);
         buildStatementWithConditionValues(statement, condition.values());
         ResultSet result = statement.executeQuery();
         if (result.next()) {
@@ -39,33 +41,34 @@ public class DatabaseHelper<T> {
         return models;
     }
 
-    public List<T> list(String table) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table,
+    public List<T> list() throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + tableName,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         return list(statement);
     }
 
-    public List<T> list(String table, Map<String, Object> condition) throws SQLException {
+    public List<T> list(Map<String, Object> condition) throws SQLException {
         String whereClause = buildWhereClause(condition.keySet());
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + whereClause,
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE " + whereClause,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         buildStatementWithConditionValues(statement, condition.values());
         return list(statement);
     }
 
-    public boolean delete(String table, Map<String, Object> condition) throws SQLException {
+    public boolean delete(Map<String, Object> condition) throws SQLException {
         String whereClause = buildWhereClause(condition.keySet());
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE " + whereClause);
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + tableName + " WHERE " + whereClause);
         buildStatementWithConditionValues(statement, condition.values());
         int res = statement.executeUpdate();
         statement.close();
         return res == 1;
     }
 
-    public boolean update(String table, Map<String, Object> primaryKey, Map<String, Object> values) throws SQLException {
+    public boolean update(Map<String, Object> primaryKey, T model) throws SQLException {
+        Map<String, Object> values = modelDestructor.apply(model);
         String setClause = buildWhereClause(values.keySet());
         String whereClause = buildWhereClause(primaryKey.keySet());
-        String query = "UPDATE " + table + " SET " +
+        String query = "UPDATE " + tableName + " SET " +
                 setClause +
                 " WHERE " + whereClause;
         PreparedStatement statement = connection.prepareStatement(query);
@@ -77,11 +80,12 @@ public class DatabaseHelper<T> {
         return res == 1;
     }
 
-    public Object create(String table, Map<String, Object> values)  throws SQLException {
+    public Object create(T model)  throws SQLException {
+        Map<String, Object> values = modelDestructor.apply(model);
         Object key = null;
         String columnNames = String.join(",", values.keySet());
         String tokens = String.join(",", Collections.nCopies(values.size(), "?"));
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO " + table +
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO " + tableName +
                 "(" + columnNames + ") " +
                 "VALUES(" + tokens + ")", Statement.RETURN_GENERATED_KEYS);
         buildStatementWithConditionValues(statement, values.values());

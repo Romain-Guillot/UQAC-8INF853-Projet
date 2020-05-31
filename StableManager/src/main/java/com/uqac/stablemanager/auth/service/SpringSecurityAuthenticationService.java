@@ -1,6 +1,7 @@
 package com.uqac.stablemanager.auth.service;
 
 import com.uqac.stablemanager.auth.model.CredentialsModel;
+import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.MemberService;
 import com.uqac.stablemanager.utils.PasswordManager;
 import org.apache.struts2.ServletActionContext;
@@ -8,24 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * {@inheritDoc}
  *
- * Implémente le système d'authentification avec MySQL et Spring Security.
+ * Implémente le système d'authentification avec Spring Security.
  */
-public class MySQLAuthenticationService implements IAuthenticationService {
-    @Autowired
-    private MemberService memberService;
-    @Autowired
-    private PasswordManager passwordManager;
+public class SpringSecurityAuthenticationService implements IAuthenticationService {
+    @Autowired private MemberService memberService;
+    @Autowired private PasswordManager passwordManager;
 
 
     /**
@@ -62,6 +59,15 @@ public class MySQLAuthenticationService implements IAuthenticationService {
             new SecurityContextLogoutHandler().logout(ServletActionContext.getRequest(), ServletActionContext.getResponse(), auth);
         }
         SecurityContextHolder.getContext().setAuthentication(null);
+    }
+
+    /**
+     * {@inheritDoc}
+     * Retrouve l'utilisateur dans la session courrante
+     */
+    @Override
+    public MemberModel getConnectedMember(Map<String, Object> sessionObject) {
+        return (MemberModel) ((SecurityContextImpl) sessionObject.get("SPRING_SECURITY_CONTEXT")).getAuthentication().getPrincipal();
     }
 
     /**

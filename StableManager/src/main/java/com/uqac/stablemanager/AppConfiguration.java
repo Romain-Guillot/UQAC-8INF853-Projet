@@ -1,7 +1,7 @@
 package com.uqac.stablemanager;
 
 import com.uqac.stablemanager.auth.service.IAuthenticationService;
-import com.uqac.stablemanager.auth.service.MySQLAuthenticationService;
+import com.uqac.stablemanager.auth.service.SpringSecurityAuthenticationService;
 import com.uqac.stablemanager.member.service.MemberService;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.MySQLConnection;
@@ -44,7 +44,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public IAuthenticationService authenticationService() {
-        return new MySQLAuthenticationService();
+        return new SpringSecurityAuthenticationService();
     }
 
     @Bean

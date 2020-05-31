@@ -4,25 +4,33 @@ import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.CommonDao;
-import com.uqac.stablemanager.utils.DatabaseHelper;
-import com.uqac.stablemanager.utils.MySQLConnection;
+import com.uqac.stablemanager.utils.SQLTableOperationsHelper;
 import com.uqac.stablemanager.utils.PasswordManager;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigInteger;
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MemberService extends CommonDao<MemberModel> {
-    private final static String TABLE = "ProfileMember";
+    @Autowired private PasswordManager passwordManager;
+    @Autowired private RoleService roleService;
 
+    private final SQLTableOperationsHelper<MemberModel> tableOperationsHelper;
+
+    public MemberService() {
+        tableOperationsHelper = new SQLTableOperationsHelper<>(connection, "ProfileMember", this::fromResultSet, this::toMap);
+    }
 
     public MemberModel findById(int id) {
         try {
             Map<String, Object> condition = new HashMap<>();
             condition.put("id", id);
-            return new DatabaseHelper<>(connection, this::fromResultSet).findBy(TABLE, condition);
+            return tableOperationsHelper.findBy(condition);
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            log(Level.SEVERE, null, exception);
             return null;
         }
     }
@@ -31,70 +39,16 @@ public class MemberService extends CommonDao<MemberModel> {
         try {
             Map<String, Object> condition = new HashMap<>();
             condition.put("email", email);
-            return new DatabaseHelper<>(connection, this::fromResultSet).findBy(TABLE, condition);
+            return tableOperationsHelper.findBy(condition);
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            log(Level.SEVERE, null, exception);
             return null;
         }
     }
 
-    public boolean update(MemberModel member) {
-        try {
-            Map<String, Object> primaryKey = Collections.singletonMap("id", member.getId());
-            Map<String, Object> values = toMap(member);
-            return new DatabaseHelper<>(connection, this::fromResultSet).update(TABLE, primaryKey, values);
-        } catch (SQLException exception) {
-            System.err.println(exception);
-            return  false;
-        }
-    }
-
-    public boolean changePassword(int memberID, String newPassword) {
-        boolean success = false;
-        try{
-            String hashPassword = PasswordManager.hash(newPassword);
-            PreparedStatement statement = connection.prepareStatement("UPDATE ProfileMember SET " +
-                    "passwd=?" +
-                    "WHERE id = ?");
-            statement.setString(1, hashPassword);
-            statement.setInt(2, memberID);
-            int res = statement.executeUpdate();
-            success = res == 1;
-            statement.close();
-        }catch (SQLException exception) {
-            System.err.println(exception);
-        }
-        return success;
-    }
-
-    public boolean delete(int id) {
-        try {
-            Map<String, Object> condition = new HashMap<>();
-            condition.put("id", id);
-            return new DatabaseHelper<>(connection, this::fromResultSet).delete(TABLE, condition);
-        } catch (SQLException exception) {
-            return false;
-        }
-    }
-
-    public boolean create(MemberModel member) {
-        try{
-            member.setRegisterAt(Calendar.getInstance().getTime());
-            member.setPassword(PasswordManager.hash(member.getPassword()));
-            Map<String, Object> values = toMap(member);
-            Object key = new DatabaseHelper<>(connection, this::fromResultSet).create(TABLE, values);
-            member.setId(((BigInteger) key).intValue());
-            return true;
-        } catch (SQLException exception) {
-            System.err.println(exception);
-            return false;
-        }
-    }
-
-
     public List<MemberModel> list() {
         try {
-            return new DatabaseHelper<>(connection, this::fromResultSet).list("ProfileMember");
+            return tableOperationsHelper.list();
         } catch (SQLException exception) {
             return null;
         }
@@ -104,12 +58,63 @@ public class MemberService extends CommonDao<MemberModel> {
         try {
             Map<String, Object> condition = new HashMap<>();
             condition.put("role_name", roleFilter.getName());
-            return new DatabaseHelper<>(connection, this::fromResultSet).list("ProfileMember", condition);
+            return tableOperationsHelper.list(condition);
         } catch (SQLException exception) {
             return null;
         }
     }
 
+    public boolean update(MemberModel member) {
+        try {
+            Map<String, Object> primaryKey = Collections.singletonMap("id", member.getId());
+            return tableOperationsHelper.update(primaryKey, member);
+        } catch (SQLException exception) {
+            log(Level.SEVERE, null, exception);
+            return  false;
+        }
+    }
+
+    public boolean delete(int id) {
+        try {
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("id", id);
+            return tableOperationsHelper.delete(condition);
+        } catch (SQLException exception) {
+            log(Level.SEVERE, null, exception);
+            return false;
+        }
+    }
+
+    public boolean create(MemberModel member) {
+        try{
+            member.setRegisterAt(Calendar.getInstance().getTime());
+            member.setPassword(passwordManager.hash(member.getPassword()));
+            Object key = tableOperationsHelper.create(member);
+            member.setId(((BigInteger) key).intValue());
+            return true;
+        } catch (SQLException exception) {
+            log(Level.SEVERE, null, exception);
+            return false;
+        }
+    }
+
+    public boolean changePassword(int memberID, String newPassword) {
+        boolean success = false;
+        try{
+            String hashPassword = passwordManager.hash(newPassword);
+            PreparedStatement statement = connection.prepareStatement("UPDATE ProfileMember SET " +
+                    "passwd=?" +
+                    "WHERE id = ?");
+            statement.setString(1, hashPassword);
+            statement.setInt(2, memberID);
+            int res = statement.executeUpdate();
+            success = res == 1;
+            statement.close();
+        }catch (SQLException exception) {
+            log(Level.SEVERE, null, exception);
+        }
+        return success;
+    }
 
     private HashMap<String, Object> toMap(MemberModel memberModel) {
         HashMap<String, Object> map = new HashMap<>();
@@ -135,15 +140,11 @@ public class MemberService extends CommonDao<MemberModel> {
             member.setRegisterAt(result.getDate("register_at"));
             member.setPassword(result.getString("passwd"));
             member.setPostalAddress(result.getString("postal_address"));
-            RoleModel role = new RoleService(MySQLConnection.getConnection()).findByName(result.getString("role_name"));
+            RoleModel role = roleService.findByName(result.getString("role_name"));
             member.setRole(role);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-//        boolean isAdmin = result.getBoolean("isAdmin");
-//        if (isAdmin) {
-//            member = new AdminModel(member);
-//        }
         return member;
     }
 }

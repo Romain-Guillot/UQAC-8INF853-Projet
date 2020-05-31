@@ -14,8 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class LoginAction extends ActionSupport {
     private static final long serialVersionUID = 1L;
 
-    @Autowired
-    private IAuthenticationService authenticationService;
+    @Autowired private IAuthenticationService authenticationService;
     private CredentialsModel credential;
 
     @Override

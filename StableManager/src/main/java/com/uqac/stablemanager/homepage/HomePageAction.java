@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 /**
+ * Action pour fournir les données nécessaires à afficher sur la page d'accueil du site
  *
+ * Pour l'instant, seuls les rôles ont besoin d'être founris à la page d'accueil, le reste étant
+ * des liens direct vers des actions qui ne requière par de paramètre particulier.
  */
 public class HomePageAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;

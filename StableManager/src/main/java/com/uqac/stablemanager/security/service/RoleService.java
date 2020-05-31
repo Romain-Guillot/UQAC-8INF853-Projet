@@ -3,11 +3,9 @@ package com.uqac.stablemanager.security.service;
 import com.uqac.stablemanager.security.model.PermissionModel;
 import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.utils.CommonDao;
-import com.uqac.stablemanager.utils.DatabaseHelper;
+import com.uqac.stablemanager.utils.SQLTableOperationsHelper;
 import com.uqac.stablemanager.utils.MySQLConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -21,7 +19,7 @@ public class RoleService extends CommonDao<RoleModel> {
 
     public List<RoleModel> list() {
         try {
-            return new DatabaseHelper<>(connection, this::buildRoleFromResultSet).list(TABLE);
+            return new SQLTableOperationsHelper<>(connection, this::buildRoleFromResultSet).list(TABLE);
         } catch (SQLException exception) {
             System.err.println(exception);
             return null;
@@ -31,7 +29,7 @@ public class RoleService extends CommonDao<RoleModel> {
     public RoleModel findByName(String name) {
         try {
             Map<String, Object> condition = Collections.singletonMap("name", name);
-            return new DatabaseHelper<>(connection, this::buildRoleFromResultSet).findBy(TABLE, condition);
+            return new SQLTableOperationsHelper<>(connection, this::buildRoleFromResultSet).findBy(TABLE, condition);
         } catch (SQLException exception) {
             System.err.println(exception);
             return null;
@@ -41,7 +39,7 @@ public class RoleService extends CommonDao<RoleModel> {
     public boolean delete(String name) {
         try {
             Map<String, Object> condition = Collections.singletonMap("name", name);
-            return new DatabaseHelper<>(connection, this::buildRoleFromResultSet).delete(TABLE, condition);
+            return new SQLTableOperationsHelper<>(connection, this::buildRoleFromResultSet).delete(TABLE, condition);
         } catch (SQLException exception) {
             System.err.println(exception);
             return false;
@@ -56,7 +54,7 @@ public class RoleService extends CommonDao<RoleModel> {
                 {put("description", role.getDescription());}
             };
             boolean success = new PermissionService(MySQLConnection.getConnection()).updateRolePermissions(role);
-            success = success && new DatabaseHelper<>(connection, this::buildRoleFromResultSet).update(TABLE, primaryKey, values);
+            success = success && new SQLTableOperationsHelper<>(connection, this::buildRoleFromResultSet).update(TABLE, primaryKey, values);
             return success;
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -70,7 +68,7 @@ public class RoleService extends CommonDao<RoleModel> {
                 {put("name", role.getName());}
                 {put("description", role.getDescription());}
             };
-            Object r = new DatabaseHelper<>(connection, this::buildRoleFromResultSet).create(TABLE, values);
+            Object r = new SQLTableOperationsHelper<>(connection, this::buildRoleFromResultSet).create(TABLE, values);
             new PermissionService(connection).updateRolePermissions(role);
             return true;
         } catch (SQLException exception) {

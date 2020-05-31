@@ -8,19 +8,23 @@ import com.uqac.stablemanager.utils.AuthenticatedAction;
 import com.uqac.stablemanager.utils.MySQLConnection;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.Map;
 
 
-public class MemberProfileViewAction extends AuthenticatedAction {
+public class MemberViewAction extends AuthenticatedAction {
+    private static final long serialVersionUID = 1L;
+
+    @Autowired MemberService memberService;
+
     private int memberID;
     private MemberModel member;
 
     @Override
     public String execute() throws Exception {
-        Object a = ActionContext.getContext().getParameters();
-        member = new MemberService(MySQLConnection.getConnection()).findById(memberID);
+        member = memberService.findById(memberID);
         return member == null ? ERROR : SUCCESS;
     }
 
