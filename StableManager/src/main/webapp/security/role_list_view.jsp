@@ -3,14 +3,24 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:basepage pageTitle="StableManager">
+    <jsp:attribute name="pageHeader">
+        <t:pagedescription title="Sécurité > Rôle > Liste"  />
+    </jsp:attribute>
 
-    <t:pagedescription title="Sécurité > Rôle > Liste"  />
-
-    <ul>
-    <s:iterator value="roles">
-        <li><a href="<s:url action='role/view/%{name}' namespace="/security" />">${name}</a></li>
-    </s:iterator>
-    </ul>
-
-
+    <jsp:body>
+        <ul class="collection">
+            <li class="collection-item collection-header row collection-item-content">
+                <span class="col s3">Nom du rôle</span>
+                <span class="col s3">Description</span>
+            </li>
+            <s:iterator value="roles" var="role">
+                <li class="collection-item">
+                    <a href="<s:url action='role/view/%{name}' namespace="/security" />" class="row collection-item-content">
+                        <span class="col s3">${role.name}</span>
+                        <span class="col s9">${role.description}</span>
+                    </a>
+                </li>
+            </s:iterator>
+        </ul>
+    </jsp:body>
 </t:basepage>

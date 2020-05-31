@@ -1,0 +1,21 @@
+.members-list-filter-form {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    align-content:flex-start;
+    margin-top: 20px;
+    .input-field {
+        margin: 0 15px 0 0;
+        padding: 0;
+    }
+}
+
+
+#pageheader {
+    border-bottom: 1px solid $border-color;
+    padding: 15px 0;
+    h1 {
+        padding: 0;
+        margin: 0;
+    }
+}

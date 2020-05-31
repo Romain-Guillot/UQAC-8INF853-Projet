@@ -3,26 +3,35 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+
 <t:basepage pageTitle="StableManager">
-
-    <t:pagedescription title="Employés > ${member.id}" />
-
-    <sec:authorize access="hasAuthority('WRITE_ALL_PROFILES')">
-        PERMISSION PRIVILEGE ?? :
-        <p><a href="<s:url action='edit/%{member.id}' namespace="/member"/>">Modifier</a></p>
-        <p><a href="<s:url action='perform_delete/%{member.id}' namespace="/member"/>">Supprimer</a></p>
-    </sec:authorize>
+    <jsp:attribute name="pageHeader">
+        <t:pagedescription title="Employés > ${member.id}" />
+    </jsp:attribute>
 
 
-    <s:if test="user.id == member.id">
-        <p><a href="<s:url action='edit/%{member.id}' namespace="/member"/>">Modifier</a></p>
-        <p><a href="<s:url action='perform_delete/%{member.id}' namespace="/member"/>">Supprimer</a></p>
-    </s:if>
+    <jsp:body>
+        <sec:authorize access="hasAuthority('WRITE_ALL_PROFILES')">
+            PERMISSION PRIVILEGE ?? :
+            <p><a href="<s:url action='edit/%{member.id}' namespace="/member"/>" class="waves-effect waves-light btn">Modifier</a></p>
+            <p><a href="<s:url action='perform_delete/%{member.id}' namespace="/member"/>">Supprimer</a></p>
+        </sec:authorize>
 
-    First name: <s:property value="member.firstName"/><br>
-    Last name: <s:property value="member.lastName"/><br>
-    Email: <s:property value="member.email"/><br>
-    Birth date: <s:property value="member.birthDate"/><br>
-    Postal address: <s:property value="member.postalAddress"/>
+        <s:if test="user.id == member.id">
+            <a href="<s:url action='edit/%{member.id}' namespace="/member"/>" class="waves-effect waves-light btn">
+                Modifier
+            </a>
+            <a href="<s:url action='perform_delete/%{member.id}' namespace="/member"/>" class="waves-effect waves-light btn error-btn">
+                Supprimer
+            </a>
+        </s:if>
 
+        <table>
+            <tr><th>First name</th>     <td>${member.firstName}</td>        </tr>
+            <tr><th>Last name</th>      <td>${member.lastName}</td>         </tr>
+            <tr><th>Email</th>          <td>${member.email}</td>            </tr>
+            <tr><th>Birth date</th>     <td>${member.birthDate}</td>       </tr>
+            <tr><th>Postal address</th> <td>${member.postalAddress}</td>    </tr>
+        </table>
+    </jsp:body>
 </t:basepage>

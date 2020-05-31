@@ -1,0 +1,24 @@
+.select-wrapper input.select-dropdown, .select-wrapper input.select-dropdown:focus {
+    border: 1px solid $border-color;
+    border-radius: $radius;
+}
+.input-field.col label {
+    left: 0;
+}
+.select-wrapper input.select-dropdown {
+    height: 2.3rem;
+    padding-left: 10px;
+    margin: 0;
+    width: calc(100% - 10px);
+}
+.dropdown-content {
+    border-radius: $radius;
+    border: 1px solid $border-color;
+    li {
+        height: 2.3rem;
+    }
+    li > a, li > span {
+        color: $text-color;
+        font-size: 1em;
+    }
+}

@@ -1,0 +1,17 @@
+@import "materialize-src/sass/components/color-variables";
+
+
+$primary-color: #2f66d4 !default;
+$primary-color-light: #2f66d4 !default;
+$primary-color-dark: darken(#2f66d4, 15%) !default;
+
+$secondary-color: #2f66d4  !default;
+$success-color: green !default;
+$error-color: #f54949 !default;
+$link-color: #2f66d4 !default;
+$text-color: rgb(60,60,60);
+
+$radius: 5px;
+$border-color: #d1d8dd;
+$border-color-darker: darken($border-color, 15%);
+$background-hover: #F5F7FA;

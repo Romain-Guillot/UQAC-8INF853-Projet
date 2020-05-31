@@ -1,0 +1,134 @@
+////////////////////////////////////////////////////////////////////////////////
+// Général
+////////////////////////////////////////////////////////////////////////////////
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    color: $text-color;
+}
+
+main {
+    flex: 1 0 auto;
+    flex-direction: row;
+}
+
+#main {
+    margin-top: 15px;
+}
+
+h1 {
+    font-size: 1.8em;
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 0.9em;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 45px 0 10px 0;
+    color: rgba(0,0,0,0.5);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Header, footer
+////////////////////////////////////////////////////////////////////////////////
+.page-footer {
+    border-top: 1px solid $border-color;
+    padding: 10px 0;
+}
+
+.page-wrapper {
+    max-width: 1500px;
+    padding: 0 15px;
+    margin: auto;
+}
+
+nav, .page-footer {
+    background-color: #F5F7FA;
+    box-shadow: none;
+    color: $text-color;
+    a {
+        color: $text-color;
+    }
+}
+
+nav {
+    border-bottom: 1px solid $border-color;
+    .brand-logo {
+        font-size: 1.2em;
+        font-weight: 700;
+        display: flex;
+        align-items:center;
+        align-content:flex-start;
+        color: $text-color;
+        svg {
+            height: 25px;
+            width: 25px;
+            margin-right: 15px;
+        }
+        &:hover {
+            color: $primary-color;
+            svg {
+                fill: $primary-color;
+            }
+        }
+    }
+    .header-menu {
+        a {
+            margin-left: 15px;
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Lists
+////////////////////////////////////////////////////////////////////////////////
+.collection {
+    border-radius: $radius;
+    padding: 0;
+    margin: 15px 0 0 0;
+
+    .collection-header {
+        background-color: $background-hover;
+        text-transform: uppercase;
+        font-size: 0.9em;
+        font-weight: 500;
+    }
+    a {
+        display: block;
+        color: $text-color;
+    }
+    .row {
+        margin: 0;
+    }
+    .collection-item {
+        padding: 0;
+
+        a:hover {
+            background-color: $background-hover;
+        }
+    }    
+    .collection-item-content {
+        padding: 12px 0;
+    }
+}
+
+
+.z-depth-1, .sidenav, .collapsible, .dropdown-content, .btn-floating, .btn, .btn-small, .btn-large, .toast, .card, .card-panel, nav {
+    box-shadow: none;
+}
+.z-depth-1-half, .btn-floating:hover, .btn:hover, .btn-small:hover, .btn-large:hover {
+    box-shadow: none;
+}
+.btn, .btn-small, .btn-large, .btn-flat {
+    text-transform: unset;
+    border-radius: $radius;
+    font-weight: 500;
+}
+.error-btn, .error-btn:focus {
+    background-color: $error-color;
+}
+.error-btn:hover {
+    background-color: lighten($error-color, 15%);
+}
