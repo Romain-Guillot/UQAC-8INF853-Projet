@@ -1,7 +1,6 @@
 package com.uqac.stablemanager.member.action;
 
 import com.uqac.stablemanager.auth.service.IAuthenticationService;
-import com.uqac.stablemanager.auth.service.SpringSecurityAuthenticationService;
 import com.uqac.stablemanager.member.service.MemberService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;

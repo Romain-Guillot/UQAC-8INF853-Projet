@@ -3,6 +3,8 @@ package com.uqac.stablemanager.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MySQLConnection {
 
@@ -18,7 +20,7 @@ public class MySQLConnection {
                     + "&useSSL=" + props.getProperty("mysql.useSSL")
                     + "&serverTimezone=" +props.getProperty("mysql.timezone"));
         } catch (Exception ex) {
-            System.err.println(ex);
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

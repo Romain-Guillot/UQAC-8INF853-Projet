@@ -12,7 +12,6 @@ import java.math.BigInteger;
 import java.sql.*;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MemberService extends CommonDao<MemberModel> {
     @Autowired private PasswordManager passwordManager;
@@ -143,7 +142,7 @@ public class MemberService extends CommonDao<MemberModel> {
             RoleModel role = roleService.findByName(result.getString("role_name"));
             member.setRole(role);
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            log(Level.SEVERE, null, exception);
         }
         return member;
     }
