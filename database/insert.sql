@@ -73,3 +73,12 @@ values ('Datha', 'Sturror', 'dsturrori@usda.gov', '17 Kings Junction', '2020-01-
 insert into ProfileMember (first_name, last_name, email, postal_address, birth_date, register_at, passwd, role_name) 
 values ('Benjamen', 'Lowsely', 'blowselyj@businesswire.com', '13 Mcguire Pass', '2020-01-12', '2019-09-08', '$2b$10$57dglqmOwykrxHAkJREIJOWExyu/modCO3kS4ryV/l0EWEJZZimbm', 'Palfrenier');
 
+-- Horse
+insert into Horse (name, birth_date, profile_member_id) 
+values ('Zac', '2004-08-08', 1);
+insert into Horse (name, birth_date, profile_member_id) 
+values ('Tempete', '2003-02-09', 1);
+insert into Horse (name, birth_date, profile_member_id) 
+values ('Atila', '2005-11-04', 2);
+insert into Horse (name, birth_date, profile_member_id) 
+values ('Zeus', '2008-06-12', 2);

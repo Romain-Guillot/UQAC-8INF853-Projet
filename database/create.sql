@@ -56,3 +56,11 @@ CREATE TABLE ManagerMember (
     FOREIGN KEY (admin_id) REFERENCES AdministatorMember(id)
 );
 
+CREATE TABLE Horse (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255),
+    birth_date  DATE,
+    profile_member_id INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (profile_member_id) REFERENCES ProfileMember(id)
+);
