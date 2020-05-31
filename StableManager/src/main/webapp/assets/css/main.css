@@ -8146,6 +8146,7 @@ nav a, .page-footer a {
 
 nav {
   border-bottom: 1px solid #d1d8dd;
+  color: #3c3c3c;
 }
 nav .brand-logo {
   font-size: 1.2em;
@@ -8165,6 +8166,9 @@ nav .brand-logo:hover {
 }
 nav .brand-logo:hover svg {
   fill: #2f66d4;
+}
+nav ul a {
+  color: #3c3c3c;
 }
 nav .header-menu a {
   margin-left: 15px;

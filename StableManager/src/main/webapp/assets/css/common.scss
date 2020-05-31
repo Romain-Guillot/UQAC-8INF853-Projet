@@ -59,6 +59,7 @@ nav, .page-footer {
 
 nav {
     border-bottom: 1px solid $border-color;
+    color: $text-color;
     .brand-logo {
         font-size: 1.2em;
         font-weight: 700;
@@ -77,6 +78,9 @@ nav {
                 fill: $primary-color;
             }
         }
+    }
+    ul a {
+        color: $text-color;
     }
     .header-menu {
         a {
