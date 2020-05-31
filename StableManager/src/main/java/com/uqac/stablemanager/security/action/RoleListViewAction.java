@@ -3,16 +3,20 @@ package com.uqac.stablemanager.security.action;
 import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
-import com.uqac.stablemanager.utils.MySQLConnection;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class RoleListViewAction extends AuthenticatedAction {
+    private static final long serialVersionUID = 1L;
+
+    @Autowired RoleService roleService;
+
     private List<RoleModel> roles;
 
     @Override
-    public String execute() throws Exception {
-        roles = new RoleService(MySQLConnection.getConnection()).list();
+    public String execute() {
+        roles = roleService.list();
         return SUCCESS;
     }
 

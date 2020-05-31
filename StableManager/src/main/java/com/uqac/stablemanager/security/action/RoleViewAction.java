@@ -5,11 +5,15 @@ import com.uqac.stablemanager.member.service.MemberService;
 import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
-import com.uqac.stablemanager.utils.MySQLConnection;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class RoleViewAction extends AuthenticatedAction {
+    private static final long serialVersionUID = 1L;
+
+    @Autowired RoleService roleService;
+    @Autowired MemberService memberService;
 
     private String roleName;
     private RoleModel role;
@@ -17,8 +21,8 @@ public class RoleViewAction extends AuthenticatedAction {
 
     @Override
     public String execute() {
-        role = new RoleService(MySQLConnection.getConnection()).findByName(roleName);
-        usersWithThisRole = new MemberService(MySQLConnection.getConnection()).list(role);
+        role = roleService.findByName(roleName);
+        usersWithThisRole = memberService.list(role);
         return role != null ? SUCCESS : ERROR;
     }
 

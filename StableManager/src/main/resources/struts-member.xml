@@ -5,16 +5,16 @@
 <struts>
     <constant name="struts.devMode" value="true" />
 
-    <package name="member" namespace="/member" extends="struts-default">
-        <action name="view/{memberID}" class="com.uqac.stablemanager.member.action.MemberProfileViewAction" method="execute">
+    <package name="member" namespace="/member" extends="default">
+        <action name="view/{memberID}" class="com.uqac.stablemanager.member.action.MemberViewAction" method="execute">
             <result name="success">/member/member_view.jsp</result>
         </action>
 
-        <action name="edit/{memberID}" class="com.uqac.stablemanager.member.action.MemberProfileEditAction" method="execute">
+        <action name="edit/{memberID}" class="com.uqac.stablemanager.member.action.MemberEditAction" method="view">
             <result name="success">/member/member_edit.jsp</result>
         </action>
 
-        <action name="perform_edit/{memberID}" class="com.uqac.stablemanager.member.action.MemberProfilePerformEditAction" method="execute">
+        <action name="perform_edit/{memberID}" class="com.uqac.stablemanager.member.action.MemberEditAction" method="performUpdate">
             <result name="success" type="redirectAction">
                 <param name="actionName">edit/{1}</param>
                 <param name="memberID">{1}</param>
@@ -25,7 +25,7 @@
             </result>
         </action>
 
-        <action name="perform_changepassword/{memberID}" class="com.uqac.stablemanager.member.action.MemberProfilePerformEditAction" method="updatePassword">
+        <action name="perform_changepassword/{memberID}" class="com.uqac.stablemanager.member.action.MemberEditAction" method="performUpdatePassword">
             <result name="success" type="redirectAction">
                 <param name="actionName">edit/{1}</param>
             </result>
@@ -38,7 +38,7 @@
             <result name="success">/member/member_create.jsp</result>
         </action>
 
-        <action name="perform_create" class="com.uqac.stablemanager.member.action.MemberProfileCreationAction" method="execute">
+        <action name="perform_create" class="com.uqac.stablemanager.member.action.MemberCreateAction" method="perform">
             <result name="success" type="redirectAction">
                 <param name="actionName">view/${member.id}</param>
             </result>
@@ -46,18 +46,15 @@
             <result name="input">/member/member_create.jsp</result>
         </action>
         
-        <action name="perform_delete/{memberID}" class="com.uqac.stablemanager.member.action.MemberPerformDelete" method="execute">
-            <result name="success" type="redirectAction">
-                <param name="actionName">index</param>
-                <param name="namespace">/</param>
-            </result>
-        </action>
+        <action name="perform_delete/{memberID}" class="com.uqac.stablemanager.member.action.MemberDeleteAction" method="performDelete" />
 
-        <action name="list" class="com.uqac.stablemanager.member.action.MemberListAction" method="execute">
+        <action name="perform_delete_connected_user" class="com.uqac.stablemanager.member.action.MemberDeleteAction" method="performDeleteConnectedUser" />
+
+        <action name="list" class="com.uqac.stablemanager.member.action.MemberListViewAction" method="execute">
             <result name="success">/member/member_list.jsp</result>
         </action>
 
-        <action name="list_applyfilter" class="com.uqac.stablemanager.member.action.MemberListAction">
+        <action name="list_applyfilter" class="com.uqac.stablemanager.member.action.MemberListViewAction">
             <result name="success" type="redirectAction">
                 <param name="actionName">list</param>
                 <param name="selectedRole">${selectedRole}</param>

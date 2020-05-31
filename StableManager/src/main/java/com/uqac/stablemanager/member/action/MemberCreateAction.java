@@ -3,18 +3,19 @@ package com.uqac.stablemanager.member.action;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.MemberService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
-import com.uqac.stablemanager.utils.MySQLConnection;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class MemberProfileCreationAction extends AuthenticatedAction {
+public class MemberCreateAction extends AuthenticatedAction {
+    private static final long serialVersionUID = 1L;
 
+    @Autowired MemberService memberService;
     private MemberModel member;
     private String passwordConfirmation;
-
-    @Override
-    public String execute() {
+    
+    public String perform() {
         boolean success = false;
         if (member != null)
-            success = new MemberService(MySQLConnection.getConnection()).create(member);
+            success = memberService.create(member);
         return success ? SUCCESS : ERROR;
     }
 
@@ -23,7 +24,7 @@ public class MemberProfileCreationAction extends AuthenticatedAction {
         if (member.getEmail() == null) {
             addFieldError("member.email", "Email cannot be empty");
         } else {
-            MemberModel memberWithSameEmail = new MemberService(MySQLConnection.getConnection()).findByEmail(member.getEmail());
+            MemberModel memberWithSameEmail = memberService.findByEmail(member.getEmail());
             if (memberWithSameEmail != null) {
                 addFieldError("member.email", "Email already exists");
             }

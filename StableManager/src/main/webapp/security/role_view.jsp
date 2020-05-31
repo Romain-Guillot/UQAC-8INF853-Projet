@@ -6,6 +6,7 @@
 
     <t:pagedescription title="Sécurité > Rôle > ${roleName}"  />
 
+
     <s:if test="usersWithThisRole.isEmpty()">
         <p>
             <a href="<s:url action="role/perform_delete/%{role.name}" namespace="/security" />">Supprimer</a>
