@@ -42,6 +42,18 @@ public class HorseService extends CommonDao<HorseModel> {
         }
     }
 
+    public boolean create(HorseModel horse) {
+        try{
+            Object key = tableOperationsHelper.create(horse);
+            horse.setId(((BigInteger) key).intValue());
+            return true;
+        } catch (SQLException exception) {
+            log(Level.SEVERE, null, exception);
+            return false;
+        }
+    }
+
+
     public boolean update(HorseModel horse) {
         try {
             Map<String, Object> primaryKey = Collections.singletonMap("id", horse.getId());

@@ -5,6 +5,9 @@
 <t:basepage pageTitle="StableManager">
 
     <t:pagedescription title="Chevaux > Liste" ></t:pagedescription>
+    <sec:authorize access="hasAuthority('WRITE_ALL_PROFILES')">
+        <a href="<s:url action='create' namespace="/horse"/>" class="waves-effect waves-light btn">Ajouter un cheval</a>
+    </sec:authorize>
     <t:horselist horses="${horses}"  />
 
 </t:basepage>
