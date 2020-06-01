@@ -25,7 +25,7 @@ hs_err_pid*
 
 
 StableManager/out/
-
+StableManager/src/main/webapp/assets/css/main.css.map
 
 # INTELLIJ
 StableManager/.idea/workspace.xml

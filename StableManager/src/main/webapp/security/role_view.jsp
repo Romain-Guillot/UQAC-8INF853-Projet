@@ -24,18 +24,24 @@
         <p>${role.description}</p>
 
         <h2>Privilèges</h2>
-        <ul class="collection">
-            <li class="collection-item collection-header row collection-item-content">
-                <span class="col s3">Nom</span>
-                <span class="col s9">Description</span>
-            </li>
-            <s:iterator value="role.rights" var="permission">
+        <s:if test="%{role.rights.isEmpty()}">
+            <p class="empty-indicator">Aucun privilège</p>
+        </s:if>
+        <s:else>
+            <ul class="collection">
+                <li class="collection-item collection-header row collection-item-content">
+                    <span class="col s3">Nom</span>
+                    <span class="col s9">Description</span>
+                </li>
+
+                <s:iterator value="role.rights" var="permission">
                 <li class="row collection-item">
                     <p class="col s3">${permission.name}</p>
                     <p class="col s9">${permission.description}</p>
                 </li>
-            </s:iterator>
-        </ul>
+                </s:iterator>
+            </ul>
+        </s:else>
 
         <h2>Membres</h2>
         <t:memberlist members="${usersWithThisRole}" />

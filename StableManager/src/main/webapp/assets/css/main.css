@@ -8174,6 +8174,10 @@ nav .header-menu a {
   margin-left: 15px;
 }
 
+.empty-indicator {
+  font-style: italic;
+}
+
 .collection {
   border-radius: 5px;
   padding: 0;
