@@ -7,7 +7,7 @@
     <t:pagedescription title="Chevaux > ${horse.id}" ></t:pagedescription>
     <sec:authorize access="hasAuthority('WRITE_ALL_PROFILES')">
         <a href="<s:url action='edit/%{horse.id}' namespace="/horse"/>" class="waves-effect waves-light btn">Modifier</a>
-        <a href="<s:url action='perform_delete/%{horse.id}' namespace="/horse"/>" class="waves-effect waves-light btn error-btn">Supprimer</a>
+        <a href="<s:url action='perform_delete/%{horse.id}' namespace="/horse"/>" class="waves-effect waves-light btn btn-error">Supprimer</a>
     </sec:authorize>
     <br>
     Name: <s:property value="horse.name"/><br>
