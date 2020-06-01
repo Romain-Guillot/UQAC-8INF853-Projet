@@ -18,7 +18,7 @@ public class MemberViewAction extends AuthenticatedAction {
     @PreAuthorize("@controlBasedService.hasAccess('READ_ALL_PROFILES')")
     public String execute() {
         member = memberService.findById(memberID);
-        return member == null ? ERROR : SUCCESS;
+        return member == null ? ERROR_404 : SUCCESS;
     }
 
     public MemberModel getMember() {

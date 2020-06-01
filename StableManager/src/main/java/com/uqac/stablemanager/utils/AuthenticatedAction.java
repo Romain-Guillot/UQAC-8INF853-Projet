@@ -17,9 +17,9 @@ public abstract class AuthenticatedAction extends ActionSupport implements Sessi
 
     @Autowired MemberService memberService;
 
-    String ERROR_404 = "error_404";
-    String ERROR_403 = "error_403";
-    String ERROR_500 = "error_500";
+    protected String ERROR_404 = "error_404";
+    protected String ERROR_403 = "error_403";
+    protected String ERROR_500 = "error_500";
 
     private MemberModel member;
     @Autowired

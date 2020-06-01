@@ -5,7 +5,7 @@
 <t:basepage pageTitle="StableManager">
 
     <jsp:attribute name="pageHeader">
-        <t:pagedescription title="Erreur • Accès refusé"/>
+        <t:pagedescription title="Erreur • 403"/>
     </jsp:attribute>
 
     <jsp:body>
