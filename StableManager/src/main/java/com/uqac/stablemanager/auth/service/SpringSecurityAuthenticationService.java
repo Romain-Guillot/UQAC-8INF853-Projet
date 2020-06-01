@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
+import java.lang.reflect.Member;
 import java.util.Map;
 
 /**
@@ -67,7 +68,11 @@ public class SpringSecurityAuthenticationService implements IAuthenticationServi
      */
     @Override
     public MemberModel getConnectedMember(Map<String, Object> sessionObject) {
-        return (MemberModel) ((SecurityContextImpl) sessionObject.get("SPRING_SECURITY_CONTEXT")).getAuthentication().getPrincipal();
+        MemberModel member = (MemberModel) ((SecurityContextImpl) sessionObject.get("SPRING_SECURITY_CONTEXT")).getAuthentication().getPrincipal();
+        if (member == null) {
+            logout();
+        }
+        return member;
     }
 
     /**

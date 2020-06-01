@@ -38,6 +38,9 @@ public class PermissionService  extends CommonDao<PermissionModel> {
 
     public boolean updateRolePermissions(RoleModel role) {
         try {
+            PreparedStatement st1 = connection.prepareStatement("DELETE FROM RolePermissionAssoc WHERE role_name = ? ");
+            st1.setString(1, role.getName());
+            st1.executeUpdate();
             PreparedStatement st = connection.prepareStatement("insert ignore into RolePermissionAssoc values(?,?)" );
             connection.setAutoCommit(false);
             for (PermissionModel permission : role.getRights()) {

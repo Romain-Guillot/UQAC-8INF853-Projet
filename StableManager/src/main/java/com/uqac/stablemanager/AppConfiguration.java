@@ -3,22 +3,23 @@ package com.uqac.stablemanager;
 import com.uqac.stablemanager.auth.service.IAuthenticationService;
 import com.uqac.stablemanager.auth.service.SpringSecurityAuthenticationService;
 import com.uqac.stablemanager.horse.service.HorseService;
+import com.uqac.stablemanager.member.service.MemberControleBasedService;
 import com.uqac.stablemanager.member.service.MemberService;
 import com.uqac.stablemanager.security.service.PermissionService;
 import com.uqac.stablemanager.security.service.RoleService;
-import com.uqac.stablemanager.utils.MySQLConnection;
 import com.uqac.stablemanager.utils.PasswordManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import java.sql.Connection;
 import java.text.SimpleDateFormat;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, proxyTargetClass = true, jsr250Enabled = true)
 public class AppConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -28,6 +29,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/auth/login*").anonymous().and()
                 .authorizeRequests().antMatchers("/auth/perform_login*").anonymous().and()
                 .authorizeRequests().anyRequest().authenticated().and()
+                .exceptionHandling().accessDeniedPage("/error/err403.jsp").and()
                 .formLogin()
                     .loginPage("/auth/login")
                     .loginProcessingUrl("/auth/perform_login")
@@ -73,5 +75,10 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public SimpleDateFormat simpleDateFormat() {
         return new SimpleDateFormat("dd/MM/yyyy");
+    }
+
+    @Bean
+    public MemberControleBasedService controlBasedService() {
+        return new MemberControleBasedService();
     }
 }

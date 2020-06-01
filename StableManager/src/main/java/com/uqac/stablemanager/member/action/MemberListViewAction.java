@@ -7,11 +7,11 @@ import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
 
-@PreAuthorize("hasAuthority('READ_ALL_PROFILES')")
 public class MemberListViewAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
 
@@ -24,6 +24,7 @@ public class MemberListViewAction extends AuthenticatedAction {
     private List<MemberModel> members;
 
     @Override
+    @PreAuthorize("hasAuthority('READ_ALL_PROFILES')")
     public String execute() {
         roles = roleService.list();
         Optional<RoleModel> selectedRoleModel = roles.stream().filter(r -> r.getName().equals(selectedRole)).findFirst();

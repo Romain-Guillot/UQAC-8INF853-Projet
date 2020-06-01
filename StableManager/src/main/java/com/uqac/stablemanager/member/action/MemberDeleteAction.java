@@ -17,22 +17,14 @@ public class MemberDeleteAction extends AuthenticatedAction {
 
     private int memberID;
 
-    @PreAuthorize("hasAuthority('WRITE_ALL_PROFILES')")
+    @PreAuthorize("@controlBasedService.hasAccess('WRITE_ALL_PROFILES')")
     public String performDelete() {
-        return deleteWorker(memberID) ? SUCCESS : INPUT;
-    }
-
-    public String performDeleteConnectedUser() {
-        return deleteWorker(getUser().getId()) ? SUCCESS : INPUT;
-    }
-
-    private boolean deleteWorker(int memberID) {
         int userID = getUser().getId();
         boolean success = memberService.delete(memberID);
         if (success && memberID == userID) {
             authenticationService.logout();
         }
-        return success;
+        return success ? SUCCESS : INPUT;
     }
 
     public int getMemberID() {

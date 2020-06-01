@@ -4,6 +4,7 @@ import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.MemberService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,11 +20,13 @@ public class MemberEditAction extends AuthenticatedAction {
     private MemberModel member;
     private String newPassword;
 
+    @PreAuthorize("@controlBasedService.hasAccess('WRITE_ALL_PROFILES')")
     public String view() {
         member = memberService.findById(memberID);
         return SUCCESS;
     }
 
+    @PreAuthorize("@controlBasedService.hasAccess('WRITE_ALL_PROFILES')")
     public String performUpdate() {
         member.setId(memberID);
         boolean success = memberService.update(member);
@@ -33,6 +36,7 @@ public class MemberEditAction extends AuthenticatedAction {
         return success ? SUCCESS : ERROR;
     }
 
+    @PreAuthorize("@controlBasedService.hasAccess('WRITE_ALL_PROFILES')")
     public String performUpdatePassword() {
         boolean success = memberService.changePassword(memberID, newPassword);
         return success ? SUCCESS : ERROR;

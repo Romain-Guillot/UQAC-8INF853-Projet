@@ -31,9 +31,12 @@ values ('Manager', 'READ_ALL_PROFILES');
 insert into RolePermissionAssoc (role_name, permission_name) 
 values ('Manager', 'WRITE_ALL_PROFILES');
 
-
 insert into ProfileMember (first_name, last_name, email, postal_address, birth_date, register_at, passwd, role_name) 
-values ('Yancy', 'Stave', 'ystave0@mapy.cz', '59 Old Gate Alley', '2019-09-04', '2020-04-26', '$2a$12$eIFOisxQG4MM3XXs6GuTveQ8pITJqRX4HN9AuWKdfRiDqyE1Zoo/y', 'Palfrenier');
+values ('Yancy', 'Stave', 'manager', '59 Old Gate Alley', '2019-09-04', '2020-04-26', '$2a$12$eIFOisxQG4MM3XXs6GuTveQ8pITJqRX4HN9AuWKdfRiDqyE1Zoo/y', 'Manager');
+insert into ProfileMember (first_name, last_name, email, postal_address, birth_date, register_at, passwd, role_name) 
+values ('Yancy', 'Stave', 'membre', '59 Old Gate Alley', '2019-09-04', '2020-04-26', '$2a$12$eIFOisxQG4MM3XXs6GuTveQ8pITJqRX4HN9AuWKdfRiDqyE1Zoo/y', 'Membre');
+insert into ProfileMember (first_name, last_name, email, postal_address, birth_date, register_at, passwd, role_name) 
+values ('Yancy', 'Stave', 'palfrenier', '59 Old Gate Alley', '2019-09-04', '2020-04-26', '$2a$12$eIFOisxQG4MM3XXs6GuTveQ8pITJqRX4HN9AuWKdfRiDqyE1Zoo/y', 'Palfrenier');
 insert into ProfileMember (first_name, last_name, email, postal_address, birth_date, register_at, passwd, role_name) 
 values ('Maximilian', 'Fenelow', 'mfenelow1@sciencedirect.com', '4 Barnett Court', '2019-09-22', '2019-06-06', '$2b$10$57dglqmOwykrxHAkJREIJOWExyu/modCO3kS4ryV/l0EWEJZZimbm', 'Membre');
 insert into ProfileMember (first_name, last_name, email, postal_address, birth_date, register_at, passwd, role_name) 

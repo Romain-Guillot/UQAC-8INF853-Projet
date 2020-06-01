@@ -23,8 +23,8 @@ CREATE TABLE RolePermissionAssoc (
     role_name VARCHAR(255) NOT NULL,
     permission_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (role_name, permission_name),
-    FOREIGN KEY (role_name) REFERENCES Role(name) ON DELETE CASCADE,
-    FOREIGN KEY (permission_name) REFERENCES Permission(name)
+    FOREIGN KEY (role_name) REFERENCES Role(name) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (permission_name) REFERENCES Permission(name) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE ProfileMember (
@@ -38,7 +38,7 @@ CREATE TABLE ProfileMember (
     role_name VARCHAR(255),
     passwd VARCHAR(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (role_name) REFERENCES Role(name),
+    FOREIGN KEY (role_name) REFERENCES Role(name) ON DELETE SET NULL ON UPDATE CASCADE,
     UNIQUE(email)
 );
 
@@ -46,14 +46,14 @@ CREATE TABLE AdministatorMember (
     id INT NOT NULL AUTO_INCREMENT,
     profile_id INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (profile_id) REFERENCES ProfileMember(id)
+    FOREIGN KEY (profile_id) REFERENCES ProfileMember(id) ON DELETE CASCADE
 );
 
 CREATE TABLE ManagerMember (
     id INT NOT NULL AUTO_INCREMENT,
     admin_id INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (admin_id) REFERENCES AdministatorMember(id)
+    FOREIGN KEY (admin_id) REFERENCES AdministatorMember(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Horse (
@@ -62,5 +62,5 @@ CREATE TABLE Horse (
     birth_date  DATE,
     profile_member_id INT,
     PRIMARY KEY (id),
-    FOREIGN KEY (profile_member_id) REFERENCES ProfileMember(id)
+    FOREIGN KEY (profile_member_id) REFERENCES ProfileMember(id) ON DELETE SET NULL
 );

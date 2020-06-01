@@ -4,6 +4,7 @@ import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.MemberService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 public class MemberCreateAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
@@ -11,7 +12,8 @@ public class MemberCreateAction extends AuthenticatedAction {
     @Autowired MemberService memberService;
     private MemberModel member;
     private String passwordConfirmation;
-    
+
+    @PreAuthorize("@controlBasedService.hasAccess('WRITE_ALL_PROFILES')")
     public String perform() {
         boolean success = false;
         if (member != null)

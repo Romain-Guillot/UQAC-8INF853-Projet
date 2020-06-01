@@ -6,6 +6,7 @@ import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -20,9 +21,12 @@ public class RoleViewAction extends AuthenticatedAction {
     private List<MemberModel> usersWithThisRole;
 
     @Override
+    @PreAuthorize("hasAuthority('MANAGE_ROLES')")
     public String execute() {
         role = roleService.findByName(roleName);
-        usersWithThisRole = memberService.list(role);
+        if (role != null) {
+            usersWithThisRole = memberService.list(role);
+        }
         return role != null ? SUCCESS : ERROR;
     }
 

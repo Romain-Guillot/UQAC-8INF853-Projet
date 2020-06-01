@@ -6,10 +6,12 @@ import com.uqac.stablemanager.security.service.PermissionService;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 
 public class RoleEditionAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
@@ -22,6 +24,7 @@ public class RoleEditionAction extends AuthenticatedAction {
     private List<String> selectedPermissions;
 
     @Override
+    @PreAuthorize("hasAuthority('MANAGE_ROLES')")
     public String execute() {
         Map<String, PermissionModel> allPermissions = getPermissions().stream()
                 .collect(Collectors.toMap(PermissionModel::getName, p -> p));
@@ -38,6 +41,7 @@ public class RoleEditionAction extends AuthenticatedAction {
     }
 
     @Override
+    @PreAuthorize("hasAuthority('MANAGE_ROLES')")
     public String input() {
         if (roleName != null)
             role = roleService.findByName(roleName);

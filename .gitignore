@@ -34,4 +34,5 @@ StableManager/.idea/misc.xml
 StableManager/.idea/dataSources.xml
 StableManager/.idea/dataSources.local.xml
 StableManager/.idea/dataSources
+StableManager/.idea/libraries/*
 StableManager/target

@@ -8,16 +8,22 @@
     <constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
     <constant name="struts.patternMatcher" value="regex" />
     <constant name="struts.ui.theme" value="simple" />
-
+    <constant name="struts.objectFactory" value="spring" />
+    <constant name="struts.objectFactory.spring.autoWire.alwaysRespect" value="true"/>
     <package name="default" namespace="/" extends="struts-default">
 
         <global-results>
             <result name="success" type="redirectAction">index</result>
-            <result name="error">/error404.jsp</result>
-            <result name="error_notfound">/error404.jsp</result>
-            <result name="error_database">/error404.jsp</result>
-            <result name="error_permission_missing">/error404.jsp</result>
+            <result name="error">/error/err.jsp</result>
+            <result name="error_404">/error/err404.jsp</result>
+            <result name="error_500">/error/err500.jsp</result>
+            <result name="error_403">/error/err403.jsp</result>
         </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="org.springframework.security.access.AccessDeniedException" result="error_403"/>
+        </global-exception-mappings>
+
 
         <action name="index" class="com.uqac.stablemanager.homepage.HomePageAction">
             <result>/index.jsp</result>

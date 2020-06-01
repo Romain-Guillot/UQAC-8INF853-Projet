@@ -22,7 +22,9 @@
         </s:if>
 
         <s:form action="perform_login">
-            <s:textfield name="credential.email" label="Email" value="ystave0@mapy.cz"/>
+            <i>Comptes démos (email) : Manager, Member, Membre</i>
+            <i>Mot de passe : <code>pass</code></i>
+            <s:textfield name="credential.email" label="Email" value="Manager"/>
             <s:textfield name="credential.password" label="Password" value="pass" />
             <%--        <s:password name="credential.password" label="Password" />--%>
 

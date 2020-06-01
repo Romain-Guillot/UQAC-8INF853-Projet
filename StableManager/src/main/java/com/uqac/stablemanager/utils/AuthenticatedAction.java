@@ -17,9 +17,9 @@ public abstract class AuthenticatedAction extends ActionSupport implements Sessi
 
     @Autowired MemberService memberService;
 
-    String ERROR_NOTFOUND = "error_notfound";
-    String ERROR_PERMISSION_MISSING = "error_permission_missing";
-    String ERROR_DATABASE = "error_database";
+    String ERROR_404 = "error_404";
+    String ERROR_403 = "error_403";
+    String ERROR_500 = "error_500";
 
     private MemberModel member;
     @Autowired
