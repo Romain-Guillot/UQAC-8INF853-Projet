@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS AdministatorMember;
 DROP TABLE IF EXISTS ProfileMember;
 DROP TABLE IF EXISTS RolePermissionAssoc;
 DROP TABLE IF EXISTS Permission;
+DROP TABLE IF EXISTS Horse;
 DROP TABLE IF EXISTS Role;
 
 
