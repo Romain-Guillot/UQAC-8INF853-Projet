@@ -12,5 +12,5 @@
     <br>
     Type: <s:property value="equipment.type"/><br>
     Modèle: <s:property value="equipment.model"/><br>
-    Prix: <s:property value="equipment.price"/><br>
+    Prix: <s:property value="equipment.price"/> €<br>
 </t:basepage>
