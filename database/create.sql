@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS ProfileMember;
 DROP TABLE IF EXISTS RolePermissionAssoc;
 DROP TABLE IF EXISTS Permission;
 DROP TABLE IF EXISTS Horse;
-DROP TABLE IF EXISTS Equipement;
+DROP TABLE IF EXISTS Equipment;
 DROP TABLE IF EXISTS Role;
 
 
@@ -67,11 +67,12 @@ CREATE TABLE Horse (
     FOREIGN KEY (profile_member_id) REFERENCES ProfileMember(id) ON DELETE SET NULL
 );
 
-CREATE TABLE Equipement (
+CREATE TABLE Equipment (
     id INT NOT NULL AUTO_INCREMENT,
     type VARCHAR(255),
     model VARCHAR(255),
     price FLOAT,
+    profile_member_id INT,
     PRIMARY KEY (id),
     FOREIGN KEY (profile_member_id) REFERENCES ProfileMember(id) ON DELETE SET NULL
 );
