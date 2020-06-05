@@ -89,3 +89,20 @@ insert into Horse (name, birth_date, profile_member_id)
 values ('Tonerre', '2006-08-11', 2);
 insert into Horse (name, birth_date, profile_member_id) 
 values ('Rose', '2002-02-10', 3);
+
+
+-- Equipement
+insert into Equipement (type, model, price, profile_member_id) 
+values ('Saddle', 'EA3-22', 10, 1);
+insert into Equipement (type, model, price, profile_member_id) 
+values ('Saddle', 'EA3-22', 10, 1);
+insert into Equipement (type, model, price, profile_member_id) 
+values ('Stirrups', 'RAGE 11', 10.5, 1);
+insert into Equipement (type, model, price, profile_member_id) 
+values ('Stirrups', 'DGTE-2020', 9, 1);
+insert into Equipement (type, model, price, profile_member_id) 
+values ('Reins', 'CAMDGE 2015', 20, 1);
+insert into Equipement (type, model, price, profile_member_id) 
+values ('Bit', 'RSA 330', 10, 1);
+insert into Equipement (type, model, price, profile_member_id) 
+values ('Bit', 'RSA 332', 15, 1);
