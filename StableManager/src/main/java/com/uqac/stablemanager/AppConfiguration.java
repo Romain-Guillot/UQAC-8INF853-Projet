@@ -2,6 +2,8 @@ package com.uqac.stablemanager;
 
 import com.uqac.stablemanager.auth.service.IAuthenticationService;
 import com.uqac.stablemanager.auth.service.SpringSecurityAuthenticationService;
+import com.uqac.stablemanager.equipment.model.EquipmentModel;
+import com.uqac.stablemanager.equipment.service.EquipmentService;
 import com.uqac.stablemanager.horse.service.HorseService;
 import com.uqac.stablemanager.member.service.MemberControleBasedService;
 import com.uqac.stablemanager.member.service.MemberService;
@@ -70,6 +72,11 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public HorseService horseService() {
         return new HorseService();
+    }
+
+    @Bean
+    public EquipmentService equipmentService() {
+        return new EquipmentService();
     }
 
     @Bean

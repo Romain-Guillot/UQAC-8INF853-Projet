@@ -34,5 +34,6 @@
     <include file="struts-member.xml"/>
     <include file="struts-security.xml"/>
     <include file="struts-horse.xml"/>
+    <include file="struts-equipment.xml"/>
 
 </struts>

@@ -30,7 +30,7 @@
         <h2>Ressources</h2>
         <ul class="list-actions">
             <li><a href="<s:url action='list' namespace="/horse"/>">Les chevaux</a></li>
-            <li><a href="">Le matériel</a></li>
+            <li><a href="<s:url action='list' namespace="/equipment"/>">Le matériel</a></li>
             <li><a href="">Les corrals</a></li>
         </ul>
 
