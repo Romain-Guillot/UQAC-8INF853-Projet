@@ -1,7 +1,8 @@
 package com.uqac.stablemanager.member.action;
 
 import com.uqac.stablemanager.member.model.MemberModel;
-import com.uqac.stablemanager.member.service.MemberService;
+import com.uqac.stablemanager.member.service.IMemberService;
+import com.uqac.stablemanager.member.service.MySQLMemberService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,15 +10,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 public class MemberCreateAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
 
-    @Autowired MemberService memberService;
+    @Autowired
+    IMemberService mySQLMemberService;
     private MemberModel member;
     private String passwordConfirmation;
 
     @PreAuthorize("@controlBasedService.hasAccess('WRITE_ALL_PROFILES')")
-    public String perform() {
+    public String perform() throws Exception {
         boolean success = false;
         if (member != null)
-            success = memberService.create(member);
+            success = mySQLMemberService.create(member);
         return success ? SUCCESS : ERROR;
     }
 
@@ -26,7 +28,12 @@ public class MemberCreateAction extends AuthenticatedAction {
         if (member.getEmail() == null) {
             addFieldError("member.email", "Email cannot be empty");
         } else {
-            MemberModel memberWithSameEmail = memberService.findByEmail(member.getEmail());
+            MemberModel memberWithSameEmail = null;
+            try {
+                memberWithSameEmail = mySQLMemberService.findByEmail(member.getEmail());
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             if (memberWithSameEmail != null) {
                 addFieldError("member.email", "Email already exists");
             }

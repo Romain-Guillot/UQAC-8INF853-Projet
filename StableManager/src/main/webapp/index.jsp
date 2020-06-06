@@ -36,14 +36,14 @@
 
         <h2>Cours et locations</h2>
         <ul class="list-actions">
-            <li><a href="">Cours</a></li>
             <li><a href="<s:url action='list' namespace="/booking"/>">Locations</a></li>
+            <li><a href="">Cours <span class="badge">Bientôt</span></a></li>
         </ul>
 
         <h2>Actualités de l'écurie</h2>
         <ul class="list-actions">
-            <li><a href="">Actualités</a></li>
-            <li><a href="">Activités</a></li>
+            <li><a href="">Actualités <span class="badge">Bientôt</span></a></li>
+            <li><a href="">Activités <span class="badge">Bientôt</span></a></li>
         </ul>
     </jsp:body>
 </t:basepage>

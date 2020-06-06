@@ -30,7 +30,7 @@ CREATE TABLE RolePermissionAssoc (
 );
 
 CREATE TABLE ProfileMember (
-    id INT NOT NULL AUTO_INCREMENT,
+    profile_id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     email VARCHAR(255),
@@ -39,23 +39,23 @@ CREATE TABLE ProfileMember (
     register_at DATE,
     role_name VARCHAR(255),
     passwd VARCHAR(255),
-    PRIMARY KEY (id),
+    PRIMARY KEY (profile_id),
     FOREIGN KEY (role_name) REFERENCES Role(name) ON DELETE SET NULL ON UPDATE CASCADE,
     UNIQUE(email)
 );
 
 CREATE TABLE AdministatorMember (
-    id INT NOT NULL AUTO_INCREMENT,
+    admin_id INT NOT NULL AUTO_INCREMENT,
     profile_id INT NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (profile_id) REFERENCES ProfileMember(id) ON DELETE CASCADE
+    PRIMARY KEY (admin_id),
+    FOREIGN KEY (profile_id) REFERENCES ProfileMember(profile_id) ON DELETE CASCADE
 );
 
 CREATE TABLE ManagerMember (
-    id INT NOT NULL AUTO_INCREMENT,
+    manager_id INT NOT NULL AUTO_INCREMENT,
     admin_id INT NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (admin_id) REFERENCES AdministatorMember(id) ON DELETE CASCADE
+    PRIMARY KEY (manager_id),
+    FOREIGN KEY (admin_id) REFERENCES AdministatorMember(admin_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Horse (
@@ -64,7 +64,7 @@ CREATE TABLE Horse (
     birth_date  DATE,
     profile_member_id INT,
     PRIMARY KEY (id),
-    FOREIGN KEY (profile_member_id) REFERENCES ProfileMember(id) ON DELETE SET NULL
+    FOREIGN KEY (profile_member_id) REFERENCES ProfileMember(profile_id) ON DELETE SET NULL
 );
 
 CREATE TABLE Equipment (
@@ -74,16 +74,16 @@ CREATE TABLE Equipment (
     price FLOAT,
     profile_member_id INT,
     PRIMARY KEY (id),
-    FOREIGN KEY (profile_member_id) REFERENCES ProfileMember(id) ON DELETE SET NULL
+    FOREIGN KEY (profile_member_id) REFERENCES ProfileMember(profile_id) ON DELETE SET NULL
 );
 
 CREATE TABLE Booking (
-    id INT NOT NULL AUTO_INCREMENT,
+    booking_id INT NOT NULL AUTO_INCREMENT,
     profile_id INT,
     resource_id INT NOT NULL,
     begin DATE NOT NULL,
     end DATE NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (profile_id) REFERENCES ProfileMember(id) ON DELETE SET NULL, 
+    PRIMARY KEY (booking_id),
+    FOREIGN KEY (profile_id) REFERENCES ProfileMember(profile_id) ON DELETE SET NULL, 
     FOREIGN KEY (resource_id) REFERENCES Horse(id) ON DELETE CASCADE
 )

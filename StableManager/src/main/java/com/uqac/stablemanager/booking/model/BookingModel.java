@@ -5,10 +5,10 @@ import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.utils.TimeSlot;
 
 public class BookingModel {
-    protected int id;
-    protected MemberModel member;
-    protected HorseModel resource;
-    protected TimeSlot timeSlot;
+    private int id;
+    private MemberModel member;
+    private HorseModel resource;
+    private TimeSlot timeSlot;
 
     public BookingModel() { }
 

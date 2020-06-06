@@ -18,7 +18,7 @@ public class LoginAction extends ActionSupport {
     private CredentialsModel credential;
 
     @Override
-    public String execute() {
+    public String execute() throws Exception {
         boolean isAuthenticated = authenticationService.login(credential);
         if (!isAuthenticated) {
             addActionError("Impossible de vous connecter avec ces informations");

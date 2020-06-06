@@ -14,9 +14,9 @@
 
         <table>
             <tr><th>#ID</th>            <td>${booking.id}</td>             </tr>
-            <tr><th>Member</th>         <td>${booking.member}</td>         </tr>
+            <tr><th>Member</th>         <td><a href="<s:url action='view/%{booking.member.id}"' namespace="/member"/>">${booking.member}</a></td>         </tr>
             <tr><th>Resource</th>       <td>${booking.resource}</td>       </tr>
-            <tr><th>Plage horaire</th>  <td>${booking.timeSlot}</td>       </tr>
+            <tr><th>Plage horaire</th>  <td><t:timeslot timeslot="${booking.timeSlot}"/></td>       </tr>
         </table>
 
 <%--        <s:if test="%{user.id == member.id || #hasPrivilege == true}">--%>

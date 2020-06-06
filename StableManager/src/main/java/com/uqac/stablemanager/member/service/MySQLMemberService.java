@@ -4,63 +4,76 @@ import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.CommonDao;
+import com.uqac.stablemanager.utils.NotFoundException;
 import com.uqac.stablemanager.utils.SQLTableOperationsHelper;
 import com.uqac.stablemanager.utils.PasswordManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.management.relation.Role;
 import java.math.BigInteger;
 import java.sql.*;
 import java.util.*;
 import java.util.logging.Level;
 
-public class MemberService extends CommonDao<MemberModel> {
+public class MySQLMemberService extends CommonDao<MemberModel> implements IMemberService {
     @Autowired private PasswordManager passwordManager;
     @Autowired private RoleService roleService;
 
     private final SQLTableOperationsHelper<MemberModel> tableOperationsHelper;
 
-    public MemberService() {
-        tableOperationsHelper = new SQLTableOperationsHelper<>(connection, "ProfileMember", this::fromResultSet, this::toMap);
+    public MySQLMemberService() {
+        tableOperationsHelper = new SQLTableOperationsHelper<>(connection, "ProfileMember", null, this::toMap);
     }
 
-    public MemberModel findById(int id) {
-        try {
-            Map<String, Object> condition = new HashMap<>();
-            condition.put("id", id);
-            return tableOperationsHelper.findBy(condition);
-        } catch (SQLException exception) {
-            log(Level.SEVERE, null, exception);
-            return null;
+    public MemberModel findById(int id) throws Exception {
+        String query = "SELECT * FROM ProfileMember P LEFT JOIN Role R ON P.role_name = R.name WHERE P.profile_id = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, id);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            RoleModel role = roleService.findByName(resultSet.getString("role_name"));
+            return new MySQLMemberAdapter(resultSet, role);
+        } else {
+            throw new NotFoundException();
         }
     }
 
-    public MemberModel findByEmail(String email) {
-        try {
-            Map<String, Object> condition = new HashMap<>();
-            condition.put("email", email);
-            return tableOperationsHelper.findBy(condition);
-        } catch (SQLException exception) {
-            log(Level.SEVERE, null, exception);
-            return null;
+    public MemberModel findByEmail(String email) throws Exception{
+        String query = "SELECT * FROM ProfileMember P LEFT JOIN Role R ON P.role_name = R.name WHERE P.email = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, email);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            RoleModel role = roleService.findByName(resultSet.getString("role_name"));
+            return new MySQLMemberAdapter(resultSet, role);
+        } else {
+            throw new NotFoundException();
         }
     }
 
-    public List<MemberModel> list() {
-        try {
-            return tableOperationsHelper.list();
-        } catch (SQLException exception) {
-            return null;
+    public List<MemberModel> list() throws Exception {
+        List<MemberModel> members = new ArrayList<>();
+        String query = "SELECT * FROM ProfileMember";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            RoleModel role = roleService.findByName(resultSet.getString("role_name"));
+            members.add(new MySQLMemberAdapter(resultSet, role));
         }
+        return members;
     }
 
-    public List<MemberModel> list(RoleModel roleFilter) {
-        try {
-            Map<String, Object> condition = new HashMap<>();
-            condition.put("role_name", roleFilter.getName());
-            return tableOperationsHelper.list(condition);
-        } catch (SQLException exception) {
-            return null;
+    public List<MemberModel> list(RoleModel roleFilter) throws Exception {
+        List<MemberModel> members = new ArrayList<>();
+        String query = "SELECT * FROM ProfileMember WHERE role_name = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, roleFilter.getName());
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            RoleModel role = roleService.findByName(resultSet.getString("role_name"));
+            members.add(new MySQLMemberAdapter(resultSet, role));
         }
+        return members;
     }
 
     public boolean update(MemberModel member) {
@@ -76,7 +89,7 @@ public class MemberService extends CommonDao<MemberModel> {
     public boolean delete(int id) {
         try {
             Map<String, Object> condition = new HashMap<>();
-            condition.put("id", id);
+            condition.put("profile_id", id);
             return tableOperationsHelper.delete(condition);
         } catch (SQLException exception) {
             log(Level.SEVERE, null, exception);
@@ -117,7 +130,7 @@ public class MemberService extends CommonDao<MemberModel> {
 
     private HashMap<String, Object> toMap(MemberModel memberModel) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("id", memberModel.getId());
+        map.put("profile_id", memberModel.getId());
         map.put("email", memberModel.getEmail());
         map.put("first_name", memberModel.getFirstName());
         map.put("last_name", memberModel.getLastName());
@@ -126,24 +139,5 @@ public class MemberService extends CommonDao<MemberModel> {
         map.put("passwd", memberModel.getPassword());
         map.put("postal_address", memberModel.getPostalAddress());
         return map;
-    }
-
-    private MemberModel fromResultSet(ResultSet result) {
-        MemberModel member = new MemberModel();
-        try {
-            member.setId(result.getInt("id"));
-            member.setEmail(result.getString("email"));
-            member.setFirstName(result.getString("first_name"));
-            member.setLastName(result.getString("last_name"));
-            member.setBirthDate(result.getDate("birth_date"));
-            member.setRegisterAt(result.getDate("register_at"));
-            member.setPassword(result.getString("passwd"));
-            member.setPostalAddress(result.getString("postal_address"));
-            RoleModel role = roleService.findByName(result.getString("role_name"));
-            member.setRole(role);
-        } catch (SQLException exception) {
-            log(Level.SEVERE, null, exception);
-        }
-        return member;
     }
 }

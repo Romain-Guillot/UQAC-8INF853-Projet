@@ -10,12 +10,17 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-public class MemberControleBasedService {
+public class MemberControlBasedService {
     @Autowired IAuthenticationService authenticationService;
 
     public boolean hasAccess(String permission) {
         Map session = (Map) ActionContext.getContext().get("session");
-        MemberModel user = authenticationService.getConnectedMember(session);
+        MemberModel user = null;
+        try {
+            user = authenticationService.getConnectedMember(session);
+        } catch (Exception exception) {
+            return false;
+        }
         HttpServletRequest req = ServletActionContext.getRequest();
         Object resourceOwnerID = req.getAttribute("memberID");
         if (user == null) {

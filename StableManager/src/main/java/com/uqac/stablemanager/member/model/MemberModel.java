@@ -139,4 +139,9 @@ public class MemberModel implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "#" + id + " " + firstName + " " + lastName;
+    }
 }

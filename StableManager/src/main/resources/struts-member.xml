@@ -32,7 +32,7 @@
             </result>
         </action>
 
-        <action name="create">
+        <action name="create" class="com.uqac.stablemanager.utils.AuthenticatedAction">
             <result name="success">/member/member_create.jsp</result>
         </action>
 

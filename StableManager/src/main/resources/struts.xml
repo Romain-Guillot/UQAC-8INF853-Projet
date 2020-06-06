@@ -36,7 +36,7 @@
             <exception-mapping exception="com.uqac.stablemanager.utils.NotFoundException" result="error_404"/>
             <exception-mapping exception="java.lang.Exception" result="error_500"/>
         </global-exception-mappings>
-        
+
         <action name="index" class="com.uqac.stablemanager.homepage.HomePageAction">
             <result>/index.jsp</result>
         </action>

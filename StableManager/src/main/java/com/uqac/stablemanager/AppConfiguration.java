@@ -4,11 +4,11 @@ import com.uqac.stablemanager.auth.service.IAuthenticationService;
 import com.uqac.stablemanager.auth.service.SpringSecurityAuthenticationService;
 import com.uqac.stablemanager.booking.service.IBookingService;
 import com.uqac.stablemanager.booking.service.MySQLBookingService;
-import com.uqac.stablemanager.equipment.model.EquipmentModel;
 import com.uqac.stablemanager.equipment.service.EquipmentService;
 import com.uqac.stablemanager.horse.service.HorseService;
-import com.uqac.stablemanager.member.service.MemberControleBasedService;
-import com.uqac.stablemanager.member.service.MemberService;
+import com.uqac.stablemanager.member.service.IMemberService;
+import com.uqac.stablemanager.member.service.MemberControlBasedService;
+import com.uqac.stablemanager.member.service.MySQLMemberService;
 import com.uqac.stablemanager.security.service.PermissionService;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.PasswordManager;
@@ -52,8 +52,13 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public MemberService memberService() {
-        return new MemberService();
+    public IMemberService memberService() {
+        return new MySQLMemberService();
+    }
+
+    @Bean
+    public IBookingService bookingService() {
+        return new MySQLBookingService();
     }
 
     @Bean
@@ -87,12 +92,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public MemberControleBasedService controlBasedService() {
-        return new MemberControleBasedService();
-    }
-
-    @Bean
-    public IBookingService bookingService() {
-        return new MySQLBookingService();
+    public MemberControlBasedService controlBasedService() {
+        return new MemberControlBasedService();
     }
 }

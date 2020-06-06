@@ -8205,6 +8205,10 @@ nav .header-menu a {
   padding: 12px 0;
 }
 
+span.badge {
+  color: #2f66d4;
+}
+
 .z-depth-1, .btn-floating, .sidenav, .collapsible, .dropdown-content, .btn-floating, .btn, .btn-small, .btn-large, .toast, .card, .card-panel, nav {
   box-shadow: none;
 }

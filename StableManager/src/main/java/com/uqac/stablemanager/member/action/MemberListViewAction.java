@@ -1,13 +1,13 @@
 package com.uqac.stablemanager.member.action;
 
 import com.uqac.stablemanager.member.model.MemberModel;
+import com.uqac.stablemanager.member.service.IMemberService;
 import com.uqac.stablemanager.security.model.RoleModel;
-import com.uqac.stablemanager.member.service.MemberService;
+import com.uqac.stablemanager.member.service.MySQLMemberService;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +16,8 @@ public class MemberListViewAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
 
 
-    @Autowired MemberService memberService;
+    @Autowired
+    IMemberService mySQLMemberService;
     @Autowired RoleService roleService;
 
     private List<RoleModel> roles;
@@ -25,13 +26,13 @@ public class MemberListViewAction extends AuthenticatedAction {
 
     @Override
     @PreAuthorize("hasAuthority('READ_ALL_PROFILES')")
-    public String execute() {
+    public String execute() throws Exception {
         roles = roleService.list();
         Optional<RoleModel> selectedRoleModel = roles.stream().filter(r -> r.getName().equals(selectedRole)).findFirst();
         if (selectedRoleModel.isPresent()) {
-            members = memberService.list(selectedRoleModel.get());
+            members = mySQLMemberService.list(selectedRoleModel.get());
         } else {
-            members = memberService.list();
+            members = mySQLMemberService.list();
         }
         return SUCCESS;
     }

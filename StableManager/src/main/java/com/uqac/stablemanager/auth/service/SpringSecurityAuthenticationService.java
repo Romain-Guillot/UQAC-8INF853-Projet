@@ -2,7 +2,8 @@ package com.uqac.stablemanager.auth.service;
 
 import com.uqac.stablemanager.auth.model.CredentialsModel;
 import com.uqac.stablemanager.member.model.MemberModel;
-import com.uqac.stablemanager.member.service.MemberService;
+import com.uqac.stablemanager.member.service.IMemberService;
+import com.uqac.stablemanager.member.service.MySQLMemberService;
 import com.uqac.stablemanager.utils.PasswordManager;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
-import java.lang.reflect.Member;
 import java.util.Map;
 
 /**
@@ -22,7 +22,7 @@ import java.util.Map;
  * Implémente le système d'authentification avec Spring Security.
  */
 public class SpringSecurityAuthenticationService implements IAuthenticationService {
-    @Autowired private MemberService memberService;
+    @Autowired private IMemberService mySQLMemberService;
     @Autowired private PasswordManager passwordManager;
 
 
@@ -35,9 +35,9 @@ public class SpringSecurityAuthenticationService implements IAuthenticationServi
      * Le chiffrement du mot de passe est opéré par la classe [PasswordManager]
      */
     @Override
-    public boolean login(CredentialsModel credentials) {
+    public boolean login(CredentialsModel credentials) throws Exception {
         boolean isAuthenticated = false;
-        UserDetails user = memberService.findByEmail(credentials.getEmail());
+        UserDetails user = mySQLMemberService.findByEmail(credentials.getEmail());
         if (user != null) {
             String hashPass = user.getPassword();
             String plainPass = credentials.getPassword();
@@ -54,7 +54,7 @@ public class SpringSecurityAuthenticationService implements IAuthenticationServi
      * {@inheritDoc}
      */
     @Override
-    public void logout() {
+    public void logout() throws Exception {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             new SecurityContextLogoutHandler().logout(ServletActionContext.getRequest(), ServletActionContext.getResponse(), auth);
@@ -67,7 +67,7 @@ public class SpringSecurityAuthenticationService implements IAuthenticationServi
      * Retrouve l'utilisateur dans la session courrante
      */
     @Override
-    public MemberModel getConnectedMember(Map<String, Object> sessionObject) {
+    public MemberModel getConnectedMember(Map<String, Object> sessionObject) throws Exception {
         MemberModel member = (MemberModel) ((SecurityContextImpl) sessionObject.get("SPRING_SECURITY_CONTEXT")).getAuthentication().getPrincipal();
         if (member == null) {
             logout();

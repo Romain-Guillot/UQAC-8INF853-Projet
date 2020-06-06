@@ -16,16 +16,16 @@ public interface IAuthenticationService {
      * @param credentials les informations de connexion.
      * @return true si l'utilisateur est connecté, faux sinon.
      */
-    boolean login(CredentialsModel credentials);
+    boolean login(CredentialsModel credentials) throws Exception;
 
     /**
      * Procède à le déconnexion de l'utilisateur dans le système.
      */
-    void logout();
+    void logout() throws Exception;
 
     /**
      * @param sessionObjects les objets actuellement stockés dans la session
      * @return l'utilisateur présentement connecté
      */
-    MemberModel getConnectedMember(Map<String, Object> sessionObjects);
+    MemberModel getConnectedMember(Map<String, Object> sessionObjects) throws Exception;
 }

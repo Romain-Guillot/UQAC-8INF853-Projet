@@ -12,7 +12,7 @@
 
     <jsp:body>
 
-
+        <h2>Informations</h2>
         <table>
             <tr><th>First name</th>     <td>${member.firstName}</td>        </tr>
             <tr><th>Last name</th>      <td>${member.lastName}</td>         </tr>
@@ -42,5 +42,9 @@
                 </a>
             </sec:authorize>
         </s:else>
+
+        <h2>Réservations</h2>
+        <t:bookinglist bookings="${bookings}"/>
+
     </jsp:body>
 </t:basepage>

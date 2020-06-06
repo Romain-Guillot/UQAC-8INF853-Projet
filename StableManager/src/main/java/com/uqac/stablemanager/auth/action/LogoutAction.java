@@ -15,7 +15,7 @@ public class LogoutAction extends ActionSupport {
     @Autowired private IAuthenticationService authenticationService;
 
     @Override
-    public String execute() {
+    public String execute() throws Exception {
         authenticationService.logout();
         return SUCCESS;
     }
