@@ -36,6 +36,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests().antMatchers("/auth/login*").anonymous().and()
                 .authorizeRequests().antMatchers("/auth/perform_login*").anonymous().and()
+                .authorizeRequests().antMatchers("/assets/**").permitAll().and()
                 .authorizeRequests().anyRequest().authenticated().and()
                 .exceptionHandling().accessDeniedPage("/error/err403.jsp").and()
                 .formLogin()
