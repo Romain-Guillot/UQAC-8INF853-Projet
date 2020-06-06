@@ -1,4 +1,7 @@
 package com.uqac.stablemanager.booking.action;
 
-public class BookingCreateAction {
+import com.uqac.stablemanager.utils.AuthenticatedAction;
+
+public class BookingCreateAction extends AuthenticatedAction {
+
 }

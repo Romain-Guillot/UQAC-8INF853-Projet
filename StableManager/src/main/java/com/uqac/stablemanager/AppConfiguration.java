@@ -2,6 +2,8 @@ package com.uqac.stablemanager;
 
 import com.uqac.stablemanager.auth.service.IAuthenticationService;
 import com.uqac.stablemanager.auth.service.SpringSecurityAuthenticationService;
+import com.uqac.stablemanager.booking.service.IBookingService;
+import com.uqac.stablemanager.booking.service.MySQLBookingService;
 import com.uqac.stablemanager.equipment.model.EquipmentModel;
 import com.uqac.stablemanager.equipment.service.EquipmentService;
 import com.uqac.stablemanager.horse.service.HorseService;
@@ -87,5 +89,10 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public MemberControleBasedService controlBasedService() {
         return new MemberControleBasedService();
+    }
+
+    @Bean
+    public IBookingService bookingService() {
+        return new MySQLBookingService();
     }
 }

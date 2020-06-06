@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <constant name="struts.devMode" value="true" />
+
+    <package name="booking" namespace="/booking" extends="default">
+        <action name="view/{bookingID}" class="com.uqac.stablemanager.booking.action.BookingViewAction" method="execute">
+            <result name="success">/booking/booking_view.jsp</result>
+        </action>
+
+<!--        <action name="edit/{memberID}" class="com.uqac.stablemanager.member.action.MemberEditAction" method="view">-->
+<!--            <result name="success">/member/member_edit.jsp</result>-->
+<!--        </action>-->
+
+<!--        <action name="perform_edit/{memberID}" class="com.uqac.stablemanager.member.action.MemberEditAction" method="performUpdate">-->
+<!--            <result name="success" type="redirectAction">-->
+<!--                <param name="actionName">view/{1}</param>-->
+<!--            </result>-->
+<!--            <result name="error">-->
+<!--                <param name="actionName">/member/member_edit.jsp</param>-->
+<!--            </result>-->
+<!--        </action>-->
+
+<!--        <action name="perform_changepassword/{memberID}" class="com.uqac.stablemanager.member.action.MemberEditAction" method="performUpdatePassword">-->
+<!--            <result name="success" type="redirectAction">-->
+<!--                <param name="actionName">edit/{1}</param>-->
+<!--            </result>-->
+<!--            <result name="error" type="redirectAction">-->
+<!--                <param name="actionName">edit/{1}</param>-->
+<!--            </result>-->
+<!--        </action>-->
+
+<!--        <action name="create">-->
+<!--            <result name="success">/member/member_create.jsp</result>-->
+<!--        </action>-->
+
+<!--        <action name="perform_create" class="com.uqac.stablemanager.member.action.MemberCreateAction" method="perform">-->
+<!--            <result name="success" type="redirectAction">-->
+<!--                <param name="actionName">view/${member.id}</param>-->
+<!--            </result>-->
+<!--            <result name="error">/member/member_create.jsp</result>-->
+<!--            <result name="input">/member/member_create.jsp</result>-->
+<!--        </action>-->
+
+<!--        <action name="perform_delete/{memberID}" class="com.uqac.stablemanager.member.action.MemberDeleteAction" method="performDelete" />-->
+
+        <action name="list" class="com.uqac.stablemanager.booking.action.BookingListViewAction" method="execute">
+            <result name="success">/booking/booking_list.jsp</result>
+        </action>
+
+<!--        <action name="list_applyfilter" class="com.uqac.stablemanager.member.action.MemberListViewAction">-->
+<!--            <result name="success" type="redirectAction">-->
+<!--                <param name="actionName">list</param>-->
+<!--                <param name="selectedRole">${selectedRole}</param>-->
+<!--            </result>-->
+<!--        </action>-->
+
+    </package>
+</struts>
