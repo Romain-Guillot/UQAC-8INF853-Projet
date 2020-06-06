@@ -18,9 +18,9 @@
             <result name="success" type="redirectAction">
                 <param name="actionName">view/{1}</param>
             </result>
-            <result name="error">
-                <param name="actionName">/member/member_edit.jsp</param>
-            </result>
+            <result name="error">/member/member_edit.jsp</result>
+            <result name="input">/member/member_create.jsp</result>
+
         </action>
 
         <action name="perform_changepassword/{memberID}" class="com.uqac.stablemanager.member.action.MemberEditAction" method="performUpdatePassword">

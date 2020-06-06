@@ -1,5 +1,6 @@
 package com.uqac.stablemanager.member.action;
 
+import com.uqac.stablemanager.member.exception.MemberCollisionException;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.IMemberService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
@@ -28,12 +29,14 @@ public class MemberEditAction extends AuthenticatedAction {
 
     @PreAuthorize("@controlBasedService.hasAccess('WRITE_ALL_PROFILES')")
     public String performUpdate() throws Exception {
-        member.setId(memberID);
-        memberService.update(member);
-//        if (!success) {
-//            addActionError("Impossible de mettre à jour le profil");
-//        }
-        return SUCCESS;
+        try {
+            member.setId(memberID);
+            memberService.update(member);
+            return SUCCESS;
+        } catch (MemberCollisionException exception) {
+            addActionError(exception.toString());
+            return ERROR;
+        }
     }
 
     @PreAuthorize("@controlBasedService.hasAccess('WRITE_ALL_PROFILES')")
