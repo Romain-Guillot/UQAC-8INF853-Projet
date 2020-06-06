@@ -1,3 +1,6 @@
+-- uselful link to generate mock sql data : https://www.mockaroo.com/
+
+-- Role
 insert into Role (name, description) 
 values ('Membre', 'Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.');
 insert into Role (name, description) 
@@ -7,7 +10,7 @@ values ('Manager', 'Donec dapibus.');
 insert into Role (name, description) 
 values ('Palfrenier', 'Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.');
 
-
+-- Permission
 insert into Permission (name, description) 
 values ('MANAGE_ROLES', 'Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante.');
 insert into Permission (name, description) 
@@ -15,7 +18,7 @@ values ('READ_ALL_PROFILES', null);
 insert into Permission (name, description) 
 values ('WRITE_ALL_PROFILES', 'Aenean sit amet justo.');
 
-
+-- Assoc role - permission
 insert into RolePermissionAssoc (role_name, permission_name) 
 values ('Secretariat', 'MANAGE_ROLES');
 insert into RolePermissionAssoc (role_name, permission_name) 
@@ -31,6 +34,8 @@ values ('Manager', 'READ_ALL_PROFILES');
 insert into RolePermissionAssoc (role_name, permission_name) 
 values ('Manager', 'WRITE_ALL_PROFILES');
 
+
+-- Member
 insert into ProfileMember (first_name, last_name, email, postal_address, birth_date, register_at, passwd, role_name) 
 values ('Yancy', 'Stave', 'manager', '59 Old Gate Alley', '2019-09-04', '2020-04-26', '$2a$12$eIFOisxQG4MM3XXs6GuTveQ8pITJqRX4HN9AuWKdfRiDqyE1Zoo/y', 'Manager');
 insert into ProfileMember (first_name, last_name, email, postal_address, birth_date, register_at, passwd, role_name) 
@@ -106,3 +111,40 @@ insert into Equipment (type, model, price, profile_member_id)
 values ('Bit', 'Mort Hkm - RSA 330', 10, 1);
 insert into Equipment (type, model, price, profile_member_id) 
 values ('Bit', 'Mort Br 18', 15, 1);
+
+-- Booking
+
+insert into Booking (id, profile_id, resource_id, begin, end) values (1, 6, 2, '2019-10-14', '2019-12-03');
+insert into Booking (id, profile_id, resource_id, begin, end) values (2, 20, 2, '2019-06-19', '2020-04-07');
+insert into Booking (id, profile_id, resource_id, begin, end) values (3, 19, 5, '2019-06-09', '2019-09-07');
+insert into Booking (id, profile_id, resource_id, begin, end) values (4, 18, 4, '2019-12-12', '2020-04-30');
+insert into Booking (id, profile_id, resource_id, begin, end) values (5, 11, 4, '2019-07-18', '2019-09-12');
+insert into Booking (id, profile_id, resource_id, begin, end) values (6, 4, 3, '2019-10-30', '2020-05-19');
+insert into Booking (id, profile_id, resource_id, begin, end) values (7, 9, 1, '2019-08-15', '2019-12-10');
+insert into Booking (id, profile_id, resource_id, begin, end) values (8, 13, 3, '2019-11-30', '2020-05-21');
+insert into Booking (id, profile_id, resource_id, begin, end) values (9, 18, 4, '2019-12-27', '2019-12-02');
+insert into Booking (id, profile_id, resource_id, begin, end) values (10, 3, 4, '2019-10-13', '2020-01-30');
+insert into Booking (id, profile_id, resource_id, begin, end) values (11, 1, 5, '2019-05-01', '2020-04-30');
+insert into Booking (id, profile_id, resource_id, begin, end) values (12, 18, 3, '2019-08-07', '2019-06-13');
+insert into Booking (id, profile_id, resource_id, begin, end) values (13, 15, 5, '2019-09-05', '2020-05-14');
+insert into Booking (id, profile_id, resource_id, begin, end) values (14, 8, 4, '2019-04-18', '2020-01-25');
+insert into Booking (id, profile_id, resource_id, begin, end) values (15, 17, 2, '2019-11-03', '2019-10-13');
+insert into Booking (id, profile_id, resource_id, begin, end) values (16, 7, 3, '2020-04-26', '2019-11-09');
+insert into Booking (id, profile_id, resource_id, begin, end) values (17, 13, 2, '2020-03-18', '2020-03-02');
+insert into Booking (id, profile_id, resource_id, begin, end) values (18, 16, 3, '2020-03-10', '2019-10-31');
+insert into Booking (id, profile_id, resource_id, begin, end) values (19, 1, 5, '2019-04-25', '2020-02-22');
+insert into Booking (id, profile_id, resource_id, begin, end) values (20, 5, 5, '2020-03-10', '2019-11-16');
+insert into Booking (id, profile_id, resource_id, begin, end) values (21, 9, 5, '2019-11-21', '2020-05-04');
+insert into Booking (id, profile_id, resource_id, begin, end) values (22, 4, 4, '2020-02-09', '2019-07-11');
+insert into Booking (id, profile_id, resource_id, begin, end) values (23, 5, 1, '2019-07-10', '2020-01-05');
+insert into Booking (id, profile_id, resource_id, begin, end) values (24, 16, 4, '2019-09-06', '2019-10-09');
+insert into Booking (id, profile_id, resource_id, begin, end) values (25, 11, 2, '2019-04-04', '2019-11-30');
+insert into Booking (id, profile_id, resource_id, begin, end) values (26, 17, 4, '2019-11-23', '2019-06-14');
+insert into Booking (id, profile_id, resource_id, begin, end) values (27, 2, 1, '2020-01-16', '2019-11-17');
+insert into Booking (id, profile_id, resource_id, begin, end) values (28, 13, 2, '2019-05-14', '2020-04-25');
+insert into Booking (id, profile_id, resource_id, begin, end) values (29, 15, 3, '2019-09-14', '2020-01-26');
+insert into Booking (id, profile_id, resource_id, begin, end) values (30, 5, 2, '2019-06-24', '2019-10-28');
+insert into Booking (id, profile_id, resource_id, begin, end) values (31, 14, 4, '2020-05-03', '2019-07-15');
+insert into Booking (id, profile_id, resource_id, begin, end) values (32, 17, 1, '2019-05-30', '2020-01-02');
+insert into Booking (id, profile_id, resource_id, begin, end) values (33, 8, 4, '2019-07-16', '2019-06-04');
+insert into Booking (id, profile_id, resource_id, begin, end) values (34, 2, 1, '2019-06-30', '2019-06-14');

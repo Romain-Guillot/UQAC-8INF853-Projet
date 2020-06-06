@@ -76,3 +76,14 @@ CREATE TABLE Equipment (
     PRIMARY KEY (id),
     FOREIGN KEY (profile_member_id) REFERENCES ProfileMember(id) ON DELETE SET NULL
 );
+
+CREATE TABLE Booking (
+    id INT NOT NULL AUTO_INCREMENT,
+    profile_id INT,
+    resource_id INT NOT NULL,
+    begin DATE NOT NULL,
+    end DATE NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (profile_id) REFERENCES ProfileMember(id) ON DELETE SET NULL, 
+    FOREIGN KEY (resource_id) REFERENCES Horse(id) ON DELETE CASCADE
+)
