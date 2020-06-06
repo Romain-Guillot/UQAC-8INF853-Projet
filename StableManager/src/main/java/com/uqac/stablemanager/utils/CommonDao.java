@@ -1,5 +1,7 @@
 package com.uqac.stablemanager.utils;
 
+import com.uqac.stablemanager.utils.sql.MySQLConnection;
+
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;

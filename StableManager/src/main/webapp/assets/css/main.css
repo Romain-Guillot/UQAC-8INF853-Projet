@@ -8287,6 +8287,18 @@ form {
   border-color: #a5b3bc;
 }
 
+.error-container {
+  background-color: #f54949;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  margin: 10px 0;
+}
+.error-container ul {
+  padding: 0;
+  margin: 0;
+}
+
 .members-list-filter-form {
   display: flex;
   flex-direction: row;

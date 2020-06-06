@@ -15,11 +15,11 @@ public interface IMemberService {
 
     List<MemberModel> list(RoleModel roleFilter) throws Exception;
 
-    boolean update(MemberModel member) throws Exception;
+    void update(MemberModel member) throws Exception;
 
-    boolean delete(int id) throws Exception;
+    void delete(int id) throws Exception;
 
-    boolean create(MemberModel member) throws Exception;
+    void create(MemberModel member) throws Exception;
 
-    boolean changePassword(int memberID, String newPassword) throws Exception;
+    void changePassword(int memberID, String newPassword) throws Exception;
 }

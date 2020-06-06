@@ -3,7 +3,6 @@ package com.uqac.stablemanager.member.action;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.IMemberService;
 import com.uqac.stablemanager.security.model.RoleModel;
-import com.uqac.stablemanager.member.service.MySQLMemberService;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;

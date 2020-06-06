@@ -33,7 +33,7 @@ CREATE TABLE ProfileMember (
     profile_id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
-    email VARCHAR(255),
+    email VARCHAR(255) NOT NULL,
     postal_address VARCHAR(255),
     birth_date DATE,
     register_at DATE,

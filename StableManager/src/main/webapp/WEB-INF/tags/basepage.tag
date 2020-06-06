@@ -40,7 +40,7 @@
         <main>
             <div id="main" class="page-wrapper">
                 <s:if test="hasActionErrors()">
-                    <div class="errors">
+                    <div class="error-container">
                         <s:actionerror/>
                     </div>
                 </s:if>

@@ -3,6 +3,7 @@ package com.uqac.stablemanager.auth.action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.uqac.stablemanager.auth.model.CredentialsModel;
 import com.uqac.stablemanager.auth.service.IAuthenticationService;
+import com.uqac.stablemanager.auth.exception.InvalidCredentialException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -19,11 +20,13 @@ public class LoginAction extends ActionSupport {
 
     @Override
     public String execute() throws Exception {
-        boolean isAuthenticated = authenticationService.login(credential);
-        if (!isAuthenticated) {
+        try {
+            authenticationService.login(credential);
+            return SUCCESS;
+        } catch (InvalidCredentialException exception) {
             addActionError("Impossible de vous connecter avec ces informations");
+            return ERROR;
         }
-        return isAuthenticated ? SUCCESS : ERROR;
     }
 
     public CredentialsModel getCredential() {

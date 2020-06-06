@@ -3,7 +3,7 @@ package com.uqac.stablemanager.security.service;
 import com.uqac.stablemanager.security.model.PermissionModel;
 import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.utils.CommonDao;
-import com.uqac.stablemanager.utils.SQLTableOperationsHelper;
+import com.uqac.stablemanager.utils.sql.SQLTableOperationsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.ResultSet;

@@ -1,10 +1,9 @@
 package com.uqac.stablemanager.equipment.service;
 
 import com.uqac.stablemanager.equipment.model.EquipmentModel;
-import com.uqac.stablemanager.horse.model.HorseModel;
 import com.uqac.stablemanager.security.service.PermissionService;
 import com.uqac.stablemanager.utils.CommonDao;
-import com.uqac.stablemanager.utils.SQLTableOperationsHelper;
+import com.uqac.stablemanager.utils.sql.SQLTableOperationsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigInteger;

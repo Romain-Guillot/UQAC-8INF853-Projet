@@ -1,53 +1,60 @@
-package com.uqac.stablemanager.utils;
+package com.uqac.stablemanager.utils.sql;
+
+import com.uqac.stablemanager.utils.exception.NotFoundException;
+import com.uqac.stablemanager.utils.sql.SQLModelBuilder;
+import com.uqac.stablemanager.utils.sql.SQLModelDestructor;
 
 import java.sql.*;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class SQLTableOperationsHelper<T> {
+public class NewSQLTableHelper<T> {
     private final Connection connection;
-    private final Function<ResultSet, T> modelBuilder;
-    private final Function<T, Map<String, Object>> modelDestructor;
+    private final SQLModelBuilder<T> modelBuilder;
+    private final SQLModelDestructor<T> modelDestructor;
     private final String tableName;
 
-    public SQLTableOperationsHelper(Connection connection, String tableName, Function<ResultSet, T> modelBuilder, Function<T, Map<String, Object>> modelDestructor) {
+    public NewSQLTableHelper(Connection connection, String tableName, SQLModelBuilder<T> modelBuilder, SQLModelDestructor<T> modelDestructor) {
         this.connection = connection;
         this.modelBuilder = modelBuilder;
         this.modelDestructor = modelDestructor;
         this.tableName = tableName;
     }
 
-    public T findBy(Map<String, Object> condition) throws SQLException {
+    public T findBy(Map<String, Object> condition) throws Exception {
         T model = null;
         String whereClause = buildWhereClause(condition.keySet());
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE " + whereClause);
         buildStatementWithConditionValues(statement, condition.values());
         ResultSet result = statement.executeQuery();
         if (result.next()) {
-            model = modelBuilder.apply(result);
+            modelBuilder.fromResultSet(result);
+            model = modelBuilder.getModel();
+        } else {
+            throw new NotFoundException();
         }
         statement.close();
         return model;
     }
 
-    private List<T> list(PreparedStatement statement) throws SQLException {
+    private List<T> list(PreparedStatement statement) throws Exception {
         List<T> models = new ArrayList<>();
         ResultSet result = statement.executeQuery();
         while (result.next()) {
-            models.add(modelBuilder.apply(result));
+            modelBuilder.fromResultSet(result);
+            models.add(modelBuilder.getModel());
         }
         return models;
     }
 
-    public List<T> list() throws SQLException {
+    public List<T> list() throws Exception {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + tableName,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         return list(statement);
     }
 
-    public List<T> list(Map<String, Object> condition) throws SQLException {
+    public List<T> list(Map<String, Object> condition) throws Exception {
         String whereClause = buildWhereClause(condition.keySet());
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE " + whereClause,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -55,7 +62,7 @@ public class SQLTableOperationsHelper<T> {
         return list(statement);
     }
 
-    public boolean delete(Map<String, Object> condition) throws SQLException {
+    public boolean delete(Map<String, Object> condition) throws Exception {
         String whereClause = buildWhereClause(condition.keySet());
         PreparedStatement statement = connection.prepareStatement("DELETE FROM " + tableName + " WHERE " + whereClause);
         buildStatementWithConditionValues(statement, condition.values());
@@ -64,8 +71,8 @@ public class SQLTableOperationsHelper<T> {
         return res == 1;
     }
 
-    public boolean update(Map<String, Object> primaryKey, T model) throws SQLException {
-        Map<String, Object> values = modelDestructor.apply(model);
+    public boolean update(Map<String, Object> primaryKey, T model) throws Exception {
+        Map<String, Object> values = modelDestructor.destruct(model);
         String setClause = buildWhereClause(values.keySet());
         String whereClause = buildWhereClause(primaryKey.keySet());
         String query = "UPDATE " + tableName + " SET " +
@@ -81,7 +88,7 @@ public class SQLTableOperationsHelper<T> {
     }
 
     public Object create(T model)  throws SQLException {
-        Map<String, Object> values = modelDestructor.apply(model);
+        Map<String, Object> values = modelDestructor.destruct(model);
         Object key = null;
         String columnNames = String.join(",", values.keySet());
         String tokens = String.join(",", Collections.nCopies(values.size(), "?"));

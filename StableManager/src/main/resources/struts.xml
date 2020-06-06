@@ -33,7 +33,7 @@
 
         <global-exception-mappings>
             <exception-mapping exception="org.springframework.security.access.AccessDeniedException" result="error_403"/>
-            <exception-mapping exception="com.uqac.stablemanager.utils.NotFoundException" result="error_404"/>
+            <exception-mapping exception="com.uqac.stablemanager.utils.exception.NotFoundException" result="error_404"/>
             <exception-mapping exception="java.lang.Exception" result="error_500"/>
         </global-exception-mappings>
 

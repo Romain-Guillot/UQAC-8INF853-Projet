@@ -16,7 +16,7 @@ public interface IAuthenticationService {
      * @param credentials les informations de connexion.
      * @return true si l'utilisateur est connecté, faux sinon.
      */
-    boolean login(CredentialsModel credentials) throws Exception;
+    void login(CredentialsModel credentials) throws Exception;
 
     /**
      * Procède à le déconnexion de l'utilisateur dans le système.

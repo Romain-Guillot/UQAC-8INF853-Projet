@@ -29,17 +29,17 @@ public class MemberEditAction extends AuthenticatedAction {
     @PreAuthorize("@controlBasedService.hasAccess('WRITE_ALL_PROFILES')")
     public String performUpdate() throws Exception {
         member.setId(memberID);
-        boolean success = memberService.update(member);
-        if (!success) {
-            addActionError("Impossible de mettre à jour le profil");
-        }
-        return success ? SUCCESS : ERROR;
+        memberService.update(member);
+//        if (!success) {
+//            addActionError("Impossible de mettre à jour le profil");
+//        }
+        return SUCCESS;
     }
 
     @PreAuthorize("@controlBasedService.hasAccess('WRITE_ALL_PROFILES')")
     public String performUpdatePassword() throws Exception {
-        boolean success = memberService.changePassword(memberID, newPassword);
-        return success ? SUCCESS : ERROR;
+        memberService.changePassword(memberID, newPassword);
+        return SUCCESS;
     }
 
     public int getMemberID() {

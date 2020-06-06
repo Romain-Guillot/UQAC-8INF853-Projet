@@ -1,9 +1,10 @@
 package com.uqac.stablemanager.auth.service;
 
+import com.uqac.stablemanager.auth.exception.InvalidCredentialException;
 import com.uqac.stablemanager.auth.model.CredentialsModel;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.IMemberService;
-import com.uqac.stablemanager.member.service.MySQLMemberService;
+import com.uqac.stablemanager.utils.exception.NotFoundException;
 import com.uqac.stablemanager.utils.PasswordManager;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,19 +36,25 @@ public class SpringSecurityAuthenticationService implements IAuthenticationServi
      * Le chiffrement du mot de passe est opéré par la classe [PasswordManager]
      */
     @Override
-    public boolean login(CredentialsModel credentials) throws Exception {
-        boolean isAuthenticated = false;
-        UserDetails user = mySQLMemberService.findByEmail(credentials.getEmail());
+    public void login(CredentialsModel credentials) throws Exception {
+        UserDetails user;
+        try {
+            user = mySQLMemberService.findByEmail(credentials.getEmail());
+        } catch (NotFoundException exception) {
+            throw new InvalidCredentialException();
+        }
         if (user != null) {
             String hashPass = user.getPassword();
             String plainPass = credentials.getPassword();
             boolean passwordsMatch = passwordManager.check(plainPass, hashPass);
             if (passwordsMatch) {
                 setSpringAuthentication(user);
-                isAuthenticated = true;
+            } else {
+                throw new InvalidCredentialException();
             }
+        } else {
+            throw new Exception();
         }
-        return isAuthenticated;
     }
 
     /**

@@ -1,4 +1,6 @@
-package com.uqac.stablemanager.utils;
+package com.uqac.stablemanager.utils.sql;
+
+import com.uqac.stablemanager.utils.ApplicationProperties;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

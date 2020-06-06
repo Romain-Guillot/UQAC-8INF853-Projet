@@ -3,7 +3,7 @@ package com.uqac.stablemanager.utils;
 import com.opensymphony.xwork2.ActionSupport;
 import com.uqac.stablemanager.auth.service.IAuthenticationService;
 import com.uqac.stablemanager.member.model.MemberModel;
-import com.uqac.stablemanager.member.service.MySQLMemberService;
+import com.uqac.stablemanager.member.service.SQLMemberService;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 public class AuthenticatedAction extends ActionSupport implements SessionAware {
 
     @Autowired
-    MySQLMemberService mySQLMemberService;
+    SQLMemberService SQLMemberService;
 
     protected String ERROR_404 = "error_404";
     protected String ERROR_403 = "error_403";
@@ -29,7 +29,7 @@ public class AuthenticatedAction extends ActionSupport implements SessionAware {
 
     public MemberModel getUser() throws Exception {
         int userID = member.getId();
-        return mySQLMemberService.findById(userID); // TODO: voir pour juste renvoyé [member], problème d'update des données?
+        return SQLMemberService.findById(userID); // TODO: voir pour juste renvoyé [member], problème d'update des données?
     }
 
     @Override

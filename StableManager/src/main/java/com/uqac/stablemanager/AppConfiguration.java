@@ -2,16 +2,20 @@ package com.uqac.stablemanager;
 
 import com.uqac.stablemanager.auth.service.IAuthenticationService;
 import com.uqac.stablemanager.auth.service.SpringSecurityAuthenticationService;
+import com.uqac.stablemanager.booking.model.BookingModel;
 import com.uqac.stablemanager.booking.service.IBookingService;
-import com.uqac.stablemanager.booking.service.MySQLBookingService;
+import com.uqac.stablemanager.booking.service.SQLBookingBuilder;
+import com.uqac.stablemanager.booking.service.SQLBookingDestructor;
+import com.uqac.stablemanager.booking.service.SQLBookingService;
 import com.uqac.stablemanager.equipment.service.EquipmentService;
 import com.uqac.stablemanager.horse.service.HorseService;
-import com.uqac.stablemanager.member.service.IMemberService;
-import com.uqac.stablemanager.member.service.MemberControlBasedService;
-import com.uqac.stablemanager.member.service.MySQLMemberService;
+import com.uqac.stablemanager.member.model.MemberModel;
+import com.uqac.stablemanager.member.service.*;
 import com.uqac.stablemanager.security.service.PermissionService;
 import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.PasswordManager;
+import com.uqac.stablemanager.utils.sql.SQLModelBuilder;
+import com.uqac.stablemanager.utils.sql.SQLModelDestructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -53,12 +57,32 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public IMemberService memberService() {
-        return new MySQLMemberService();
+        return new SQLMemberService();
+    }
+
+    @Bean
+    public SQLModelBuilder<MemberModel> memberBuilder() {
+        return new SQLMemberBuilder();
+    }
+
+    @Bean
+    public SQLModelDestructor<MemberModel> memberDestructor() {
+        return new SQLMemberDestructor();
     }
 
     @Bean
     public IBookingService bookingService() {
-        return new MySQLBookingService();
+        return new SQLBookingService();
+    }
+
+    @Bean
+    public SQLModelBuilder<BookingModel> bookingBuilder() {
+        return new SQLBookingBuilder();
+    }
+
+    @Bean
+    public SQLModelDestructor<BookingModel> bookingDestructor() {
+        return new SQLBookingDestructor();
     }
 
     @Bean

@@ -11,6 +11,8 @@
 
     <jsp:body>
         <h2>Information générales</h2>
+        <s:fielderror cssClass="error-container"/>
+
         <s:form action="perform_create" namespace="/member">
             <div class="input-field">
                 <s:textfield name="member.firstName" label="Prénom" id="firstname"/>

@@ -1,14 +1,12 @@
 package com.uqac.stablemanager.horse.service;
 
 import com.uqac.stablemanager.horse.model.HorseModel;
-import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.security.service.PermissionService;
 import com.uqac.stablemanager.utils.CommonDao;
-import com.uqac.stablemanager.utils.SQLTableOperationsHelper;
+import com.uqac.stablemanager.utils.sql.SQLTableOperationsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigInteger;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
