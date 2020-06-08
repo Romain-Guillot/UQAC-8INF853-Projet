@@ -12,4 +12,5 @@
     <br>
     Name: <s:property value="horse.name"/><br>
     Birth date: <s:property value="horse.birthDate"/><br>
+    Propriétaire: <a href="<s:url action='view/%{owner.id}' namespace="/member"/>"><s:property value="owner.firstName"/> <s:property value="owner.lastName"/></a><br>
 </t:basepage>
