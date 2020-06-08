@@ -3,6 +3,7 @@ package com.uqac.stablemanager.horse.model;
 import com.uqac.stablemanager.member.model.MemberModel;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class HorseModel {
     private int id;
@@ -42,5 +43,18 @@ public class HorseModel {
 
     public void setOwner(MemberModel owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HorseModel that = (HorseModel) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

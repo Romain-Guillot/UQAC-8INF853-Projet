@@ -8231,6 +8231,11 @@ span.badge {
   background-color: #f99292;
 }
 
+.input-radio [type=radio]:not(:checked), .input-radio [type=radio]:checked {
+  position: inherit;
+  opacity: 1;
+}
+
 form {
   max-width: 700px;
 }

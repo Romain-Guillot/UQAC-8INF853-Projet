@@ -31,7 +31,7 @@
         <ul class="list-actions">
             <li><a href="<s:url action='list' namespace="/horse"/>">Les chevaux</a></li>
             <li><a href="<s:url action='list' namespace="/equipment"/>">Le matériel</a></li>
-            <li><a href="">Les corrals</a></li>
+            <li><a href="">Les corrals <span class="badge">Bientôt</span></a></li>
         </ul>
 
         <h2>Cours et locations</h2>

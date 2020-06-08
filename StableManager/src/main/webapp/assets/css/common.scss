@@ -146,3 +146,11 @@ span.badge {
 .btn-error:hover {
     background-color: lighten($error-color, 15%);
 }
+
+
+.input-radio {
+    [type=radio]:not(:checked), [type=radio]:checked {
+        position: inherit;
+        opacity: 1;
+    }
+}
