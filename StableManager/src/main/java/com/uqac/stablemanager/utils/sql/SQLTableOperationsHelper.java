@@ -6,6 +6,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * @deprecated use NewSQLTableHelper
+ */
+@Deprecated
 public class SQLTableOperationsHelper<T> {
     private final Connection connection;
     private final Function<ResultSet, T> modelBuilder;
