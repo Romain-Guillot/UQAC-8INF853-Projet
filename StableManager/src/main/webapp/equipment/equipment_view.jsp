@@ -13,4 +13,5 @@
     Type: <s:property value="equipment.type"/><br>
     Modèle: <s:property value="equipment.model"/><br>
     Prix: <s:property value="equipment.price"/> €/heure<br>
+    Propriétaire: <a href="<s:url action='view/%{owner.id}' namespace="/member"/>"><s:property value="owner.firstName"/> <s:property value="owner.lastName"/></a><br>
 </t:basepage>
