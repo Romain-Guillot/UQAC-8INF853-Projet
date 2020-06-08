@@ -12,11 +12,11 @@ values ('Palfrenier', 'Integer non velit. Donec diam neque, vestibulum eget, vul
 
 -- Permission
 insert into Permission (name, description) 
-values ('MANAGE_ROLES', 'Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante.');
+values ('MANAGE_ROLES', 'Ajout, visualisation, création des rôles.');
 insert into Permission (name, description) 
-values ('READ_ALL_PROFILES', null);
+values ('READ_ALL_PROFILES', "Lecture de tous les profils");
 insert into Permission (name, description) 
-values ('WRITE_ALL_PROFILES', 'Aenean sit amet justo.');
+values ('WRITE_ALL_PROFILES', 'Écriture (dont la suppression) des tous les profiles');
 
 -- Assoc role - permission
 insert into RolePermissionAssoc (role_name, permission_name) 
