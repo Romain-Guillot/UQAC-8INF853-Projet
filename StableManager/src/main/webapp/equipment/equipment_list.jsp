@@ -4,10 +4,12 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Matériel > Liste" ></t:pagedescription>
-    <sec:authorize access="hasAuthority('WRITE_ALL_PROFILES')">
-        <a href="<s:url action='create' namespace="/equipment"/>" class="waves-effect waves-light btn">Ajouter un equipement</a>
-    </sec:authorize>
-    <t:equipmentlist equipments="${equipments}"  />
+    <jsp:attribute name="pageHeader">
+        <t:pagedescription title="Matériel > Liste" />
+    </jsp:attribute>
 
+    <jsp:body>
+        <a href="<s:url action='create' namespace="/equipment"/>" class="waves-effect waves-light btn">Ajouter un equipement</a>
+        <t:equipmentlist equipments="${equipments}"  />
+    </jsp:body>
 </t:basepage>

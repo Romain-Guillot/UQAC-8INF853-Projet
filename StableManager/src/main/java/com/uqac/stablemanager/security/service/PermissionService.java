@@ -67,7 +67,7 @@ public class PermissionService  extends CommonDao<PermissionModel> {
     }
 
     private NewSQLTableHelper<PermissionModel> getSQLHelper() {
-        return new NewSQLTableHelper<>(connection, "ProfileMember", permissionBuilder, permissionDestructor);
+        return new NewSQLTableHelper<>(connection, "Permission", permissionBuilder, permissionDestructor);
     }
 
 }
