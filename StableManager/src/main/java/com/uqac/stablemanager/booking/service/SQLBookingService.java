@@ -30,7 +30,7 @@ public class SQLBookingService extends CommonDao<BookingModel> implements IBooki
 
     @Override
     public BookingModel findById(int id) throws Exception {
-        Map<String, Object> condition = Collections.singletonMap("profile_id", id);
+        Map<String, Object> condition = Collections.singletonMap("booking_id", id);
         return getSQLHelper().findBy(condition);
     }
 
