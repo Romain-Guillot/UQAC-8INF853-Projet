@@ -4,13 +4,23 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Chevaux > ${horse.id}" />
-    <sec:authorize access="hasAuthority('WRITE_ALL_PROFILES')">
-        <a href="<s:url action='edit/%{horse.id}' namespace="/horse"/>" class="waves-effect waves-light btn">Modifier</a>
-        <a href="<s:url action='perform_delete/%{horse.id}' namespace="/horse"/>" class="waves-effect waves-light btn btn-error">Supprimer</a>
-    </sec:authorize>
-    <br>
-    Name: <s:property value="horse.name"/><br>
-    Birth date: <s:property value="horse.birthDate"/><br>
-    Propriétaire: <a href="<s:url action='view/%{horse.owner.id}' namespace="/member"/>">${horse.owner}</a><br>
+    <jsp:attribute name="pageHeader">
+        <t:pagedescription title="Chevaux > ${horse.id}" />
+    </jsp:attribute>
+
+    <jsp:body>
+        <sec:authorize access="hasAuthority('WRITE_ALL_PROFILES')">
+            <a href="<s:url action='edit/%{horse.id}' namespace="/horse"/>" class="waves-effect waves-light btn">Modifier</a>
+            <a href="<s:url action='perform_delete/%{horse.id}' namespace="/horse"/>" class="waves-effect waves-light btn btn-error">Supprimer</a>
+        </sec:authorize>
+
+        <h2>Informations</h2>
+
+        <table>
+            <tr><th>ID</th>                 <td>${horse.id}</td>        </tr>
+            <tr><th>Nom</th>                <td>${horse.name}</td>         </tr>
+            <tr><th>Propriétaire</th>       <td>${horse.owner}</td>            </tr>
+            <tr><th>Data de naissance</th>  <td>${horse.birthDate}</td>       </tr>
+        </table>
+    </jsp:body>
 </t:basepage>

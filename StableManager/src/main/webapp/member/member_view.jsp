@@ -11,7 +11,6 @@
 
 
     <jsp:body>
-
         <h2>Informations</h2>
         <table>
             <tr><th>First name</th>     <td>${member.firstName}</td>        </tr>
