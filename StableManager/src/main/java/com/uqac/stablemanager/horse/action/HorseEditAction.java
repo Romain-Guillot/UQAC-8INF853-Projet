@@ -9,7 +9,6 @@ import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-@PreAuthorize("hasAuthority('READ_ALL_PROFILES')")
 public class HorseEditAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
 

@@ -10,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
-@PreAuthorize("hasAuthority('READ_ALL_PROFILES')")
 public class EquipmentListViewAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
 
@@ -28,5 +27,4 @@ public class EquipmentListViewAction extends AuthenticatedAction {
     public List<EquipmentModel> getEquipments() {
         return equipments;
     }
-
 }

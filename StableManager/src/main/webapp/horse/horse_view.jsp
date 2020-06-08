@@ -9,13 +9,12 @@
     </jsp:attribute>
 
     <jsp:body>
-        <sec:authorize access="hasAuthority('WRITE_ALL_PROFILES')">
+        <div>
             <a href="<s:url action='edit/%{horse.id}' namespace="/horse"/>" class="waves-effect waves-light btn">Modifier</a>
             <a href="<s:url action='perform_delete/%{horse.id}' namespace="/horse"/>" class="waves-effect waves-light btn btn-error">Supprimer</a>
-        </sec:authorize>
+        </div>
 
         <h2>Informations</h2>
-
         <table>
             <tr><th>ID</th>                 <td>${horse.id}</td>        </tr>
             <tr><th>Nom</th>                <td>${horse.name}</td>         </tr>

@@ -10,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
-@PreAuthorize("hasAuthority('READ_ALL_PROFILES')")
 public class HorseListViewAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
 

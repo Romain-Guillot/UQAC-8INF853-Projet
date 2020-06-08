@@ -6,7 +6,6 @@ import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-@PreAuthorize("hasAuthority('WRITE_ALL_PROFILES')")
 public class EquipmentDeleteAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
 
