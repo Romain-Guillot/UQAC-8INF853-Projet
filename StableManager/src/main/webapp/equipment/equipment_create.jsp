@@ -4,7 +4,11 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Matériel > Création" ></t:pagedescription>
+    <jsp:attribute name="pageHeader">
+            <t:pagedescription title="Matériel > Création" />
+    </jsp:attribute>
+
+    <jsp:body>
         <h2>Information générales</h2>
         <s:form action="perform_create" namespace="/equipment">
             <div class="input-field">
@@ -28,4 +32,6 @@
                 <i class="material-icons right">send</i>
             </button>
         </s:form>
+    </jsp:body>
+
 </t:basepage>
