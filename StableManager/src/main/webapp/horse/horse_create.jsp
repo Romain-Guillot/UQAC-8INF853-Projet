@@ -3,8 +3,12 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:basepage pageTitle="StableManager">
+    <jsp:attribute name="pageHeader">
+        <t:pagedescription title="Chevaux > Création" />
+    </jsp:attribute>
 
-    <t:pagedescription title="Chevaux > Création" ></t:pagedescription>
+
+    <jsp:body>
         <h2>Information générales</h2>
         <s:form action="perform_create" namespace="/horse">
             <div class="input-field">
@@ -24,4 +28,5 @@
                 <i class="material-icons right">send</i>
             </button>
         </s:form>
+    </jsp:body>
 </t:basepage>
