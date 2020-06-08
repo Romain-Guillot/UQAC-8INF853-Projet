@@ -1,9 +1,14 @@
 package com.uqac.stablemanager.security.service;
 
+import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.security.model.PermissionModel;
 import com.uqac.stablemanager.security.model.RoleModel;
 import com.uqac.stablemanager.utils.CommonDao;
+import com.uqac.stablemanager.utils.sql.NewSQLTableHelper;
+import com.uqac.stablemanager.utils.sql.SQLModelBuilder;
+import com.uqac.stablemanager.utils.sql.SQLModelDestructor;
 import com.uqac.stablemanager.utils.sql.SQLTableOperationsHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,14 +16,10 @@ import java.util.List;
 import java.util.logging.Level;
 
 public class PermissionService  extends CommonDao<PermissionModel> {
+    @Autowired private SQLModelBuilder<PermissionModel> permissionBuilder;
+    @Autowired private SQLModelDestructor<PermissionModel> permissionDestructor;
 
-    private final SQLTableOperationsHelper<PermissionModel> tableOperationsHelper;
-
-    public PermissionService() {
-        tableOperationsHelper = new SQLTableOperationsHelper<>(connection, "Permission", this::buildPermissionFromResultSet, null);
-    }
-
-    public List<PermissionModel> listByRole(RoleModel role) {
+    public List<PermissionModel> listByRole(RoleModel role) throws Exception {
         try {
             List<PermissionModel> permissions = new ArrayList<>();
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Permission as P " +
@@ -27,7 +28,8 @@ public class PermissionService  extends CommonDao<PermissionModel> {
             statement.setString(1, role.getName());
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                permissions.add(buildPermissionFromResultSet(result));
+                permissionBuilder.fromResultSet(result);
+                permissions.add(permissionBuilder.getModel());
             }
             return permissions;
         } catch (SQLException exception) {
@@ -60,25 +62,12 @@ public class PermissionService  extends CommonDao<PermissionModel> {
         }
     }
 
-    public List<PermissionModel> list() {
-        try {
-            return tableOperationsHelper.list();
-        } catch (SQLException exception) {
-            log(Level.SEVERE, null, exception);
-            return null;
-        }
+    public List<PermissionModel> list() throws Exception {
+        return getSQLHelper().list();
     }
 
-    public PermissionModel buildPermissionFromResultSet(ResultSet result) {
-        try {
-            PermissionModel permission = new PermissionModel();
-            permission.setName(result.getString("name"));
-            permission.setDescription(result.getString("description"));
-            return permission;
-        } catch (SQLException exception) {
-            log(Level.SEVERE, null, exception);
-            return null;
-        }
+    private NewSQLTableHelper<PermissionModel> getSQLHelper() {
+        return new NewSQLTableHelper<>(connection, "ProfileMember", permissionBuilder, permissionDestructor);
     }
 
 }

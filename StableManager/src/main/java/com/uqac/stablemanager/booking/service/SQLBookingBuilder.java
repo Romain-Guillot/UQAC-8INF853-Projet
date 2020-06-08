@@ -12,20 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.ResultSet;
 import java.util.Date;
 
-public class SQLBookingBuilder implements SQLModelBuilder<BookingModel> {
+public class SQLBookingBuilder extends SQLModelBuilder<BookingModel> {
     @Autowired private IMemberService memberService;
     @Autowired private HorseService horseService;
-    private BookingModel model;
 
-    @Override
-    public void reset() {
-        model = null;
-    }
-
-    @Override
-    public BookingModel getModel() {
-        return model;
-    }
 
     @Override
     public void fromResultSet(ResultSet resultSet) throws Exception {

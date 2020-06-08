@@ -1,14 +1,18 @@
 package com.uqac.stablemanager.utils.sql;
 
-import com.uqac.stablemanager.member.model.MemberModel;
-
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
-public interface SQLModelBuilder<T> {
-    void reset();
+public abstract class SQLModelBuilder<T> {
 
-    T getModel();
+    protected T model;
 
-    void fromResultSet(ResultSet resultSet) throws Exception;
+    public void reset() {
+        model = null;
+    }
+
+    public T getModel() {
+        return model;
+    }
+
+    public abstract void fromResultSet(ResultSet resultSet) throws Exception;
 }

@@ -11,8 +11,9 @@ import com.uqac.stablemanager.equipment.service.EquipmentService;
 import com.uqac.stablemanager.horse.service.HorseService;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.*;
-import com.uqac.stablemanager.security.service.PermissionService;
-import com.uqac.stablemanager.security.service.RoleService;
+import com.uqac.stablemanager.security.model.PermissionModel;
+import com.uqac.stablemanager.security.model.RoleModel;
+import com.uqac.stablemanager.security.service.*;
 import com.uqac.stablemanager.utils.PasswordManager;
 import com.uqac.stablemanager.utils.sql.SQLModelBuilder;
 import com.uqac.stablemanager.utils.sql.SQLModelDestructor;
@@ -87,8 +88,18 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public RoleService roleService() {
-        return new RoleService();
+    public IRoleService roleService() {
+        return new SQLRoleService();
+    }
+
+    @Bean
+    public SQLModelBuilder<RoleModel> roleBuilder() {
+        return new SQLRoleBuilder();
+    }
+
+    @Bean
+    public SQLModelDestructor<RoleModel> roleDestructor() {
+        return new SQLRoleDestructor();
     }
 
     @Bean
@@ -99,6 +110,16 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public PermissionService permissionService() {
         return new PermissionService();
+    }
+
+    @Bean
+    public SQLModelBuilder<PermissionModel> permissionBuilder() {
+        return new SQLPermissionBuilder();
+    }
+
+    @Bean
+    public SQLModelDestructor<PermissionModel> permissionDestructor() {
+        return new SQLPermissionDestructor();
     }
 
     @Bean

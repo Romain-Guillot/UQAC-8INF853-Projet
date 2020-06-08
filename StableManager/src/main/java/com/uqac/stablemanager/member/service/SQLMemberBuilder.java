@@ -1,38 +1,27 @@
 package com.uqac.stablemanager.member.service;
 
 import com.uqac.stablemanager.member.model.MemberModel;
-import com.uqac.stablemanager.security.service.RoleService;
+import com.uqac.stablemanager.security.service.IRoleService;
 import com.uqac.stablemanager.utils.sql.SQLModelBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
-public class SQLMemberBuilder implements SQLModelBuilder<MemberModel> {
-    @Autowired private RoleService roleService;
-    private MemberModel member;
+public class SQLMemberBuilder extends SQLModelBuilder<MemberModel> {
+    @Autowired private IRoleService roleService;
 
-    public void reset() {
-        member = null;
-    }
 
-    public MemberModel getModel() {
-        MemberModel temp = member;
+    public void fromResultSet(ResultSet resultSet) throws Exception {
         reset();
-        return temp;
-    }
-
-    public void fromResultSet(ResultSet resultSet) throws SQLException {
-        reset();
-        member = new MemberModel();
-        member.setId(resultSet.getInt("profile_id"));
-        member.setEmail(resultSet.getString("email"));
-        member.setFirstName(resultSet.getString("first_name"));
-        member.setLastName(resultSet.getString("last_name"));
-        member.setBirthDate(resultSet.getDate("birth_date"));
-        member.setRegisterAt(resultSet.getDate("register_at"));
-        member.setPassword(resultSet.getString("passwd"));
-        member.setPostalAddress(resultSet.getString("postal_address"));
-        member.setRole(roleService.findByName(resultSet.getString("role_name")));
+        model = new MemberModel();
+        model.setId(resultSet.getInt("profile_id"));
+        model.setEmail(resultSet.getString("email"));
+        model.setFirstName(resultSet.getString("first_name"));
+        model.setLastName(resultSet.getString("last_name"));
+        model.setBirthDate(resultSet.getDate("birth_date"));
+        model.setRegisterAt(resultSet.getDate("register_at"));
+        model.setPassword(resultSet.getString("passwd"));
+        model.setPostalAddress(resultSet.getString("postal_address"));
+        model.setRole(roleService.findByName(resultSet.getString("role_name")));
     }
 }

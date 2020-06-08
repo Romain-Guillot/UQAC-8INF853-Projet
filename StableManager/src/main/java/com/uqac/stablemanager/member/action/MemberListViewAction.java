@@ -3,7 +3,7 @@ package com.uqac.stablemanager.member.action;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.IMemberService;
 import com.uqac.stablemanager.security.model.RoleModel;
-import com.uqac.stablemanager.security.service.RoleService;
+import com.uqac.stablemanager.security.service.IRoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,10 +14,8 @@ import java.util.Optional;
 public class MemberListViewAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
 
-
-    @Autowired
-    IMemberService mySQLMemberService;
-    @Autowired RoleService roleService;
+    @Autowired IMemberService mySQLMemberService;
+    @Autowired IRoleService roleService;
 
     private List<RoleModel> roles;
     private String selectedRole;

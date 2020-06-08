@@ -2,8 +2,8 @@ package com.uqac.stablemanager.security.action;
 
 import com.uqac.stablemanager.security.model.PermissionModel;
 import com.uqac.stablemanager.security.model.RoleModel;
+import com.uqac.stablemanager.security.service.IRoleService;
 import com.uqac.stablemanager.security.service.PermissionService;
-import com.uqac.stablemanager.security.service.RoleService;
 import com.uqac.stablemanager.utils.AuthenticatedAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class RoleEditionAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
 
-    @Autowired RoleService roleService;
+    @Autowired IRoleService roleService;
     @Autowired PermissionService permissionService;
 
     private RoleModel role;
@@ -25,24 +25,21 @@ public class RoleEditionAction extends AuthenticatedAction {
 
     @Override
     @PreAuthorize("hasAuthority('MANAGE_ROLES')")
-    public String execute() {
-        Map<String, PermissionModel> allPermissions = getPermissions().stream()
-                .collect(Collectors.toMap(PermissionModel::getName, p -> p));
-        List<PermissionModel> selectedPermissionModels = selectedPermissions.stream().map(allPermissions::get)
-                .collect(Collectors.toList());
+    public String execute() throws Exception {
+        Map<String, PermissionModel> allPermissions = getPermissions().stream().collect(Collectors.toMap(PermissionModel::getName, p -> p));
+        List<PermissionModel> selectedPermissionModels = selectedPermissions.stream().map(allPermissions::get).collect(Collectors.toList());
         role.setRights(selectedPermissionModels);
-        boolean success;
         if (roleName == null || roleName.isEmpty()) {
-            success = roleService.create(role);
+            roleService.create(role);
         } else {
-            success = roleService.update(roleName, role);
+            roleService.update(roleName, role);
         }
-        return success ? SUCCESS : ERROR;
+        return SUCCESS;
     }
 
     @Override
     @PreAuthorize("hasAuthority('MANAGE_ROLES')")
-    public String input() {
+    public String input() throws Exception {
         if (roleName != null)
             role = roleService.findByName(roleName);
         return INPUT;
@@ -70,8 +67,8 @@ public class RoleEditionAction extends AuthenticatedAction {
         this.role = role;
     }
 
-    public List<PermissionModel> getPermissions() {
-        return permissionService.list(); // TODO : mettre en variable d'instance !?
+    public List<PermissionModel> getPermissions() throws Exception {
+        return permissionService.list(); // TODO : mettre en variable d'instance
     }
 
     public List<String> getSelectedPermissions() {
