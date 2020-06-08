@@ -86,4 +86,4 @@ CREATE TABLE Booking (
     PRIMARY KEY (booking_id),
     FOREIGN KEY (profile_id) REFERENCES ProfileMember(profile_id) ON DELETE SET NULL, 
     FOREIGN KEY (resource_id) REFERENCES Horse(id) ON DELETE CASCADE
-)
+);
