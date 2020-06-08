@@ -1,21 +1,16 @@
 package com.uqac.stablemanager.horse.model;
 
+import com.uqac.stablemanager.member.model.MemberModel;
+
 import java.util.Date;
 
 public class HorseModel {
     private int id;
     private String name;
     private Date birthDate;
-    private int memberId;
+    private MemberModel owner;
 
     public HorseModel() { }
-
-    public HorseModel(HorseModel horse) {
-        id = horse.id;
-        name = horse.name;
-        birthDate = horse.birthDate;
-        memberId = horse.memberId;
-    }
 
     public int getId() {
         return id;
@@ -41,13 +36,11 @@ public class HorseModel {
         this.birthDate = birthDate;
     }
 
-    public int getMemberId() {
-        return memberId;
+    public MemberModel getOwner() {
+        return owner;
     }
 
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
+    public void setOwner(MemberModel owner) {
+        this.owner = owner;
     }
-
-
 }

@@ -3,6 +3,7 @@ package com.uqac.stablemanager.booking.service;
 import com.uqac.stablemanager.booking.model.BookingModel;
 import com.uqac.stablemanager.horse.model.HorseModel;
 import com.uqac.stablemanager.horse.service.HorseService;
+import com.uqac.stablemanager.horse.service.IHorseService;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.IMemberService;
 import com.uqac.stablemanager.utils.TimeSlot;
@@ -14,7 +15,7 @@ import java.util.Date;
 
 public class SQLBookingBuilder extends SQLModelBuilder<BookingModel> {
     @Autowired private IMemberService memberService;
-    @Autowired private HorseService horseService;
+    @Autowired private IHorseService horseService;
 
 
     @Override

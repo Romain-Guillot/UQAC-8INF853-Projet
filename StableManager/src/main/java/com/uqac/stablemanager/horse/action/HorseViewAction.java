@@ -2,6 +2,7 @@ package com.uqac.stablemanager.horse.action;
 
 import com.uqac.stablemanager.horse.model.HorseModel;
 import com.uqac.stablemanager.horse.service.HorseService;
+import com.uqac.stablemanager.horse.service.IHorseService;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.IMemberService;
 import com.uqac.stablemanager.member.service.MemberControlBasedService;
@@ -15,19 +16,14 @@ import java.util.List;
 public class HorseViewAction extends AuthenticatedAction {
     private static final long serialVersionUID = 1L;
 
-
-    @Autowired HorseService horseService;
-    @Autowired IMemberService memberService;
-
+    @Autowired IHorseService horseService;
     private HorseModel horse;
-    private MemberModel owner;
     private int horseID;
 
     @Override
     public String execute() throws Exception {
         horse = horseService.findById(horseID);
-        owner = memberService.findById(horse.getMemberId());
-        return (horse == null || owner == null) ? ERROR : SUCCESS;
+        return SUCCESS;
     }
 
     public HorseModel getHorse() {
@@ -36,14 +32,6 @@ public class HorseViewAction extends AuthenticatedAction {
 
     public void setHorse(HorseModel horse) {
         this.horse = horse;
-    }
-
-    public MemberModel getOwner() {
-        return owner;
-    }
-
-    public void setOwner(MemberModel owner) {
-        this.owner = owner;
     }
 
     public int getHorseID() {

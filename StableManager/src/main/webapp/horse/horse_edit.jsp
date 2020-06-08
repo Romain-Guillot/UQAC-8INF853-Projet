@@ -12,9 +12,10 @@
     <jsp:body>
         <h2>Information générales</h2>
         <s:form action="perform_edit/%{horse.id}" namespace="/horse">
+            <s:hidden name="horse.id" />
+            <s:textfield name="owner" label="Propriétaire" />
             <s:textfield name="horse.name" label="Nom" />
             <s:textfield name="horse.birthDate" label="Date de naissance" />
-            <s:textfield name="horse.memberId" label="ID du Membre" />
             <s:submit/>
         </s:form>
     </jsp:body>

@@ -4,7 +4,7 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Chevaux > ${horse.id}" ></t:pagedescription>
+    <t:pagedescription title="Chevaux > ${horse.id}" />
     <sec:authorize access="hasAuthority('WRITE_ALL_PROFILES')">
         <a href="<s:url action='edit/%{horse.id}' namespace="/horse"/>" class="waves-effect waves-light btn">Modifier</a>
         <a href="<s:url action='perform_delete/%{horse.id}' namespace="/horse"/>" class="waves-effect waves-light btn btn-error">Supprimer</a>
@@ -12,5 +12,5 @@
     <br>
     Name: <s:property value="horse.name"/><br>
     Birth date: <s:property value="horse.birthDate"/><br>
-    Propriétaire: <a href="<s:url action='view/%{owner.id}' namespace="/member"/>"><s:property value="owner.firstName"/> <s:property value="owner.lastName"/></a><br>
+    Propriétaire: <a href="<s:url action='view/%{horse.owner.id}' namespace="/member"/>">${horse.owner}</a><br>
 </t:basepage>

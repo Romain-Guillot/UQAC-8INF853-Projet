@@ -8,7 +8,11 @@ import com.uqac.stablemanager.booking.service.SQLBookingBuilder;
 import com.uqac.stablemanager.booking.service.SQLBookingDestructor;
 import com.uqac.stablemanager.booking.service.SQLBookingService;
 import com.uqac.stablemanager.equipment.service.EquipmentService;
+import com.uqac.stablemanager.horse.model.HorseModel;
 import com.uqac.stablemanager.horse.service.HorseService;
+import com.uqac.stablemanager.horse.service.IHorseService;
+import com.uqac.stablemanager.horse.service.SQLHorseBuilder;
+import com.uqac.stablemanager.horse.service.SQLHorseDestructor;
 import com.uqac.stablemanager.member.model.MemberModel;
 import com.uqac.stablemanager.member.service.*;
 import com.uqac.stablemanager.security.model.PermissionModel;
@@ -123,8 +127,18 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public HorseService horseService() {
+    public IHorseService horseService() {
         return new HorseService();
+    }
+    @Bean
+
+    public SQLModelBuilder<HorseModel> horseBuilder() {
+        return new SQLHorseBuilder();
+    }
+
+    @Bean
+    public SQLModelDestructor<HorseModel> horseDestructor() {
+        return new SQLHorseDestructor();
     }
 
     @Bean
