@@ -4,14 +4,24 @@
 
 <t:basepage pageTitle="StableManager">
 
-    <t:pagedescription title="Matériel > ${equipment.id}" ></t:pagedescription>
-    <sec:authorize access="hasAuthority('WRITE_ALL_PROFILES')">
-        <a href="<s:url action='edit/%{equipment.id}' namespace="/equipment"/>" class="waves-effect waves-light btn">Modifier</a>
-        <a href="<s:url action='perform_delete/%{equipment.id}' namespace="/equipment"/>" class="waves-effect waves-light btn btn-error">Supprimer</a>
-    </sec:authorize>
-    <br>
-    Type: <s:property value="equipment.type"/><br>
-    Modèle: <s:property value="equipment.model"/><br>
-    Prix: <s:property value="equipment.price"/> €/heure<br>
-    Propriétaire: <a href="<s:url action='view/%{owner.id}' namespace="/member"/>"><s:property value="owner.firstName"/> <s:property value="owner.lastName"/></a><br>
+    <jsp:attribute name="pageHeader">
+        <t:pagedescription title="Matériel > ${equipment.id}"/>
+    </jsp:attribute>
+
+    <jsp:body>
+        <div>
+            <a href="<s:url action='edit/%{equipment.id}' namespace="/equipment"/>" class="waves-effect waves-light btn">Modifier</a>
+            <a href="<s:url action='perform_delete/%{equipment.id}' namespace="/equipment"/>" class="waves-effect waves-light btn btn-error">Supprimer</a>
+        </div>
+
+        <h2>Informations</h2>
+
+        <table>
+            <tr><th>ID</th>                 <td>${equipment.id}</td>        </tr>
+            <tr><th>Type</th>                <td>${equipment.type}</td>         </tr>
+            <tr><th>Modèle</th>       <td>${equipment.model}</td>            </tr>
+            <tr><th>Propriétaire</th>  <td>${owner}</td>       </tr>
+        </table>
+
+    </jsp:body>
 </t:basepage>
