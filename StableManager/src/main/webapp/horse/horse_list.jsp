@@ -25,7 +25,7 @@
                     <i class="material-icons right">filter_alt</i>
                 </button>
             </s:form>
-            <a href="">Recherche avancée</a>
+            <a href="<s:url action="search" namespace="/horse"/>">Recherche avancée</a>
         </div>
         <t:horselist horses="${horses}"  />
     </jsp:body>

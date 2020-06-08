@@ -10,6 +10,8 @@ public class SQLSearchFilterQueryBuilder {
 
     public String build(HorseSearchFilterModel filter) {
         String query = "SELECT * FROM Horse H";
+        if (filter == null)
+            return query;
         String ownerFilter = filter.getOwner();
         Boolean linkedWithBooking = filter.getLinkedWithBookings();
         if (linkedWithBooking != null) {
