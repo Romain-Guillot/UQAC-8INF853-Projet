@@ -2,6 +2,9 @@ package com.uqac.stablemanager.utils.sql;
 
 import java.sql.ResultSet;
 
+/**
+ * Permet la création d'un model à partir de ses propriétés SQL
+ */
 public abstract class SQLModelBuilder<T> {
 
     protected T model;

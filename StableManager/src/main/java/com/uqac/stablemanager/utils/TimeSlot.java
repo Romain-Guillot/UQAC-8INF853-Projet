@@ -1,10 +1,10 @@
 package com.uqac.stablemanager.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Plage horaire avec une date de début et de fin
+ */
 public class TimeSlot {
     private Date begin;
     private Date end;

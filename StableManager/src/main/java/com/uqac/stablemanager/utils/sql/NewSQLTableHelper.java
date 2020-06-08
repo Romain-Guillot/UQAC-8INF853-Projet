@@ -9,6 +9,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Performe des opérations SQL de base (get, list, create, delete) sur une table en utilisant les
+ * ModelBuilder et ModelDestructor des objets correspondants.
+ * @param <T>
+ */
 public class NewSQLTableHelper<T> {
     private final Connection connection;
     private final SQLModelBuilder<T> modelBuilder;

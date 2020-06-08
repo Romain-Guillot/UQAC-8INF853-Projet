@@ -27,6 +27,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import java.text.SimpleDateFormat;
 
+/**
+ * Configuration utilisée par Spring Framework et par Spring Security
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, proxyTargetClass = true, jsr250Enabled = true)

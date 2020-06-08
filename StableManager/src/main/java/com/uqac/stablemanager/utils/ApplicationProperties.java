@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Classe permettant de chargé la configuration de l'application contenu dans le fichier application.properties
+ * dans le dossier des ressources
+ */
 public class ApplicationProperties {
 
     private static Properties properties;
